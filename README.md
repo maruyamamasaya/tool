@@ -9,6 +9,7 @@
 | --- | --- |
 | [Data Inspector](https://maruyamamasaya.github.io/tool/data-inspector/) | CSV / JSON / YAML / XML / TEXT の形式・サイズ・階層・型や、文字数・バイト数・半角全角の内訳をまとめて解析できます。 |
 | [Byte Converter](https://maruyamamasaya.github.io/tool/byte-converter/) | B / KB / MB / GB / TB と KiB / MiB / GiB / TiB を相互変換し、結果をコピーできます。 |
+| [Base64 Converter](https://maruyamamasaya.github.io/tool/base64-converter/) | テキストをBase64に変換したり、Base64からテキストへ復元したりできます。 |
 | [JSON Structure Viewer](https://maruyamamasaya.github.io/tool/json-structure-viewer/) | JSON の階層、データ型、要素数をツリー表示し、一括で展開・折りたたみできます。 |
 | [JSON Formatter](https://maruyamamasaya.github.io/tool/json-formatter/) | JSON の整形・圧縮・構文チェックと、整形結果のコピーができます。 |
 | [CSV ビューアー](https://maruyamamasaya.github.io/tool/csv-viewer/) | UTF-8 / Shift_JIS の CSV を表で表示し、全列検索や列ごとの並べ替えができます。 |

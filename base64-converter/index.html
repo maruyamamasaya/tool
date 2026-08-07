@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="テキストとBase64をブラウザ内で相互変換するシンプルなツール">
+  <title>Base64 Converter</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header>
+      <p class="eyebrow">BASE64 CONVERTER</p>
+      <h1>Base64 変換</h1>
+      <p class="lead">テキストを貼り付けて、Base64への変換・復元ができます。</p>
+    </header>
+
+    <section class="converter" aria-label="Base64変換">
+      <div class="field-heading">
+        <label for="input">入力</label>
+        <button id="clearButton" class="text-button" type="button" disabled>クリア</button>
+      </div>
+      <textarea id="input" rows="8" autofocus placeholder="テキスト、またはBase64を貼り付けてください"></textarea>
+
+      <div class="actions" aria-label="変換方法">
+        <button id="encodeButton" class="primary" type="button" disabled>Base64に変換</button>
+        <button id="decodeButton" class="secondary" type="button" disabled>テキストに復元</button>
+      </div>
+
+      <div class="field-heading result-heading">
+        <label for="output">変換結果</label>
+        <button id="copyButton" class="text-button" type="button" disabled>コピー</button>
+      </div>
+      <textarea id="output" rows="8" readonly placeholder="変換結果がここに表示されます"></textarea>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <p class="privacy"><span aria-hidden="true">●</span> 入力内容はブラウザ内だけで処理されます。</p>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
