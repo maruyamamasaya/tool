@@ -8,3 +8,4 @@
 - [CSVビューアー](https://maruyamamasaya.github.io/tool/csv-viewer/)
 - [Whiteboard](https://maruyamamasaya.github.io/tool/drawing/)
 - [Timer Board](https://maruyamamasaya.github.io/tool/timer-board/)
+- [Bandwidth Calculator](https://maruyamamasaya.github.io/tool/bandwidth-calculator/) - データ容量と転送時間から必要な帯域幅を計算できます。
