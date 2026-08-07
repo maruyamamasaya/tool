@@ -1,0 +1,71 @@
+:root {
+  font-family: Inter, "Noto Sans JP", system-ui, -apple-system, sans-serif;
+  color: #202124;
+  background: #f7f7f5;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, textarea { font: inherit; }
+
+.app {
+  width: min(760px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: clamp(52px, 9vw, 96px) 0 40px;
+}
+
+header { margin-bottom: 32px; }
+.eyebrow {
+  margin: 0 0 10px;
+  color: #77736b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+}
+h1 { margin: 0; font-size: clamp(30px, 6vw, 46px); letter-spacing: -.04em; }
+.lead { margin: 12px 0 0; color: #66635e; line-height: 1.7; }
+
+.cleaner {
+  padding: clamp(18px, 4vw, 28px);
+  border: 1px solid #deddd9;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 36px rgba(35, 34, 31, .06);
+}
+
+label { display: block; margin-bottom: 10px; font-size: 14px; font-weight: 700; }
+textarea {
+  width: 100%;
+  min-height: 290px;
+  padding: 16px;
+  resize: vertical;
+  border: 1px solid #cfcdc7;
+  border-radius: 10px;
+  outline: none;
+  color: #202124;
+  background: #fdfdfc;
+  line-height: 1.7;
+}
+textarea::placeholder { color: #aaa69e; }
+textarea:focus { border-color: #2f6b50; box-shadow: 0 0 0 3px rgba(47, 107, 80, .12); }
+
+.footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 14px; }
+.footer p { margin: 0; color: #77736b; font-size: 13px; }
+.actions { display: flex; gap: 8px; }
+button { min-height: 42px; padding: 8px 18px; border-radius: 9px; font-weight: 700; cursor: pointer; }
+button:focus-visible { outline: 3px solid rgba(47, 107, 80, .25); outline-offset: 2px; }
+button:disabled { cursor: default; opacity: .42; }
+.primary { border: 1px solid #2f6b50; color: #fff; background: #2f6b50; }
+.primary:not(:disabled):hover { background: #255740; }
+.secondary { border: 1px solid #d4d1cb; color: #55514b; background: #fff; }
+.secondary:not(:disabled):hover { background: #f5f4f1; }
+.status { min-height: 20px; margin: 8px 0 -8px; color: #2f6b50; font-size: 13px; text-align: right; }
+.privacy { margin: 18px 2px 0; color: #77736b; font-size: 12px; text-align: center; }
+.privacy span { color: #4d8b6d; font-size: 8px; vertical-align: 1px; }
+
+@media (max-width: 520px) {
+  .footer { align-items: stretch; flex-direction: column; }
+  .actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .status { text-align: left; }
+}
