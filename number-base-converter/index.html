@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="2進数・10進数・16進数と任意の進数をリアルタイムで相互変換します。">
+  <meta name="theme-color" content="#f5f6f8">
+  <title>Number Base Converter</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="converter">
+    <header class="page-header">
+      <div class="logo" aria-hidden="true">01</div>
+      <div>
+        <h1>Number Base Converter</h1>
+        <p>入力するだけで、すぐに進数変換</p>
+      </div>
+    </header>
+
+    <section class="primary-card" aria-label="基本の進数">
+      <div class="field" data-base="2">
+        <label for="binary"><span>2進数</span><small>BINARY</small></label>
+        <div class="input-row">
+          <input id="binary" type="text" value="11111111" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="binary-error">
+          <button class="copy-button" type="button" data-copy="binary" aria-label="2進数をコピー"><span aria-hidden="true">▣</span> コピー</button>
+        </div>
+        <p class="error" id="binary-error" role="alert"></p>
+      </div>
+
+      <div class="field" data-base="10">
+        <label for="decimal"><span>10進数</span><small>DECIMAL</small></label>
+        <div class="input-row">
+          <input id="decimal" type="text" value="255" inputmode="numeric" autocomplete="off" spellcheck="false" aria-describedby="decimal-error">
+          <button class="copy-button" type="button" data-copy="decimal" aria-label="10進数をコピー"><span aria-hidden="true">▣</span> コピー</button>
+        </div>
+        <p class="error" id="decimal-error" role="alert"></p>
+      </div>
+
+      <div class="field" data-base="16">
+        <label for="hexadecimal"><span>16進数</span><small>HEXADECIMAL</small></label>
+        <div class="input-row">
+          <input id="hexadecimal" type="text" value="FF" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="hexadecimal-error">
+          <button class="copy-button" type="button" data-copy="hexadecimal" aria-label="16進数をコピー"><span aria-hidden="true">▣</span> コピー</button>
+        </div>
+        <p class="error" id="hexadecimal-error" role="alert"></p>
+      </div>
+    </section>
+
+    <section class="custom-section" aria-labelledby="custom-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="custom-title">任意の進数</h2>
+          <p>2〜36進数に対応</p>
+        </div>
+        <span class="alphabet">0–9 &nbsp; A–Z</span>
+      </div>
+      <div class="custom-grid">
+        <div class="base-field">
+          <label for="custom-base">基数</label>
+          <div><input id="custom-base" type="number" value="8" min="2" max="36" inputmode="numeric"><span>進数</span></div>
+        </div>
+        <div class="value-field">
+          <label for="custom-value">値</label>
+          <div class="input-row">
+            <input id="custom-value" type="text" value="377" autocomplete="off" spellcheck="false" aria-describedby="custom-error">
+            <button class="copy-button" type="button" data-copy="custom-value" aria-label="任意進数の値をコピー"><span aria-hidden="true">▣</span> コピー</button>
+          </div>
+        </div>
+      </div>
+      <p class="error" id="custom-error" role="alert"></p>
+      <p class="base-error" id="base-error" role="alert"></p>
+    </section>
+
+    <footer>
+      <button id="clear-button" class="clear-button" type="button">すべてクリア</button>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+      <p class="privacy">変換はすべてブラウザ内で処理されます</p>
+    </footer>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>

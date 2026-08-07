@@ -12,6 +12,7 @@
 | [QR Code Generator](https://maruyamamasaya.github.io/tool/qr-code-generator/) | URLを入力または貼り付けてQRコードを生成し、PNG画像として保存できます。 |
 | [Data Inspector](https://maruyamamasaya.github.io/tool/data-inspector/) | CSV / JSON / YAML / XML / TEXT の形式・サイズ・階層・型や、文字数・バイト数・半角全角の内訳をまとめて解析できます。 |
 | [Byte Converter](https://maruyamamasaya.github.io/tool/byte-converter/) | B / KB / MB / GB / TB と KiB / MiB / GiB / TiB を相互変換し、結果をコピーできます。 |
+| [Number Base Converter](https://maruyamamasaya.github.io/tool/number-base-converter/) | 2進数・10進数・16進数と2〜36の任意進数をリアルタイムで相互変換できます。 |
 | [Base64 Converter](https://maruyamamasaya.github.io/tool/base64-converter/) | テキストをBase64に変換したり、Base64からテキストへ復元したりできます。 |
 | [JSON Structure Viewer](https://maruyamamasaya.github.io/tool/json-structure-viewer/) | JSON の階層、データ型、要素数をツリー表示し、一括で展開・折りたたみできます。 |
 | [JSON Formatter](https://maruyamamasaya.github.io/tool/json-formatter/) | JSON の整形・圧縮・構文チェックと、整形結果のコピーができます。 |

@@ -1,0 +1,67 @@
+:root {
+  font-family: Inter, "Noto Sans JP", system-ui, -apple-system, sans-serif;
+  color: #17202d;
+  background: #f5f6f8;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+body { min-width: 320px; min-height: 100vh; margin: 0; }
+button, input { font: inherit; }
+
+.converter { width: min(680px, calc(100% - 40px)); margin: 0 auto; padding: 64px 0 40px; }
+.page-header { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
+.logo { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 13px; background: #2463eb; color: #fff; font: 800 15px/1 ui-monospace, monospace; box-shadow: 0 7px 18px #2463eb33; }
+h1 { margin: 0; font-size: clamp(24px, 5vw, 30px); letter-spacing: -.04em; }
+.page-header p { margin: 4px 0 0; color: #7d8795; font-size: 13px; }
+
+.primary-card, .custom-section { border: 1px solid #e1e5eb; border-radius: 18px; background: #fff; box-shadow: 0 12px 40px #1924340a; }
+.primary-card { padding: 6px 24px; }
+.field { padding: 19px 0 14px; border-bottom: 1px solid #edf0f3; }
+.field:last-child { border-bottom: 0; }
+label { display: block; margin-bottom: 8px; color: #344052; font-size: 13px; font-weight: 750; }
+.field label { display: flex; align-items: baseline; justify-content: space-between; }
+label small { color: #a0a8b3; font-size: 9px; letter-spacing: .12em; }
+.input-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 9px; }
+input { width: 100%; min-width: 0; height: 52px; padding: 0 15px; border: 1px solid #d9dee6; border-radius: 10px; outline: 0; background: #fafbfc; color: #17202d; font: 600 18px/1 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .02em; }
+input:hover { border-color: #bdc5d0; }
+input:focus { border-color: #2463eb; background: #fff; box-shadow: 0 0 0 3px #2463eb15; }
+input[aria-invalid="true"] { border-color: #dc4c4c; background: #fffafa; }
+.copy-button { min-width: 88px; padding: 0 13px; border: 1px solid #dfe3e9; border-radius: 10px; background: #fff; color: #687486; font-size: 12px; font-weight: 650; cursor: pointer; }
+.copy-button span { margin-right: 4px; color: #9aa3af; }
+.copy-button:hover { border-color: #bfc7d2; background: #f8f9fb; color: #273346; }
+.copy-button:focus-visible, .clear-button:focus-visible { outline: 3px solid #2463eb30; outline-offset: 2px; }
+.copy-button:disabled { opacity: .45; cursor: default; }
+.error, .base-error { min-height: 17px; margin: 6px 2px -2px; color: #c33f3f; font-size: 12px; }
+.error:empty, .base-error:empty { min-height: 0; margin: 0; }
+
+.custom-section { margin-top: 22px; padding: 22px 24px 18px; }
+.section-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+h2 { margin: 0; font-size: 16px; letter-spacing: -.02em; }
+.section-heading p { margin: 3px 0 0; color: #9199a5; font-size: 11px; }
+.alphabet { padding: 5px 9px; border-radius: 6px; background: #f2f4f7; color: #929ba8; font: 600 10px/1 ui-monospace, monospace; }
+.custom-grid { display: grid; grid-template-columns: 130px 1fr; gap: 18px; }
+.base-field > div { display: flex; align-items: center; gap: 8px; }
+.base-field input { text-align: center; }
+.base-field span { flex: none; color: #707b8b; font-size: 13px; }
+.value-field .input-row { grid-template-columns: minmax(0, 1fr) auto; }
+
+footer { position: relative; padding-top: 24px; text-align: center; }
+.clear-button { height: 43px; padding: 0 22px; border: 1px solid #d8dde4; border-radius: 9px; background: transparent; color: #697586; font-size: 13px; font-weight: 650; cursor: pointer; }
+.clear-button:hover { background: #fff; color: #283447; }
+.status { min-height: 18px; margin: 8px 0 0; color: #2463eb; font-size: 12px; }
+.privacy { margin: 10px 0 0; color: #a0a7b1; font-size: 10px; }
+
+@media (max-width: 560px) {
+  .converter { width: min(100% - 24px, 680px); padding-top: 30px; }
+  .page-header { margin-bottom: 24px; }
+  .logo { width: 44px; height: 44px; }
+  .primary-card { padding: 4px 16px; }
+  .custom-section { padding: 19px 16px 16px; }
+  .custom-grid { grid-template-columns: 1fr; gap: 14px; }
+  .base-field > div { width: 145px; }
+  .copy-button { min-width: 48px; padding: 0 10px; font-size: 0; }
+  .copy-button span { margin: 0; font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
