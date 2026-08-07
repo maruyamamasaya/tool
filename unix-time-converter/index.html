@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Unix timestampと日時をテキストで相互変換できるシンプルなツール">
+  <meta name="theme-color" content="#f5f3ee">
+  <title>Unix Time Converter</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="converter">
+    <header>
+      <div class="mark" aria-hidden="true">↔</div>
+      <div>
+        <p class="eyebrow">TIMESTAMP ⇔ DATETIME</p>
+        <h1>Unix Time Converter</h1>
+      </div>
+    </header>
+
+    <section class="card" aria-labelledby="timestamp-title">
+      <div class="card-heading">
+        <div><span class="step">01</span><h2 id="timestamp-title">timestamp → 日時</h2></div>
+        <button id="setNow" class="text-button" type="button">現在時刻を入力</button>
+      </div>
+      <label for="timestampInput">Unix timestamp</label>
+      <input id="timestampInput" type="text" value="1704067200" inputmode="numeric" autocomplete="off" spellcheck="false" aria-describedby="timestampHint timestampError">
+      <p id="timestampHint" class="hint">秒・ミリ秒を自動判定します</p>
+      <p id="timestampError" class="error" role="alert"></p>
+      <dl id="dateResults" class="results" aria-live="polite">
+        <div><dt>UTC</dt><dd id="utcResult">—</dd><button class="copy" data-copy-target="utcResult" type="button">コピー</button></div>
+        <div><dt>ローカル</dt><dd id="localResult">—</dd><button class="copy" data-copy-target="localResult" type="button">コピー</button></div>
+        <div><dt>ISO 8601</dt><dd id="isoResult">—</dd><button class="copy" data-copy-target="isoResult" type="button">コピー</button></div>
+      </dl>
+    </section>
+
+    <div class="divider" aria-hidden="true"><span>⇅</span></div>
+
+    <section class="card" aria-labelledby="datetime-title">
+      <div class="card-heading"><div><span class="step">02</span><h2 id="datetime-title">日時 → timestamp</h2></div></div>
+      <label for="datetimeInput">日時</label>
+      <div class="input-row">
+        <input id="datetimeInput" type="text" value="2024-01-01 00:00:00" autocomplete="off" spellcheck="false" aria-describedby="datetimeHint datetimeError">
+        <select id="timezoneInput" aria-label="入力日時のタイムゾーン">
+          <option value="utc">UTC</option>
+          <option value="local">ローカル</option>
+        </select>
+      </div>
+      <p id="datetimeHint" class="hint">YYYY-MM-DD HH:mm:ss</p>
+      <p id="datetimeError" class="error" role="alert"></p>
+      <dl id="timestampResults" class="results" aria-live="polite">
+        <div><dt>秒</dt><dd id="secondsResult">—</dd><button class="copy" data-copy-target="secondsResult" type="button">コピー</button></div>
+        <div><dt>ミリ秒</dt><dd id="millisecondsResult">—</dd><button class="copy" data-copy-target="millisecondsResult" type="button">コピー</button></div>
+      </dl>
+    </section>
+
+    <footer>入力内容はブラウザ内だけで処理されます。</footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>
