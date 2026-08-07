@@ -35,6 +35,7 @@
 | [Character Encoding Checker](https://maruyamamasaya.github.io/tool/character-encoding-checker/) | テキストの文字種の割合を集計し、置換文字・不可視文字・制御文字などを確認できます。 |
 | [Hash Generator](https://maruyamamasaya.github.io/tool/hash-generator/) | テキストからSHA-1・SHA-256・SHA-384・SHA-512のハッシュ値を生成できます。 |
 | [Regex Tester](https://maruyamamasaya.github.io/tool/regex-tester/) | JavaScriptの正規表現を入力し、マッチ箇所・位置・キャプチャグループをリアルタイムで確認できます。 |
+| [Cron Reader](https://maruyamamasaya.github.io/tool/cron-reader/) | 標準的な5フィールドCron式を、読みやすい日本語へリアルタイムに変換できます。 |
 
 ## 特長
 
