@@ -7,6 +7,7 @@
 
 | ツール | できること |
 | --- | --- |
+| [Percentage Calculator](https://maruyamamasaya.github.io/tool/percentage-calculator/) | 増減率・割合・○%の値・増減後の結果から元の値をすばやく計算できます。 |
 | [QR Code Generator](https://maruyamamasaya.github.io/tool/qr-code-generator/) | URLを入力または貼り付けてQRコードを生成し、PNG画像として保存できます。 |
 | [Data Inspector](https://maruyamamasaya.github.io/tool/data-inspector/) | CSV / JSON / YAML / XML / TEXT の形式・サイズ・階層・型や、文字数・バイト数・半角全角の内訳をまとめて解析できます。 |
 | [Byte Converter](https://maruyamamasaya.github.io/tool/byte-converter/) | B / KB / MB / GB / TB と KiB / MiB / GiB / TiB を相互変換し、結果をコピーできます。 |
