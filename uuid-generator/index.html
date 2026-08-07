@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="UUID v4を1〜100個まとめて生成し、ワンクリックでコピーできるブラウザツール">
+  <title>UUID Generator</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div class="mark" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <p class="eyebrow">DEVELOPER TOOL</p>
+      <h1>UUID <span>Generator</span></h1>
+      <p class="lead">必要な数だけ、すぐに。安全な UUID v4 をブラウザで生成します。</p>
+    </header>
+
+    <section class="generator-card" aria-labelledby="generator-title">
+      <div class="controls">
+        <div>
+          <h2 id="generator-title">生成する個数</h2>
+          <p>1〜100個までまとめて生成できます</p>
+        </div>
+        <div class="action-row">
+          <div class="count-control">
+            <button id="decrease" type="button" aria-label="個数を1減らす">−</button>
+            <label><span class="sr-only">生成する個数</span><input id="count" type="number" min="1" max="100" value="5" inputmode="numeric"></label>
+            <button id="increase" type="button" aria-label="個数を1増やす">＋</button>
+          </div>
+          <button id="generate" class="generate-button" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-14.9 4M4 12A8 8 0 0 1 18.9 8M5 20v-4h4M19 4v4h-4"/></svg>
+            生成する
+          </button>
+        </div>
+      </div>
+
+      <div class="result-heading">
+        <div><span id="resultCount">5</span> UUIDs</div>
+        <button id="copyAll" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+          すべてコピー
+        </button>
+      </div>
+      <ol id="results" class="results" aria-live="polite"></ol>
+      <p class="privacy-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.6 2.9 8.1 7 10 4.1-1.9 7-5.4 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>生成処理はすべてブラウザ内で行われ、データは外部に送信されません。</p>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <footer>UUID Generator · Simple, fast and private</footer>
+  <script src="./app.js" defer></script>
+</body>
+</html>
