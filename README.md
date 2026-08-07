@@ -36,6 +36,7 @@
 | [Hash Generator](https://maruyamamasaya.github.io/tool/hash-generator/) | テキストからSHA-1・SHA-256・SHA-384・SHA-512のハッシュ値を生成できます。 |
 | [Escape Tool](https://maruyamamasaya.github.io/tool/escape-tool/) | 改行・タブなどの特殊文字をエスケープ、復元、可視化できます。 |
 | [Regex Tester](https://maruyamamasaya.github.io/tool/regex-tester/) | JavaScriptの正規表現を入力し、マッチ箇所・位置・キャプチャグループをリアルタイムで確認できます。 |
+| [Cron Reader](https://maruyamamasaya.github.io/tool/cron-reader/) | 標準的な5フィールドCron式を、読みやすい日本語へリアルタイムに変換できます。 |
 
 ## 特長
 
