@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="入力したテキストからSHA-1、SHA-256、SHA-384、SHA-512ハッシュを生成するブラウザツール">
+  <title>Hash Generator</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div class="brand-icon" aria-hidden="true">#</div>
+      <div>
+        <p class="eyebrow">DEVELOPER UTILITY</p>
+        <h1>Hash <span>Generator</span></h1>
+        <p class="lead">テキストからハッシュ値をすばやく生成します。</p>
+      </div>
+    </header>
+
+    <section class="workspace" aria-labelledby="input-title">
+      <div class="input-panel">
+        <div class="section-heading">
+          <div>
+            <p class="step">01 / INPUT</p>
+            <h2 id="input-title">ハッシュ化するテキスト</h2>
+          </div>
+          <button id="clearButton" class="text-button" type="button" disabled>クリア</button>
+        </div>
+        <label class="sr-only" for="inputText">ハッシュ化するテキスト</label>
+        <textarea id="inputText" placeholder="ここにテキストを入力または貼り付け..." spellcheck="false"></textarea>
+        <div class="input-meta">
+          <span><strong id="characterCount">0</strong> 文字</span>
+          <span><strong id="byteCount">0</strong> bytes (UTF-8)</span>
+        </div>
+      </div>
+
+      <div class="settings-panel">
+        <div class="section-heading compact">
+          <div>
+            <p class="step">02 / SETTINGS</p>
+            <h2>生成設定</h2>
+          </div>
+        </div>
+        <fieldset>
+          <legend>アルゴリズム</legend>
+          <div class="choice-grid" id="algorithmChoices">
+            <label><input type="radio" name="algorithm" value="SHA-256" checked><span>SHA-256<small>推奨</small></span></label>
+            <label><input type="radio" name="algorithm" value="SHA-1"><span>SHA-1<small>Legacy</small></span></label>
+            <label><input type="radio" name="algorithm" value="SHA-384"><span>SHA-384</span></label>
+            <label><input type="radio" name="algorithm" value="SHA-512"><span>SHA-512</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>出力形式</legend>
+          <div class="format-toggle">
+            <label><input type="radio" name="format" value="hex" checked><span>HEX</span></label>
+            <label><input type="radio" name="format" value="base64"><span>Base64</span></label>
+          </div>
+        </fieldset>
+        <button id="generateButton" class="primary-button" type="button" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1"/><circle cx="12" cy="12" r="4"/></svg>
+          ハッシュを生成
+        </button>
+      </div>
+
+      <div class="result-panel">
+        <div class="section-heading">
+          <div>
+            <p class="step">03 / RESULT</p>
+            <h2>生成結果</h2>
+          </div>
+          <span id="resultBadge" class="badge">SHA-256 · HEX</span>
+        </div>
+        <div class="result-box">
+          <output id="result" aria-live="polite">入力後に生成ボタンを押してください</output>
+          <button id="copyButton" class="copy-button" type="button" disabled aria-label="結果をコピー">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+            <span>コピー</span>
+          </button>
+        </div>
+        <p class="privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.6 2.9 8.1 7 10 4.1-1.9 7-5.4 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>すべての処理はブラウザ内で行われ、入力内容が外部へ送信されることはありません。</p>
+      </div>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <footer>HASH GENERATOR <span>•</span> SIMPLE &amp; PRIVATE</footer>
+  <script src="./app.js" defer></script>
+</body>
+</html>
