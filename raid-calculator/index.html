@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ディスク台数と容量からRAIDの使用可能容量を計算するシンプルなツール">
+  <title>RAID Calculator</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="calculator">
+    <header>
+      <p class="eyebrow">STORAGE TOOL</p>
+      <h1>RAID Calculator</h1>
+      <p class="lead">RAID構成の使用可能容量を、すばやく計算します。</p>
+    </header>
+
+    <section class="card" aria-labelledby="settings-title">
+      <h2 id="settings-title">構成</h2>
+      <div class="fields">
+        <label>
+          RAIDレベル
+          <select id="raidLevel">
+            <option value="0">RAID 0</option>
+            <option value="1">RAID 1</option>
+            <option value="5" selected>RAID 5</option>
+            <option value="6">RAID 6</option>
+            <option value="10">RAID 10</option>
+          </select>
+        </label>
+        <label>
+          ディスク台数
+          <input id="diskCount" type="number" min="2" max="1000" step="1" value="4" inputmode="numeric">
+        </label>
+        <label>
+          1台あたりの容量
+          <span class="capacity-input">
+            <input id="diskSize" type="number" min="0.01" step="any" value="4" inputmode="decimal">
+            <select id="unit" aria-label="容量の単位">
+              <option value="GB">GB</option>
+              <option value="TB" selected>TB</option>
+            </select>
+          </span>
+        </label>
+      </div>
+      <p id="error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section class="result" aria-live="polite">
+      <p>使用可能容量</p>
+      <strong id="usableCapacity">12 TB</strong>
+      <div class="bar" aria-hidden="true"><span id="usableBar"></span></div>
+      <dl>
+        <div><dt>総容量</dt><dd id="rawCapacity">16 TB</dd></div>
+        <div><dt>容量効率</dt><dd id="efficiency">75%</dd></div>
+        <div><dt>耐障害性</dt><dd id="faultTolerance">1台</dd></div>
+      </dl>
+      <p id="note" class="note">パリティ用にディスク1台分を使用します。</p>
+    </section>
+    <p class="disclaimer">※ 同一容量のディスクを使用した場合の理論値です。実際の容量は製品やファイルシステムにより異なります。</p>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
