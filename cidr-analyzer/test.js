@@ -1,0 +1,20 @@
+const assert = require('node:assert/strict');
+const { ipToNumber, numberToIp, parseCidr, formatInput, buildHierarchy } = require('./app.js');
+
+assert.equal(numberToIp(ipToNumber('192.168.1.10')), '192.168.1.10');
+assert.equal(ipToNumber('256.0.0.1'), null);
+const parsed = parseCidr('192.168.1.10/24');
+assert.equal(parsed.key, '192.168.1.0/24');
+assert.equal(numberToIp(parsed.mask), '255.255.255.0');
+assert.equal(numberToIp(parsed.first), '192.168.1.1');
+assert.equal(numberToIp(parsed.last), '192.168.1.254');
+assert.equal(parsed.total, 256);
+assert.equal(parsed.usable, 254);
+assert.match(parseCidr('192.168.1.1').error, /CIDR/);
+assert.match(parseCidr('192.168.1.1/33').error, /0～32/);
+assert.equal(formatInput('192.168.1.10 / 24\n192.168.1.11\t24\n192.168.1.13　／　20'), '192.168.1.10/24\n192.168.1.11/24\n192.168.1.13/20');
+assert.match(formatInput('not an ip'), /^解析不能:/);
+const hierarchy = buildHierarchy([parseCidr('192.168.1.13/20'), parseCidr('192.168.1.10/24')]);
+assert.equal(hierarchy[0].key, '192.168.0.0/20');
+assert.equal(hierarchy[0].children[0].key, '192.168.1.0/24');
+console.log('All CIDR Analyzer tests passed.');
