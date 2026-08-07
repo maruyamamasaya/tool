@@ -9,3 +9,4 @@
 - [Whiteboard](https://maruyamamasaya.github.io/tool/drawing/)
 - [Timer Board](https://maruyamamasaya.github.io/tool/timer-board/)
 - [CIDR Analyzer](https://maruyamamasaya.github.io/tool/cidr-analyzer/) - 複数のIPv4/CIDRをまとめて整形・解析し、ネットワークのグループや包含関係を確認できます。
+- [Text Diff Viewer](https://maruyamamasaya.github.io/tool/diff-viewer/) - 2つのテキストを行・文字単位で比較できます。

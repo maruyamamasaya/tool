@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="2つのテキストをブラウザ内で安全に比較できるText Diff Viewer">
+  <title>Text Diff Viewer</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div><p class="eyebrow">LOCAL TEXT TOOL</p><h1>Text Diff Viewer</h1><p class="lead">行の追加・削除を追跡し、文字単位の違いまで見つけます。</p></div>
+      <p class="privacy"><span aria-hidden="true">&#128274;</span> 入力内容は外部へ送信されません</p>
+    </header>
+
+    <section class="input-section" aria-labelledby="input-title">
+      <h2 id="input-title" class="sr-only">比較するテキスト</h2>
+      <div class="editors">
+        <label><span><b>LEFT</b><small id="leftCount">0 行</small></span><textarea id="leftInput" spellcheck="false" placeholder="左側のテキストを貼り付け"></textarea></label>
+        <label><span><b>RIGHT</b><small id="rightCount">0 行</small></span><textarea id="rightInput" spellcheck="false" placeholder="右側のテキストを貼り付け"></textarea></label>
+      </div>
+      <p id="warning" class="warning" role="alert" hidden></p>
+      <div class="actions">
+        <button id="compareButton" class="primary" type="button">Compare</button>
+        <button id="swapButton" type="button">Swap</button>
+        <button id="clearButton" type="button">Clear</button>
+      </div>
+    </section>
+
+    <section id="resultSection" class="result-section" aria-labelledby="result-title" hidden>
+      <div class="result-header">
+        <div><p class="eyebrow">RESULT</p><h2 id="result-title">比較結果</h2></div>
+        <div class="result-tools"><div id="summary" class="summary" aria-live="polite"></div><label class="toggle"><input id="wrapToggle" type="checkbox" checked> 行を折り返す</label></div>
+      </div>
+      <div class="legend" aria-label="差分の凡例"><span><i class="same"></i>同一</span><span><i class="changed"></i>変更</span><span><i class="removed"></i>削除</span><span><i class="added"></i>追加</span></div>
+      <div id="diffShell" class="diff-shell wrap" tabindex="0">
+        <table><thead><tr><th colspan="2">LEFT</th><th colspan="2">RIGHT</th><th class="detail-heading">差分位置</th></tr></thead><tbody id="diffBody"></tbody></table>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
