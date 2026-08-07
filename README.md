@@ -3,6 +3,7 @@
 
 ## ツール一覧
 
+- [JSON Structure Viewer](https://maruyamamasaya.github.io/tool/json-structure-viewer/) - JSONの構造・階層・データ型をツリー形式で確認できます。
 - [JSON Formatter](https://maruyamamasaya.github.io/tool/json-formatter/)
 - [CSVビューアー](https://maruyamamasaya.github.io/tool/csv-viewer/)
 - [Whiteboard](https://maruyamamasaya.github.io/tool/drawing/)
