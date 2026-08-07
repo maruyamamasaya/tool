@@ -3,6 +3,7 @@
 
 ## ツール一覧
 
+- [Byte Converter](https://maruyamamasaya.github.io/tool/byte-converter/) - B・KB・MB・GBなどのデータ容量を10進・2進単位で換算できます。
 - [JSON Structure Viewer](https://maruyamamasaya.github.io/tool/json-structure-viewer/) - JSONの構造・階層・データ型をツリー形式で確認できます。
 - [JSON Formatter](https://maruyamamasaya.github.io/tool/json-formatter/)
 - [CSVビューアー](https://maruyamamasaya.github.io/tool/csv-viewer/)
