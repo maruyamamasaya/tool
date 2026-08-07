@@ -23,6 +23,7 @@
 | [CIDR Analyzer](https://maruyamamasaya.github.io/tool/cidr-analyzer/) | 複数の IPv4/CIDR を整形し、ネットワーク・範囲・アドレス数と包含関係を一括で確認できます。 |
 | [Calendar](https://maruyamamasaya.github.io/tool/calendar/) | 月間カレンダーを見ながら、期間の日数・営業日・土日の日数をまとめて計算できます。 |
 | [Checklist Builder](https://maruyamamasaya.github.io/tool/checklist-builder/) | 3階層のチェックリストを作成・保存し、Markdownで入出力できます。 |
+| [Pomodoro Timer](https://maruyamamasaya.github.io/tool/pomodoro-timer/) | 作業と休憩を自動で切り替え、今日の完了回数を記録できるポモドーロタイマーです。 |
 
 ## 特長
 

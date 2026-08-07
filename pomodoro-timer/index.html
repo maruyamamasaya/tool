@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="集中と休憩のリズムを整える、シンプルなポモドーロタイマー">
+  <meta name="theme-color" content="#f7f4ee">
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="app-header">
+      <a class="brand" href="./" aria-label="Pomodoro Timer ホーム">
+        <span class="brand-mark" aria-hidden="true">P</span>
+        <span>Pomodoro</span>
+      </a>
+      <button id="settingsToggle" class="icon-button" type="button" aria-controls="settingsPanel" aria-expanded="false">
+        <span aria-hidden="true">⚙</span><span class="sr-only">設定を開く</span>
+      </button>
+    </header>
+
+    <section class="timer-card" aria-labelledby="modeLabel">
+      <div id="modePill" class="mode-pill"><span aria-hidden="true"></span><span id="modeLabel">作業中</span></div>
+      <p class="eyebrow">FOCUS TIMER</p>
+      <p id="timerDisplay" class="timer-display" role="timer" aria-live="off">25:00</p>
+      <div class="progress-track" aria-hidden="true"><span id="progressBar"></span></div>
+      <p id="timerHint" class="timer-hint">準備ができたら、集中を始めましょう。</p>
+
+      <div class="controls" aria-label="タイマー操作">
+        <button id="startButton" class="button button-primary" type="button"><span aria-hidden="true">▶</span>開始</button>
+        <button id="pauseButton" class="button button-secondary" type="button" disabled><span aria-hidden="true">Ⅱ</span>一時停止</button>
+        <button id="resetButton" class="button button-ghost" type="button"><span aria-hidden="true">↻</span>リセット</button>
+      </div>
+    </section>
+
+    <section class="summary-card" aria-label="今日の記録">
+      <div><p>今日の完了</p><strong><span id="completedCount">0</span><small>回</small></strong></div>
+      <div class="tomato-art" aria-hidden="true"><span>✓</span></div>
+    </section>
+
+    <section id="settingsPanel" class="settings-card" aria-labelledby="settingsTitle" hidden>
+      <div class="settings-heading"><div><p>SETTINGS</p><h2 id="settingsTitle">タイマー設定</h2></div><button id="settingsClose" class="close-button" type="button" aria-label="設定を閉じる">×</button></div>
+      <form id="settingsForm">
+        <label><span>作業時間</span><span class="input-wrap"><input id="workMinutes" type="number" inputmode="numeric" min="1" max="180" required><span>分</span></span></label>
+        <label><span>休憩時間</span><span class="input-wrap"><input id="breakMinutes" type="number" inputmode="numeric" min="1" max="60" required><span>分</span></span></label>
+        <p id="settingsError" class="error" role="alert"></p>
+        <button class="save-button" type="submit">設定を保存</button>
+      </form>
+    </section>
+
+    <footer><span>集中する時間を、心地よい習慣に。</span><span>データはこのブラウザに保存されます</span></footer>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
