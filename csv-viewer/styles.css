@@ -1,61 +1,42 @@
-<!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ファイルをブラウザ内だけで表示できるCSVビューアー">
-  <title>CSVビューアー</title>
-  <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-  <main class="app">
-    <header class="page-header">
-      <div>
-        <p class="eyebrow">LOCAL CSV VIEWER</p>
-        <h1>CSVビューアー</h1>
-      </div>
-      <p class="privacy-notice"><span aria-hidden="true">&#128274;</span> このCSVは外部サーバーへ送信されません。すべてブラウザ内で処理されます。</p>
-    </header>
-
-    <section id="dropZone" class="drop-zone" tabindex="0" role="button" aria-label="CSVファイルを選択、またはドロップ">
-      <input id="fileInput" type="file" accept=".csv,text/csv" hidden>
-      <div class="file-icon" aria-hidden="true">CSV</div>
-      <h2>CSVファイルをここにドロップ</h2>
-      <p>または</p>
-      <button id="selectButton" class="primary-button" type="button">ファイルを選択</button>
-      <p class="drop-note">UTF-8 / Shift_JIS ・ファイルは端末内だけで処理されます</p>
-    </section>
-
-    <p id="errorMessage" class="error-message" role="alert" hidden></p>
-
-    <section id="viewer" class="viewer" aria-live="polite" hidden>
-      <div class="toolbar">
-        <div class="file-summary">
-          <div class="loaded-icon" aria-hidden="true">CSV</div>
-          <div><strong id="fileName"></strong><span id="encodingLabel"></span></div>
-        </div>
-        <div class="statistics" aria-label="CSVの概要">
-          <span><strong id="rowCount">0</strong> 行</span>
-          <span><strong id="columnCount">0</strong> 列</span>
-        </div>
-        <button id="changeFileButton" class="secondary-button" type="button">別のCSVを開く</button>
-      </div>
-
-      <label class="search-box" for="searchInput">
-        <span aria-hidden="true">&#128269;</span>
-        <input id="searchInput" type="search" placeholder="キーワードで全列を検索" autocomplete="off">
-        <span id="filteredCount" class="filtered-count"></span>
-      </label>
-
-      <div class="table-shell" tabindex="0" aria-label="CSVデータ（横方向にスクロールできます）">
-        <table>
-          <thead id="tableHead"></thead>
-          <tbody id="tableBody"></tbody>
-        </table>
-        <p id="emptyResult" class="empty-result" hidden>該当する行がありません。</p>
-      </div>
-    </section>
-  </main>
-  <script src="./app.js" defer></script>
-</body>
-</html>
+:root { font-family: Inter, "Noto Sans JP", system-ui, sans-serif; color: #182230; background: #f5f7fa; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input { font: inherit; }
+.app { width: min(1180px, calc(100% - 32px)); margin: auto; padding: 38px 0; }
+.page-header { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 24px; }
+.eyebrow { margin: 0 0 5px; color: #526273; font-size: 12px; font-weight: 700; letter-spacing: .14em; }
+h1 { margin: 0; font-size: clamp(28px, 4vw, 42px); }
+.privacy-notice { max-width: 490px; margin: 0; padding: 10px 14px; border-radius: 8px; background: #eaf7ef; color: #28744a; font-size: 13px; }
+.drop-zone { padding: 58px 20px; border: 2px dashed #b8c3d1; border-radius: 16px; background: #fff; text-align: center; cursor: pointer; transition: .15s ease; }
+.drop-zone:hover, .drop-zone:focus, .drop-zone.is-dragging { border-color: #4169e1; background: #f6f8ff; outline: none; }
+.file-icon, .loaded-icon { display: inline-grid; place-items: center; border-radius: 9px; background: #e9eeff; color: #3455bd; font-weight: 800; }
+.file-icon { width: 64px; height: 64px; font-size: 18px; }
+.drop-zone h2 { margin: 16px 0 6px; }
+.drop-zone p { color: #667085; }
+.primary-button, .secondary-button { min-height: 40px; padding: 8px 16px; border: 1px solid #4169e1; border-radius: 8px; cursor: pointer; }
+.primary-button { background: #4169e1; color: #fff; }
+.secondary-button { background: #fff; color: #3455bd; }
+.drop-note { margin-bottom: 0; font-size: 12px; }
+.error-message { padding: 12px 14px; border-radius: 8px; background: #fff0f0; color: #b42318; }
+.viewer { overflow: hidden; border: 1px solid #dbe1ea; border-radius: 14px; background: #fff; box-shadow: 0 8px 28px #28364d0d; }
+.toolbar { padding: 14px; display: flex; align-items: center; gap: 18px; border-bottom: 1px solid #e2e7ee; }
+.file-summary { min-width: 0; flex: 1; display: flex; align-items: center; gap: 10px; }
+.loaded-icon { flex: 0 0 auto; width: 42px; height: 42px; font-size: 12px; }
+.file-summary div:last-child { min-width: 0; display: flex; flex-direction: column; }
+.file-summary strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-summary span { color: #667085; font-size: 12px; }
+.statistics { display: flex; gap: 14px; color: #667085; font-size: 13px; }
+.search-box { margin: 14px; padding: 0 12px; display: flex; align-items: center; gap: 8px; border: 1px solid #cfd7e2; border-radius: 8px; }
+.search-box:focus-within { border-color: #4169e1; box-shadow: 0 0 0 3px #4169e122; }
+.search-box input { width: 100%; min-height: 42px; border: 0; outline: 0; }
+.filtered-count { flex: 0 0 auto; color: #667085; font-size: 12px; }
+.table-shell { max-height: 62vh; overflow: auto; border-top: 1px solid #e2e7ee; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { position: sticky; top: 0; z-index: 1; padding: 0; background: #f5f7fa; text-align: left; }
+th button { width: 100%; padding: 11px 13px; display: flex; justify-content: space-between; gap: 12px; border: 0; background: transparent; font-weight: 700; text-align: left; cursor: pointer; }
+th button:hover { background: #eaf0f7; }
+td { max-width: 420px; padding: 10px 13px; overflow-wrap: anywhere; border-top: 1px solid #edf0f4; }
+tbody tr:hover { background: #fafbfc; }
+.sort-mark { color: #667085; }
+.empty-result { padding: 35px; color: #667085; text-align: center; }
+@media (max-width: 700px) { .page-header, .toolbar { align-items: stretch; flex-direction: column; } .statistics { justify-content: space-around; } }

@@ -1,119 +1,40 @@
-"use strict";
-
-const input = document.querySelector("#jsonInput");
-const output = document.querySelector("#jsonOutput");
-const status = document.querySelector("#status");
-const copyButton = document.querySelector("#copyButton");
-const inputCount = document.querySelector("#inputCount");
-const dropZone = document.querySelector("#dropZone");
-
-function showStatus(message, isError = false) {
-  status.textContent = message;
-  status.classList.toggle("error", isError);
-  status.hidden = false;
-}
-
-function locateError(message, source) {
-  const match = message.match(/position\s+(\d+)/i);
-  if (!match) return message;
-
-  const position = Number(match[1]);
-  const beforeError = source.slice(0, position);
-  const line = beforeError.split("\n").length;
-  const lastLineBreak = beforeError.lastIndexOf("\n");
-  const column = position - lastLineBreak;
-  return `${message}（${line}行 ${column}列付近）`;
-}
-
-function parseInput() {
-  const source = input.value.trim();
-  if (!source) throw new Error("JSONを入力してください。");
-  try {
-    return JSON.parse(source);
-  } catch (error) {
-    throw new Error(`JSONの構文に誤りがあります: ${locateError(error.message, source)}`);
-  }
-}
-
-function run(action) {
-  try {
-    const value = parseInput();
-    if (action !== "validate") {
-      const indent = action === "format" ? Number(document.querySelector("#indentSelect").value) : 0;
-      output.value = JSON.stringify(value, null, indent);
-      copyButton.disabled = false;
-    }
-    const messages = { format: "JSONを整形しました。", minify: "JSONを圧縮しました。", validate: "構文は正しいJSONです。" };
-    showStatus(messages[action]);
-  } catch (error) {
-    showStatus(error.message, true);
-  }
-}
-
-document.querySelector("#formatButton").addEventListener("click", () => run("format"));
-document.querySelector("#minifyButton").addEventListener("click", () => run("minify"));
-document.querySelector("#validateButton").addEventListener("click", () => run("validate"));
-
-document.querySelector("#clearButton").addEventListener("click", () => {
-  input.value = "";
-  output.value = "";
-  status.hidden = true;
-  copyButton.disabled = true;
-  inputCount.textContent = "0 文字";
-  input.focus();
-});
-
-input.addEventListener("input", () => {
-  inputCount.textContent = `${input.value.length.toLocaleString("ja-JP")} 文字`;
-});
-
-copyButton.addEventListener("click", async () => {
-  try {
-    await navigator.clipboard.writeText(output.value);
-    showStatus("整形結果をクリップボードにコピーしました。");
-  } catch {
-    output.select();
-    const copied = document.execCommand("copy");
-    showStatus(copied ? "整形結果をクリップボードにコピーしました。" : "コピーできませんでした。出力を選択して手動でコピーしてください。", !copied);
-  }
-});
-
-document.addEventListener("keydown", (event) => {
-  if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
-    event.preventDefault();
-    run("format");
-  }
-});
-
-["dragenter", "dragover"].forEach((eventName) => {
-  dropZone.addEventListener(eventName, (event) => {
-    event.preventDefault();
-    dropZone.classList.add("dragging");
-  });
-});
-
-["dragleave", "drop"].forEach((eventName) => {
-  dropZone.addEventListener(eventName, (event) => {
-    event.preventDefault();
-    dropZone.classList.remove("dragging");
-  });
-});
-
-dropZone.addEventListener("drop", (event) => {
-  const file = event.dataTransfer.files[0];
-  if (!file) return;
-  if (!file.name.toLowerCase().endsWith(".json") && file.type !== "application/json") {
-    showStatus("JSONファイル（.json）を選択してください。", true);
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.addEventListener("load", () => {
-    input.value = reader.result;
-    input.dispatchEvent(new Event("input"));
-    showStatus(`${file.name} を読み込みました。`);
-    run("format");
-  });
-  reader.addEventListener("error", () => showStatus("ファイルを読み込めませんでした。", true));
-  reader.readAsText(file);
-});
+:root { font-family: Inter, "Noto Sans JP", system-ui, sans-serif; color: #172033; background: #f4f7fb; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, select, textarea { font: inherit; }
+.app { width: min(1200px, calc(100% - 32px)); margin: 0 auto; padding: 36px 0 24px; }
+.hero { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 24px; }
+.eyebrow { margin: 0 0 5px; color: #52627c; font-size: 12px; font-weight: 700; letter-spacing: .14em; }
+h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); }
+h1 span { color: #526ee8; }
+.lead { margin: 8px 0 0; color: #667085; }
+.privacy { max-width: 390px; margin: 0; padding: 10px 14px; border-radius: 8px; background: #e9f7ef; color: #28744a; font-size: 13px; }
+.toolbar, .panel { border: 1px solid #dae0ea; background: #fff; box-shadow: 0 5px 20px #24304a0a; }
+.toolbar { padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; gap: 12px; }
+.primary-actions, .secondary-actions { display: flex; align-items: center; gap: 8px; }
+.button, select { min-height: 38px; border: 1px solid #cfd6e1; border-radius: 7px; background: #fff; color: inherit; cursor: pointer; }
+.button { padding: 8px 15px; }
+.button:hover:not(:disabled) { background: #f1f4f9; }
+.button-primary { border-color: #526ee8; background: #526ee8; color: #fff; }
+.button-primary:hover:not(:disabled) { background: #405bd4; }
+.button-subtle { color: #a02c2c; }
+select { padding: 6px 28px 6px 9px; }
+.status { margin: 14px 0 0; padding: 10px 13px; border-radius: 8px; background: #e9f7ef; color: #28744a; }
+.status.error { background: #fff0f0; color: #b42318; }
+.editors { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+.panel { min-width: 0; overflow: hidden; border-radius: 12px; }
+.panel.dragging { border-color: #526ee8; box-shadow: 0 0 0 3px #526ee833; }
+.panel-header { min-height: 52px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e3e7ee; }
+.panel-header div { display: flex; align-items: center; gap: 8px; }
+h2 { margin: 0; font-size: 15px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; }
+.dot-input { background: #526ee8; } .dot-output { background: #33a06f; }
+.copy-button { padding: 6px 11px; border: 1px solid #cfd6e1; border-radius: 6px; background: #fff; cursor: pointer; }
+.copy-button:disabled { opacity: .45; cursor: not-allowed; }
+.drop-hint { padding: 8px 14px 0; color: #7b8494; font-size: 12px; }
+textarea { display: block; width: 100%; height: min(55vh, 520px); min-height: 330px; padding: 14px; resize: vertical; border: 0; outline: 0; color: #20293a; background: #fff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; line-height: 1.55; }
+textarea:focus { box-shadow: inset 0 0 0 2px #526ee8; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+footer { margin-top: 18px; color: #70798a; text-align: center; font-size: 12px; }
+kbd { padding: 2px 5px; border: 1px solid #ccd2dc; border-radius: 4px; background: #fff; }
+@media (max-width: 760px) { .hero, .toolbar { align-items: stretch; flex-direction: column; } .editors { grid-template-columns: 1fr; } .primary-actions, .secondary-actions { flex-wrap: wrap; } }
