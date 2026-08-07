@@ -16,6 +16,7 @@
 | [JSON Structure Viewer](https://maruyamamasaya.github.io/tool/json-structure-viewer/) | JSON の階層、データ型、要素数をツリー表示し、一括で展開・折りたたみできます。 |
 | [JSON Formatter](https://maruyamamasaya.github.io/tool/json-formatter/) | JSON の整形・圧縮・構文チェックと、整形結果のコピーができます。 |
 | [CSV ビューアー](https://maruyamamasaya.github.io/tool/csv-viewer/) | UTF-8 / Shift_JIS の CSV を表で表示し、全列検索や列ごとの並べ替えができます。 |
+| [CSV Statistics](https://maruyamamasaya.github.io/tool/csv-statistics/) | CSVを貼り付けて、行・列・NULL・重複・ユニーク数や数値カラムの統計を確認できます。 |
 | [Whiteboard](https://maruyamamasaya.github.io/tool/drawing/) | ペン、消しゴム、四角、矢印、テキストを使ってブラウザ上で作図できます。Undo / Redo にも対応しています。 |
 | [Timer Board](https://maruyamamasaya.github.io/tool/timer-board/) | 複数のストップウォッチとカウントダウンをまとめて管理できます。設定内容はブラウザに保存されます。 |
 | [Meeting Timer](https://maruyamamasaya.github.io/tool/meeting-timer/) | 会議の開始・終了時刻とターン数から、残り時間と現在のターンを1画面で確認できます。 |
