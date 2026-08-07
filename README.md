@@ -8,3 +8,4 @@
 - [CSVビューアー](https://maruyamamasaya.github.io/tool/csv-viewer/)
 - [Whiteboard](https://maruyamamasaya.github.io/tool/drawing/)
 - [Timer Board](https://maruyamamasaya.github.io/tool/timer-board/)
+- [Text Diff Viewer](https://maruyamamasaya.github.io/tool/diff-viewer/) - 2つのテキストを行・文字単位で比較できます。
