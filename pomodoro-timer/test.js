@@ -1,0 +1,12 @@
+'use strict';
+const assert = require('assert');
+const { dateKey, formatTime, validMinutes } = require('./app.js');
+assert.strictEqual(formatTime(1500), '25:00');
+assert.strictEqual(formatTime(0), '00:00');
+assert.strictEqual(formatTime(-3), '00:00');
+assert.strictEqual(formatTime(61.1), '01:02');
+assert.strictEqual(dateKey(new Date(2026, 0, 2)), '2026-01-02');
+assert.strictEqual(validMinutes('25', 180), true);
+assert.strictEqual(validMinutes('1.5', 180), false);
+assert.strictEqual(validMinutes('181', 180), false);
+console.log('Pomodoro timer tests passed.');
