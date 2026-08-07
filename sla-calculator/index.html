@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SLAの稼働率から、許容される停止時間を日・週・月・年ごとに計算します">
+  <meta name="theme-color" content="#f4f7f6">
+  <title>SLA Calculator</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="page-header">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M5 12.5 9.2 17 19 7"/></svg>
+      </div>
+      <div>
+        <p class="eyebrow">AVAILABILITY TOOL</p>
+        <h1>SLA Calculator</h1>
+        <p class="lead">稼働率から、停止可能時間をすぐに確認。</p>
+      </div>
+    </header>
+
+    <section class="calculator-card">
+      <div class="input-area">
+        <div class="section-heading">
+          <div><span class="step">01</span><h2>目標稼働率</h2></div>
+          <p>契約や目標のSLAを入力してください</p>
+        </div>
+        <div class="rate-row">
+          <label class="rate-input">
+            <span class="sr-only">目標稼働率</span>
+            <input id="availability" type="text" inputmode="decimal" value="99.9" autocomplete="off" aria-describedby="rate-error">
+            <span class="suffix">%</span>
+          </label>
+          <div class="preset-group" aria-label="稼働率プリセット">
+            <button type="button" data-rate="99">99%</button>
+            <button type="button" data-rate="99.9" class="is-active">99.9%</button>
+            <button type="button" data-rate="99.99">99.99%</button>
+            <button type="button" data-rate="99.999">99.999%</button>
+          </div>
+        </div>
+        <p class="error" id="rate-error" role="alert"></p>
+      </div>
+
+      <div class="results-area">
+        <div class="section-heading compact">
+          <div><span class="step">02</span><h2>停止可能時間</h2></div>
+          <span class="live-badge"><i></i> 自動計算</span>
+        </div>
+        <div class="hero-result" aria-live="polite">
+          <div><span class="calendar-icon" aria-hidden="true">□</span><p>1か月（30日）の場合</p></div>
+          <output id="monthly-primary">43分 12秒</output>
+          <p>までの停止が許容されます</p>
+        </div>
+        <div class="result-grid" aria-live="polite">
+          <article><div class="period-icon">D</div><div><span>1日</span><strong id="daily">1分 26秒</strong><small>24時間</small></div></article>
+          <article><div class="period-icon">W</div><div><span>1週間</span><strong id="weekly">10分 5秒</strong><small>7日間</small></div></article>
+          <article><div class="period-icon">M</div><div><span>1か月</span><strong id="monthly">43分 12秒</strong><small>30日間</small></div></article>
+          <article><div class="period-icon">Y</div><div><span>1年間</span><strong id="yearly">8時間 45分 36秒</strong><small>365日間</small></div></article>
+        </div>
+        <div class="formula"><span aria-hidden="true">i</span><p><strong>計算方法</strong>期間 ×（100% − 稼働率）で停止可能時間を算出しています。</p></div>
+      </div>
+    </section>
+    <footer><span>すべての計算はブラウザ内で完結します</span><span>•</span><span>うるう年は含みません</span></footer>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
