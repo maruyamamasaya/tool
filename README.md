@@ -31,6 +31,7 @@
 | [Unix Time Converter](https://maruyamamasaya.github.io/tool/unix-time-converter/) | Unix timestamp（秒・ミリ秒）と日時をテキスト入力で相互変換できます。 |
 | [UUID Generator](https://maruyamamasaya.github.io/tool/uuid-generator/) | UUID v4を1〜100個まとめて生成し、個別または一括でコピーできます。 |
 | [User-Agent Viewer](https://maruyamamasaya.github.io/tool/user-agent-viewer/) | ブラウザ・OS・画面・端末情報を自動取得し、問い合わせ用のテキストとしてコピーできます。 |
+| [Character Encoding Checker](https://maruyamamasaya.github.io/tool/character-encoding-checker/) | テキストの文字種の割合を集計し、置換文字・不可視文字・制御文字などを確認できます。 |
 
 ## 特長
 
