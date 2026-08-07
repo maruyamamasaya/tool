@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="割合・増減率・パーセント計算・逆算がすぐできる無料の計算ツール">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Percentage Calculator</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="page-header">
+      <div class="brand-mark" aria-hidden="true">%</div>
+      <div>
+        <p class="eyebrow">QUICK CALCULATOR</p>
+        <h1>Percentage Calculator</h1>
+        <p class="lead">割合と増減率を、かんたんに。</p>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="計算方法" role="tablist">
+      <button class="tab is-active" id="tab-change" role="tab" aria-selected="true" aria-controls="panel-change" data-mode="change"><span>↗</span> 増減率</button>
+      <button class="tab" id="tab-ratio" role="tab" aria-selected="false" aria-controls="panel-ratio" data-mode="ratio" tabindex="-1"><span>◒</span> 割合</button>
+      <button class="tab" id="tab-percent" role="tab" aria-selected="false" aria-controls="panel-percent" data-mode="percent" tabindex="-1"><span>%</span> ○%計算</button>
+      <button class="tab" id="tab-reverse" role="tab" aria-selected="false" aria-controls="panel-reverse" data-mode="reverse" tabindex="-1"><span>↶</span> 逆算</button>
+    </nav>
+
+    <section class="calculator-card">
+      <div class="panel is-active" id="panel-change" role="tabpanel" aria-labelledby="tab-change" data-mode="change">
+        <div class="panel-heading"><div><p class="step">01</p><h2>増減率を計算</h2></div><p>変更前と変更後の値を入力してください</p></div>
+        <div class="fields">
+          <label><span>変更前</span><input id="change-before" type="text" inputmode="decimal" placeholder="例：1,000" autocomplete="off"><small>基準となる値</small></label>
+          <div class="field-arrow" aria-hidden="true">→</div>
+          <label><span>変更後</span><input id="change-after" type="text" inputmode="decimal" placeholder="例：1,250" autocomplete="off"><small>比較する値</small></label>
+        </div>
+        <div class="result-block" aria-live="polite">
+          <p class="result-label">増減率</p><output class="primary-result" id="change-primary">—</output>
+          <div class="metrics"><div><span>差額</span><strong id="change-diff">—</strong></div><div><span>前年比</span><strong id="change-yoy">—</strong></div><div><span>倍率</span><strong id="change-multiple">—</strong></div></div>
+          <p class="message" id="change-message">2つの値を入力すると結果が表示されます</p>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-ratio" role="tabpanel" aria-labelledby="tab-ratio" data-mode="ratio" hidden>
+        <div class="panel-heading"><div><p class="step">02</p><h2>割合を計算</h2></div><p>全体のうち、一部が占める割合を求めます</p></div>
+        <div class="fields">
+          <label><span>全体</span><input id="ratio-whole" type="text" inputmode="decimal" placeholder="例：1,000" autocomplete="off"><small>100%となる値</small></label>
+          <div class="field-arrow" aria-hidden="true">÷</div>
+          <label><span>一部</span><input id="ratio-part" type="text" inputmode="decimal" placeholder="例：350" autocomplete="off"><small>割合を求める値</small></label>
+        </div>
+        <div class="result-block" aria-live="polite"><p class="result-label">割合</p><output class="primary-result" id="ratio-primary">—</output><p class="result-sentence" id="ratio-sentence">—</p><p class="message" id="ratio-message">2つの値を入力すると結果が表示されます</p></div>
+      </div>
+
+      <div class="panel" id="panel-percent" role="tabpanel" aria-labelledby="tab-percent" data-mode="percent" hidden>
+        <div class="panel-heading"><div><p class="step">03</p><h2>○%を計算</h2></div><p>元の値に対する割合と、増減後の値を求めます</p></div>
+        <div class="fields">
+          <label><span>元の値</span><input id="percent-base" type="text" inputmode="decimal" placeholder="例：10,000" autocomplete="off"><small>計算の基準となる値</small></label>
+          <div class="field-arrow" aria-hidden="true">×</div>
+          <label><span>割合</span><div class="suffix-input"><input id="percent-rate" type="text" inputmode="decimal" placeholder="例：20" autocomplete="off"><span>%</span></div><small>求めたいパーセント</small></label>
+        </div>
+        <div class="result-block" aria-live="polite"><p class="result-label">割合分の値</p><output class="primary-result" id="percent-primary">—</output><div class="metrics two"><div><span id="percent-up-label">増加後</span><strong id="percent-up">—</strong></div><div><span id="percent-down-label">減少後</span><strong id="percent-down">—</strong></div></div><p class="message" id="percent-message">元の値と割合を入力してください</p></div>
+      </div>
+
+      <div class="panel" id="panel-reverse" role="tabpanel" aria-labelledby="tab-reverse" data-mode="reverse" hidden>
+        <div class="panel-heading"><div><p class="step">04</p><h2>元の値を逆算</h2></div><p>増減率と結果から、変更前の値を求めます</p></div>
+        <div class="fields">
+          <label><span>増減率</span><div class="suffix-input"><input id="reverse-rate" type="text" inputmode="decimal" placeholder="例：+20" autocomplete="off"><span>%</span></div><small>マイナスにも対応</small></label>
+          <div class="field-arrow" aria-hidden="true">→</div>
+          <label><span>結果</span><input id="reverse-result" type="text" inputmode="decimal" placeholder="例：12,000" autocomplete="off"><small>増減した後の値</small></label>
+        </div>
+        <div class="result-block" aria-live="polite"><p class="result-label">元の値</p><output class="primary-result" id="reverse-primary">—</output><p class="result-sentence" id="reverse-sentence">—</p><p class="message" id="reverse-message">増減率と結果を入力してください</p></div>
+      </div>
+
+      <div class="actions"><button class="reset-button" id="reset" type="button">↻&nbsp; リセット</button><button class="copy-button" id="copy" type="button" disabled><span id="copy-icon">▣</span>&nbsp; 結果をコピー</button></div>
+    </section>
+    <footer><span>入力したデータは端末内だけで処理されます</span><span class="footer-dot">•</span><span>小数は見やすく自動調整</span></footer>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
