@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="月間カレンダーを見ながら、2つの日付の経過日数や営業日数を数えられるシンプルなカレンダー">
+  <meta name="theme-color" content="#f7f3eb">
+  <title>Calendar — 日付カウンター</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="../" aria-label="Browser Tools トップへ">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+        <span><b>CALENDAR</b><small>日付を、もっとわかりやすく。</small></span>
+      </a>
+      <button id="todayButton" class="today-button" type="button">今日に戻る</button>
+    </header>
+
+    <section class="workspace">
+      <section class="calendar-panel" aria-labelledby="monthLabel">
+        <div class="month-nav">
+          <button id="previousMonth" class="icon-button" type="button" aria-label="前の月">←</button>
+          <div><p id="yearLabel"></p><h1 id="monthLabel"></h1></div>
+          <button id="nextMonth" class="icon-button" type="button" aria-label="次の月">→</button>
+        </div>
+        <div class="weekdays" aria-hidden="true"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
+        <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="月間カレンダー"></div>
+        <div class="legend"><span><i class="range-dot"></i>選択期間</span><span><i class="today-dot"></i>今日</span><span>土日を除いて営業日を計算</span></div>
+      </section>
+
+      <aside class="counter-panel" aria-labelledby="counterTitle">
+        <div class="counter-heading"><p>DATE COUNTER</p><h2 id="counterTitle">日付をカウント</h2><span>開始日と終了日を選んでください</span></div>
+        <div class="date-fields">
+          <label><span>開始日</span><input id="startDate" type="date"></label>
+          <button id="swapDates" class="swap-button" type="button" aria-label="開始日と終了日を入れ替える">⇄</button>
+          <label><span>終了日</span><input id="endDate" type="date"></label>
+        </div>
+        <p id="dateError" class="error" role="alert"></p>
+
+        <div class="primary-result">
+          <span>期間の日数</span>
+          <div><strong id="totalDays">—</strong><b>日</b></div>
+          <small id="rangeCaption">日付を選択すると結果が表示されます</small>
+        </div>
+
+        <div class="stats">
+          <article><span>営業日</span><strong id="businessDays">—</strong><small>月〜金</small></article>
+          <article><span>土日</span><strong id="weekendDays">—</strong><small>期間内</small></article>
+          <article><span>週 + 日</span><strong id="weeksDays">—</strong><small>経過期間</small></article>
+        </div>
+
+        <label class="count-mode"><input id="includeBoth" type="checkbox" checked><span><b>開始日と終了日を含める</b><small>オフにすると2つの日付の差を表示します</small></span></label>
+        <p class="notice">営業日は土・日曜日を除いて算出します。祝日は含まれます。</p>
+      </aside>
+    </section>
+    <footer><span>Browser Tools</span><span>すべての計算はブラウザ内で行われます</span></footer>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
