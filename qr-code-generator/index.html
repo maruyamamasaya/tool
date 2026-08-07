@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="入力したURLからQRコードをブラウザ内で生成し、PNG画像として保存できるツール">
+  <title>QR Code Generator</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <p class="eyebrow">QUICK &amp; PRIVATE</p>
+      <h1>QR Code <span>Generator</span></h1>
+      <p>URLを貼り付けるだけ。ブラウザの中で、すぐにQRコードを作成します。</p>
+    </header>
+
+    <section class="generator" aria-labelledby="generator-title">
+      <div class="form-panel">
+        <div class="step"><span>1</span><div><h2 id="generator-title">URLを入力</h2><p>テキスト入力、またはクリップボードから貼り付け</p></div></div>
+        <label for="urlInput">URL</label>
+        <div class="input-wrap">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10.6 13.4a2 2 0 0 0 2.8 0l3-3a2 2 0 0 0-2.8-2.8l-1.2 1.2M13.4 10.6a2 2 0 0 0-2.8 0l-3 3a2 2 0 0 0 2.8 2.8l1.2-1.2"/></svg>
+          <input id="urlInput" type="url" inputmode="url" autocomplete="url" spellcheck="false" placeholder="https://example.com" aria-describedby="urlHelp urlError">
+          <button id="clearButton" class="clear" type="button" aria-label="入力を消去">×</button>
+        </div>
+        <div class="meta"><p id="urlHelp">最大106バイトまで</p><p><span id="byteCount">0</span> / 106 bytes</p></div>
+        <p id="urlError" class="error" role="alert"></p>
+        <button id="generateButton" class="primary" type="button"><span aria-hidden="true">⌁</span> QRコードを生成</button>
+        <p class="privacy"><span aria-hidden="true">◆</span> 入力内容は外部に送信されません</p>
+      </div>
+
+      <div class="result-panel">
+        <div class="step"><span>2</span><div><h2>QRコード</h2><p id="resultHint">URLを入力して生成してください</p></div></div>
+        <div id="qrFrame" class="qr-frame" aria-live="polite">
+          <div id="placeholder" class="placeholder" aria-hidden="true"><div class="mini-qr">▦</div><p>QRコードがここに表示されます</p></div>
+          <div id="qrCode" class="qr-code" hidden></div>
+        </div>
+        <button id="downloadButton" class="secondary" type="button" disabled><span aria-hidden="true">↓</span> PNGで保存</button>
+      </div>
+    </section>
+
+    <section class="howto" aria-labelledby="howto-title"><p class="eyebrow">HOW TO USE</p><h2 id="howto-title">使い方</h2><div class="tips"><article><b>01</b><h3>URLを貼り付け</h3><p>共有したいWebページのURLを入力欄に貼り付けます。</p></article><article><b>02</b><h3>ボタンを押す</h3><p>「QRコードを生成」を押すと、その場ですぐ作成されます。</p></article><article><b>03</b><h3>画像を保存</h3><p>PNGで保存して、資料や印刷物などに利用できます。</p></article></div></section>
+  </main>
+  <footer>QR Code Generator · All processing stays in your browser</footer>
+  <script src="./qr.js"></script>
+  <script src="./app.js" defer></script>
+</body>
+</html>
