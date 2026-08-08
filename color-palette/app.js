@@ -15,6 +15,16 @@
     ["白・黒・定番",["#FFFFFF","#F8F9FA","#ECEFF1","#CFD8DC","#90A4AE","#607D8B","#455A64","#263238","#000000","#FF5733"]]
   ];
   const colors = paletteGroups.flatMap(([, values]) => values);
+  const gradientPresets = [
+    { name: "Social Sunset", colors: ["#833AB4", "#FD1D1D"], direction: "135deg" },
+    { name: "Peach Glow", colors: ["#FF9966", "#FF5E62"], direction: "135deg" },
+    { name: "Digital Lavender", colors: ["#7F7FD5", "#91EAE4"], direction: "135deg" },
+    { name: "Neo Matcha", colors: ["#DCE35B", "#45B649"], direction: "135deg" },
+    { name: "Dreamy Blue", colors: ["#A1C4FD", "#C2E9FB"], direction: "135deg" },
+    { name: "Berry Pop", colors: ["#FC466B", "#3F5EFB"], direction: "45deg" },
+    { name: "Soft Sorbet", colors: ["#FBC2EB", "#A6C1EE"], direction: "135deg" },
+    { name: "Midnight Reel", colors: ["#232526", "#6A3093"], direction: "135deg" }
+  ];
 
   function normalizeHex(value) {
     const raw = String(value).trim().replace(/^#/, "");
@@ -28,7 +38,14 @@
     return [1, 3, 5].map(index => parseInt(normalized.slice(index, index + 2), 16));
   }
 
-  if (typeof module !== "undefined") module.exports = { paletteGroups, colors, normalizeHex, hexToRgb };
+  function makeGradient(color1, color2, direction = "135deg") {
+    const first = normalizeHex(color1);
+    const second = normalizeHex(color2);
+    if (!first || !second || !/^(45|90|135|180)deg$/.test(direction)) return null;
+    return `linear-gradient(${direction}, ${first}, ${second})`;
+  }
+
+  if (typeof module !== "undefined") module.exports = { paletteGroups, colors, gradientPresets, normalizeHex, hexToRgb, makeGradient };
   if (typeof document === "undefined") return;
 
   const input = document.querySelector("#colorInput");
@@ -38,6 +55,12 @@
   const error = document.querySelector("#inputError");
   const palette = document.querySelector("#palette");
   const toast = document.querySelector("#toast");
+  const gradientPreview = document.querySelector("#gradientPreview");
+  const gradientCss = document.querySelector("#gradientCss");
+  const gradientDirection = document.querySelector("#gradientDirection");
+  const gradientInputs = [1, 2].map(number => ({ color: document.querySelector(`#gradientColor${number}`), hex: document.querySelector(`#gradientHex${number}`) }));
+  const notes = document.querySelector("#colorNotes");
+  const saveStatus = document.querySelector("#saveStatus");
   let selectedHex = "#4CAF50";
   let toastTimer;
 
@@ -84,6 +107,41 @@
     }));
   }
 
+  function updateGradient() {
+    const css = makeGradient(gradientInputs[0].hex.value, gradientInputs[1].hex.value, gradientDirection.value);
+    if (!css) return false;
+    gradientInputs.forEach(field => {
+      const value = normalizeHex(field.hex.value);
+      field.hex.value = value;
+      field.color.value = value;
+    });
+    gradientPreview.style.background = css;
+    gradientCss.textContent = css;
+    return true;
+  }
+
+  function applyPreset(preset) {
+    gradientInputs.forEach((field, index) => { field.hex.value = preset.colors[index]; });
+    gradientDirection.value = preset.direction;
+    updateGradient();
+    gradientPreview.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function renderGradientPresets() {
+    const container = document.querySelector("#gradientRecommendations");
+    container.replaceChildren(...gradientPresets.map(preset => {
+      const button = document.createElement("button");
+      const css = makeGradient(...preset.colors, preset.direction);
+      button.type = "button";
+      button.className = "gradient-preset";
+      button.style.background = css;
+      button.setAttribute("aria-label", `${preset.name}を適用`);
+      button.innerHTML = `<strong>${preset.name}</strong><span>${preset.colors.join(" · ")}</span>`;
+      button.addEventListener("click", () => applyPreset(preset));
+      return button;
+    }));
+  }
+
   function showToast(message = "コピーしました") {
     toast.textContent = message;
     toast.classList.add("show");
@@ -104,7 +162,19 @@
     if (!selectColor(input.value, false)) error.textContent = "3桁または6桁のHEXコードを入力してください";
   });
   input.addEventListener("blur", () => { if (normalizeHex(input.value)) input.value = selectedHex.slice(1); });
-  document.querySelectorAll(".copy-button").forEach(button => button.addEventListener("click", () => copyText(button.dataset.copy === "hex" ? hexValue.textContent : rgbValue.textContent)));
+  document.querySelectorAll(".copy-button[data-copy]").forEach(button => button.addEventListener("click", () => copyText(button.dataset.copy === "hex" ? hexValue.textContent : rgbValue.textContent)));
+  gradientInputs.forEach(field => {
+    field.color.addEventListener("input", () => { field.hex.value = field.color.value.toUpperCase(); updateGradient(); });
+    field.hex.addEventListener("change", () => { if (!updateGradient()) showToast("HEXコードを確認してください"); });
+  });
+  gradientDirection.addEventListener("change", updateGradient);
+  document.querySelector("#copyGradient").addEventListener("click", () => copyText(gradientCss.textContent));
+  try { notes.value = localStorage.getItem("colorPaletteNotes") || ""; } catch (_) { saveStatus.textContent = "この環境では保存できません"; }
+  notes.addEventListener("input", () => {
+    try { localStorage.setItem("colorPaletteNotes", notes.value); saveStatus.textContent = "保存しました"; setTimeout(() => { saveStatus.textContent = "自動保存"; }, 1200); }
+    catch (_) { saveStatus.textContent = "保存できませんでした"; }
+  });
   renderPalette();
+  renderGradientPresets();
   selectColor(selectedHex);
 })();
