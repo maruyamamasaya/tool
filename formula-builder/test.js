@@ -1,0 +1,14 @@
+const assert = require("node:assert/strict");
+const { FUNCTIONS, formulaFromValues } = require("./app.js");
+assert.equal(FUNCTIONS.length, 37);
+assert.deepEqual([...new Set(FUNCTIONS.map((fn) => fn.category))].sort(), ["データ整理","文字列","数値","日付","条件","条件付き集計","検索・参照","集計"].sort());
+const sum = FUNCTIONS.find((fn) => fn.name === "SUM");
+assert.equal(formulaFromValues(sum, { range: "A1:A10" }), "=SUM(A1:A10)");
+const ifFn = FUNCTIONS.find((fn) => fn.name === "IF");
+assert.equal(formulaFromValues(ifFn, { cell:"A1", operator:">=", compare:"100", trueValue:'"OK"', falseValue:'"NG"' }), '=IF(A1>=100,"OK","NG")');
+const sumif = FUNCTIONS.find((fn) => fn.name === "SUMIF");
+assert.equal(formulaFromValues(sumif, { criteriaRange:"A2:A100", criteria:'"東京"', sumRange:"B2:B100" }), '=SUMIF(A2:A100,"東京",B2:B100)');
+const xlookup = FUNCTIONS.find((fn) => fn.name === "XLOOKUP");
+assert.equal(formulaFromValues(xlookup, { lookup:"A2", lookupRange:"D2:D100", returnRange:"E2:E100", notFound:'""' }), '=XLOOKUP(A2,D2:D100,E2:E100,"")');
+for (const fn of FUNCTIONS) assert.ok(fn.name && fn.description && fn.syntax && fn.example && Array.isArray(fn.keywords));
+console.log(`Formula Builder: ${FUNCTIONS.length} functions and formula generation checks passed.`);
