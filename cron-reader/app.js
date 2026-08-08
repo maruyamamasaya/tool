@@ -85,7 +85,20 @@
     return `${schedule}の ${detail}に実行`;
   }
 
-  if (typeof module !== 'undefined' && module.exports) module.exports = { parseCron, describeCron };
+  function buildCron(frequency, options = {}) {
+    const hour = Number.isInteger(Number(options.hour)) ? Number(options.hour) : 9;
+    const minute = Number.isInteger(Number(options.minute)) ? Number(options.minute) : 30;
+    const day = Number.isInteger(Number(options.day)) ? Number(options.day) : 1;
+    const weekday = Number.isInteger(Number(options.weekday)) ? Number(options.weekday) : 1;
+    if (frequency === 'minute') return '* * * * *';
+    if (frequency === 'hour') return `${minute} * * * *`;
+    if (frequency === 'day') return `${minute} ${hour} * * *`;
+    if (frequency === 'week') return `${minute} ${hour} * * ${weekday}`;
+    if (frequency === 'month') return `${minute} ${hour} ${day} * *`;
+    throw new Error('実行間隔を選択してください');
+  }
+
+  if (typeof module !== 'undefined' && module.exports) module.exports = { parseCron, describeCron, buildCron };
   if (typeof document === 'undefined') return;
 
   const input = document.querySelector('#cronInput'); const wrap = document.querySelector('#inputWrap');
@@ -94,6 +107,48 @@
   const guideIds = ['guideMinute','guideHour','guideDay','guideMonth','guideWeekday'];
   const detailIds = ['detailMinute','detailHour','detailDay','detailMonth','detailWeekday'];
   let currentFields = [];
+
+  const builderCron = document.querySelector('#builderCron');
+  const builderDescription = document.querySelector('#builderDescription');
+  const hourSelect = document.querySelector('#hourSelect');
+  const minuteSelect = document.querySelector('#minuteSelect');
+  const hourlyMinuteSelect = document.querySelector('#hourlyMinuteSelect');
+  const daySelect = document.querySelector('#daySelect');
+  const weekdaySelect = document.querySelector('#weekdaySelect');
+
+  function addNumberOptions(select, start, end, selected, pad = true) {
+    for (let value = start; value <= end; value += 1) {
+      const option = document.createElement('option');
+      option.value = String(value); option.textContent = pad ? String(value).padStart(2, '0') : String(value);
+      option.selected = value === selected; select.append(option);
+    }
+  }
+  addNumberOptions(hourSelect, 0, 23, 9);
+  addNumberOptions(minuteSelect, 0, 59, 30);
+  addNumberOptions(hourlyMinuteSelect, 0, 59, 0);
+  addNumberOptions(daySelect, 1, 31, 1, false);
+
+  function renderBuilder() {
+    const frequency = document.querySelector('input[name="frequency"]:checked').value;
+    const optionValues = { hour: hourSelect.value, minute: frequency === 'hour' ? hourlyMinuteSelect.value : minuteSelect.value, day: daySelect.value, weekday: weekdaySelect.value };
+    const cron = buildCron(frequency, optionValues);
+    builderCron.textContent = cron;
+    builderDescription.textContent = describeCron(parseCron(cron));
+    document.querySelector('#timeOption').classList.toggle('visible', ['day', 'week', 'month'].includes(frequency));
+    document.querySelector('#minuteOption').classList.toggle('visible', frequency === 'hour');
+    document.querySelector('#weekdayOption').classList.toggle('visible', frequency === 'week');
+    document.querySelector('#dayOption').classList.toggle('visible', frequency === 'month');
+  }
+
+  function switchMode(mode) {
+    const builderActive = mode === 'builder';
+    document.querySelector('#builderPanel').hidden = !builderActive;
+    document.querySelector('#readerPanel').hidden = builderActive;
+    document.querySelector('#builderTab').classList.toggle('active', builderActive);
+    document.querySelector('#readerTab').classList.toggle('active', !builderActive);
+    document.querySelector('#builderTab').setAttribute('aria-selected', String(builderActive));
+    document.querySelector('#readerTab').setAttribute('aria-selected', String(!builderActive));
+  }
 
   function render() {
     try {
@@ -115,5 +170,10 @@
   document.querySelector('#clearButton').addEventListener('click', () => { input.value=''; render(); input.focus(); });
   document.querySelector('#copyCronButton').addEventListener('click', event => copyText(input.value.trim(), event.currentTarget));
   copyDescription.addEventListener('click', event => copyText(description.textContent, event.currentTarget));
+  document.querySelectorAll('input[name="frequency"], #builderOptions select').forEach(control => control.addEventListener('change', renderBuilder));
+  document.querySelector('#copyBuilderCron').addEventListener('click', event => copyText(builderCron.textContent, event.currentTarget));
+  document.querySelector('#builderTab').addEventListener('click', () => switchMode('builder'));
+  document.querySelector('#readerTab').addEventListener('click', () => switchMode('reader'));
+  renderBuilder();
   render();
 })();

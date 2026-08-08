@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="5フィールドのCron式を、読みやすい日本語へリアルタイムに変換するCron Reader">
-  <title>Cron Reader — Cron式を日本語で確認</title>
+  <meta name="description" content="かんたんな選択からCron式を作成し、Cron式を読みやすい日本語へ変換できるCron Builder & Reader">
+  <title>Cron Builder & Reader — Cron式をかんたん作成・日本語変換</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
@@ -12,69 +12,54 @@
     <header class="header">
       <div class="brand-mark" aria-hidden="true">⌁</div>
       <div>
-        <p class="eyebrow">SIMPLE CRON TRANSLATOR</p>
-        <h1>Cron Reader</h1>
-        <p class="intro">Cron式を貼り付けるだけ。実行タイミングを日本語で確認できます。</p>
+        <p class="eyebrow">SIMPLE CRON TOOL</p>
+        <h1>Cron Builder <span>&amp; Reader</span></h1>
+        <p class="intro">選んで作る、貼り付けて読む。Cronを知らなくても使えます。</p>
       </div>
       <span class="local-badge"><i aria-hidden="true"></i> ブラウザ内で処理</span>
     </header>
 
-    <section class="workspace" aria-labelledby="input-title">
-      <div class="input-heading">
-        <div><span class="step">01</span><h2 id="input-title">Cron式</h2></div>
-        <button id="clearButton" class="text-button" type="button">クリア</button>
+    <nav class="mode-tabs" aria-label="機能を選択">
+      <button id="builderTab" class="mode-tab active" type="button" aria-selected="true" aria-controls="builderPanel"><span aria-hidden="true">＋</span><b>Cronを作る</b><small>Builder</small></button>
+      <button id="readerTab" class="mode-tab" type="button" aria-selected="false" aria-controls="readerPanel"><span aria-hidden="true">→</span><b>Cronを読む</b><small>Reader</small></button>
+    </nav>
+
+    <section id="builderPanel" class="workspace" aria-labelledby="builder-title">
+      <div class="section-heading"><span class="step">01</span><div><p>スケジュールを選択</p><h2 id="builder-title">実行間隔</h2></div></div>
+      <fieldset class="frequency-list">
+        <legend class="sr-only">実行間隔</legend>
+        <label><input type="radio" name="frequency" value="minute"><span><i></i>毎分<small>Every minute</small></span></label>
+        <label><input type="radio" name="frequency" value="hour"><span><i></i>毎時<small>Every hour</small></span></label>
+        <label><input type="radio" name="frequency" value="day" checked><span><i></i>毎日<small>Every day</small></span></label>
+        <label><input type="radio" name="frequency" value="week"><span><i></i>毎週<small>Every week</small></span></label>
+        <label><input type="radio" name="frequency" value="month"><span><i></i>毎月<small>Every month</small></span></label>
+      </fieldset>
+
+      <div id="builderOptions" class="builder-options">
+        <div id="dayOption" class="option-group"><label for="daySelect">日付</label><div class="select-wrap"><select id="daySelect" aria-label="実行する日"></select></div><span>日</span></div>
+        <div id="weekdayOption" class="option-group"><label for="weekdaySelect">曜日</label><div class="select-wrap"><select id="weekdaySelect" aria-label="実行する曜日"><option value="0">日曜日</option><option value="1" selected>月曜日</option><option value="2">火曜日</option><option value="3">水曜日</option><option value="4">木曜日</option><option value="5">金曜日</option><option value="6">土曜日</option></select></div></div>
+        <div id="timeOption" class="option-group time-group"><label>時刻</label><div class="time-fields"><div class="select-wrap"><select id="hourSelect" aria-label="時"></select></div><b>:</b><div class="select-wrap"><select id="minuteSelect" aria-label="分"></select></div></div></div>
+        <div id="minuteOption" class="option-group"><label for="hourlyMinuteSelect">毎時の実行分</label><div class="time-fields"><div class="select-wrap"><select id="hourlyMinuteSelect" aria-label="毎時の実行分"></select></div><span>分</span></div></div>
       </div>
-      <div id="inputWrap" class="input-wrap">
-        <span class="prompt" aria-hidden="true">›</span>
-        <input id="cronInput" type="text" value="0 9 * * 1-5" aria-label="Cron式" aria-describedby="fieldOrder errorMessage" spellcheck="false" autocomplete="off" inputmode="text">
-        <button id="copyCronButton" class="icon-button" type="button" aria-label="Cron式をコピー" title="Cron式をコピー">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>
-        </button>
-      </div>
-      <div id="fieldOrder" class="field-order" aria-label="Cron式のフィールド順">
-        <div><span>分</span><i></i><code id="guideMinute">0</code></div>
-        <div><span>時</span><i></i><code id="guideHour">9</code></div>
-        <div><span>日</span><i></i><code id="guideDay">*</code></div>
-        <div><span>月</span><i></i><code id="guideMonth">*</code></div>
-        <div><span>曜日</span><i></i><code id="guideWeekday">1-5</code></div>
-      </div>
-      <div id="errorMessage" class="error" role="alert" hidden></div>
 
       <div class="divider"><span aria-hidden="true">↓</span></div>
-
-      <section class="result" aria-labelledby="result-title">
-        <div class="result-label"><span class="step result-step">02</span><h2 id="result-title">読み取り結果</h2></div>
-        <div class="result-row">
-          <output id="description" aria-live="polite">平日の毎日 9:00 に実行</output>
-          <button id="copyDescriptionButton" class="copy-button" type="button">説明をコピー</button>
-        </div>
+      <section class="result" aria-labelledby="builder-result-title">
+        <div class="result-label"><span class="step result-step">02</span><div><p>生成結果</p><h2 id="builder-result-title">Cron式</h2></div></div>
+        <div class="cron-output-row"><output id="builderCron">30 9 * * *</output><button id="copyBuilderCron" class="icon-button" type="button" aria-label="生成したCron式をコピー" title="コピー"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg></button></div>
+        <p id="builderDescription" class="builder-description" aria-live="polite">毎日 9:30 に実行</p>
       </section>
     </section>
 
-    <div class="lower-grid">
-      <section class="card" aria-labelledby="detail-title">
-        <div class="card-title"><span class="card-icon">≡</span><div><p>BREAKDOWN</p><h2 id="detail-title">式の内訳</h2></div></div>
-        <dl id="breakdown">
-          <div><dt>分 <small>minute</small></dt><dd id="detailMinute">0</dd></div>
-          <div><dt>時 <small>hour</small></dt><dd id="detailHour">9</dd></div>
-          <div><dt>日 <small>day</small></dt><dd id="detailDay">*</dd></div>
-          <div><dt>月 <small>month</small></dt><dd id="detailMonth">*</dd></div>
-          <div><dt>曜日 <small>weekday</small></dt><dd id="detailWeekday">1-5</dd></div>
-        </dl>
-      </section>
+    <section id="readerPanel" class="workspace" aria-labelledby="input-title" hidden>
+      <div class="input-heading"><div><span class="step">01</span><div><p>Cron式を入力</p><h2 id="input-title">Cron式</h2></div></div><button id="clearButton" class="text-button" type="button">クリア</button></div>
+      <div id="inputWrap" class="input-wrap"><span class="prompt" aria-hidden="true">›</span><input id="cronInput" type="text" value="0 9 * * 1-5" aria-label="Cron式" aria-describedby="fieldOrder errorMessage" spellcheck="false" autocomplete="off"><button id="copyCronButton" class="icon-button" type="button" aria-label="Cron式をコピー" title="Cron式をコピー"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0 2 2v8a2 2 0 0 0 2 2h2"></path></svg></button></div>
+      <div id="fieldOrder" class="field-order" aria-label="Cron式のフィールド順"><div><span>分</span><i></i><code id="guideMinute">0</code></div><div><span>時</span><i></i><code id="guideHour">9</code></div><div><span>日</span><i></i><code id="guideDay">*</code></div><div><span>月</span><i></i><code id="guideMonth">*</code></div><div><span>曜日</span><i></i><code id="guideWeekday">1-5</code></div></div>
+      <div id="errorMessage" class="error" role="alert" hidden></div>
+      <div class="divider"><span aria-hidden="true">↓</span></div>
+      <section class="result" aria-labelledby="result-title"><div class="result-label"><span class="step result-step">02</span><div><p>日本語に変換</p><h2 id="result-title">読み取り結果</h2></div></div><div class="result-row"><output id="description" aria-live="polite">平日の毎日 9:00 に実行</output><button id="copyDescriptionButton" class="copy-button" type="button">説明をコピー</button></div></section>
+    </section>
 
-      <aside class="card syntax-card" aria-labelledby="syntax-title">
-        <div class="card-title"><span class="card-icon">?</span><div><p>QUICK GUIDE</p><h2 id="syntax-title">記号の読み方</h2></div></div>
-        <dl class="syntax-list">
-          <div><dt><code>*</code></dt><dd>すべて</dd></div>
-          <div><dt><code>*/5</code></dt><dd>5ごと</dd></div>
-          <div><dt><code>1-5</code></dt><dd>1〜5</dd></div>
-          <div><dt><code>1,3,5</code></dt><dd>1・3・5</dd></div>
-        </dl>
-        <p class="scope-note">標準的な5フィールド形式に対応<br><code>分　時　日　月　曜日</code></p>
-      </aside>
-    </div>
-
+    <aside class="quick-guide" aria-labelledby="syntax-title"><div><p>CRON QUICK GUIDE</p><h2 id="syntax-title">5つの値で実行タイミングを表します</h2></div><div class="guide-expression"><code>30</code><code>9</code><code>*</code><code>*</code><code>*</code><span>分</span><span>時</span><span>日</span><span>月</span><span>曜日</span></div><dl><div><dt><code>*</code></dt><dd>すべて</dd></div><div><dt><code>*/5</code></dt><dd>5ごと</dd></div><div><dt><code>1-5</code></dt><dd>1〜5</dd></div><div><dt><code>1,3,5</code></dt><dd>指定した値</dd></div></dl></aside>
     <footer><span>入力内容は外部へ送信されません</span><span>Linux / Unix standard cron</span></footer>
   </main>
   <script src="./app.js" defer></script>
