@@ -3,32 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="開始日と終了日から、日本の祝日を除いた営業日数と期間の内訳を確認できます">
-  <meta name="theme-color" content="#f5f6f4">
-  <title>営業日カウンター — 期間の日数を確認</title>
+  <meta name="description" content="カレンダーで期間を選び、日本の祝日や独自の休日を除いた営業日数を確認できます">
+  <meta name="theme-color" content="#f3f4f5">
+  <title>営業日カウンター — カレンダーで期間を確認</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   <main class="app-shell">
     <header class="topbar">
-      <a class="brand" href="../" aria-label="Browser Tools トップへ">
-        <span class="brand-icon" aria-hidden="true"></span>
-        <span><b>Business Days</b><small>営業日をすばやく確認</small></span>
-      </a>
+      <a class="brand" href="../" aria-label="Browser Tools トップへ"><span class="brand-icon" aria-hidden="true"></span><span><b>Business Days</b><small>営業日をすばやく確認</small></span></a>
+      <button id="todayButton" class="subtle-button" type="button">今日</button>
     </header>
 
-    <section class="hero" aria-labelledby="pageTitle">
-      <p class="eyebrow">DATE RANGE CHECKER</p>
-      <h1 id="pageTitle">この期間、営業日は何日？</h1>
-      <p>開始日と終了日を含めて、日本の土日・祝日を数えます。</p>
-    </section>
-
     <div class="workspace">
-      <section class="input-card" aria-labelledby="inputTitle">
-        <div class="section-heading"><span>01</span><div><p>期間を指定</p><h2 id="inputTitle">日付を選択</h2></div></div>
+      <section class="calendar-card" aria-labelledby="monthLabel">
+        <div class="month-nav">
+          <button id="previousMonth" class="nav-button" type="button" aria-label="前の月">‹</button>
+          <div><p id="yearLabel"></p><h1 id="monthLabel"></h1></div>
+          <button id="nextMonth" class="nav-button" type="button" aria-label="次の月">›</button>
+        </div>
+        <div class="weekdays" aria-hidden="true"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
+        <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="営業日を調べる期間を選択"></div>
+        <div class="legend"><span><i class="weekday-key"></i>営業日</span><span><i class="saturday-key"></i>土曜</span><span><i class="holiday-key"></i>日曜・祝日</span><span><i class="selected-key"></i>選択期間</span></div>
+      </section>
+
+      <aside class="control-card" aria-labelledby="controlTitle">
+        <div class="panel-heading"><p>期間を選択</p><h2 id="controlTitle">営業日を数える</h2></div>
+        <p id="selectionHelp" class="help">カレンダーで開始日を選んでください。</p>
         <div class="date-fields">
           <label><span>開始日</span><input id="startDate" type="date"></label>
-          <span class="range-arrow" aria-hidden="true">→</span>
+          <span aria-hidden="true">〜</span>
           <label><span>終了日</span><input id="endDate" type="date"></label>
         </div>
         <div class="quick-actions" aria-label="期間のかんたん指定">
@@ -37,31 +41,38 @@
           <button id="thisMonth" type="button">今月</button>
         </div>
         <p id="dateError" class="error" role="alert"></p>
-        <p class="note"><span aria-hidden="true">i</span> 営業日は月〜金から日本の祝日を除いて算出します。</p>
-      </section>
 
-      <section class="result-card" aria-labelledby="resultTitle">
-        <div class="section-heading light"><span>02</span><div><p>集計結果</p><h2 id="resultTitle">期間の内訳</h2></div></div>
-        <div class="main-result"><span>営業日</span><strong id="businessDays">—</strong><small>日</small></div>
-        <div class="stats">
-          <div><span>期間</span><strong id="totalDays">—</strong><small>日間</small></div>
-          <div><span>土日</span><strong id="weekendDays">—</strong><small>日</small></div>
-          <div><span>祝日</span><strong id="holidayDays">—</strong><small>日</small></div>
-        </div>
-        <p class="count-note">※ 開始日・終了日の両方を含む日数です</p>
-      </section>
+        <section class="result-section" aria-labelledby="resultTitle">
+          <div class="section-title"><h3 id="resultTitle">期間の内訳</h3><span>両端の日を含む</span></div>
+          <div class="main-result"><span>営業日</span><strong id="businessDays">—</strong><small>日</small></div>
+          <div class="stats">
+            <div><span>期間</span><strong id="totalDays">—</strong><small>日</small></div>
+            <div><span>土日</span><strong id="weekendDays">—</strong><small>日</small></div>
+            <div><span>祝日</span><strong id="holidayDays">—</strong><small>日</small></div>
+          </div>
+        </section>
+
+        <section class="output-section" aria-labelledby="outputTitle">
+          <div class="section-title"><h3 id="outputTitle">期間テキスト</h3></div>
+          <textarea id="outputText" rows="3" readonly placeholder="期間を選択すると、ここに表示されます"></textarea>
+          <button id="copyButton" class="primary-button" type="button" disabled>テキストをコピー</button>
+          <p id="copyStatus" class="status" role="status" aria-live="polite"></p>
+        </section>
+
+        <details class="holiday-settings">
+          <summary>独自の祝日を追加</summary>
+          <p>会社休日などを追加すると、祝日として営業日計算に反映します（このページを開いている間のみ）。</p>
+          <div class="holiday-form">
+            <label><span>日付</span><input id="customHolidayDate" type="date"></label>
+            <label><span>祝日名</span><input id="customHolidayName" type="text" maxlength="30" placeholder="例：会社休日"></label>
+            <button id="addHoliday" class="subtle-button" type="button">追加</button>
+          </div>
+          <p id="holidayError" class="error" role="alert"></p>
+          <ul id="customHolidayList" class="holiday-list"></ul>
+        </details>
+      </aside>
     </div>
-
-    <section class="output-card" aria-labelledby="outputTitle">
-      <div><p class="eyebrow">COPY TEXT</p><h2 id="outputTitle">期間テキスト</h2><p>選択した期間だけをシンプルな形式で出力します。</p></div>
-      <div class="output-area">
-        <textarea id="outputText" rows="3" readonly aria-label="期間テキスト" placeholder="日付を選択してください"></textarea>
-        <button id="copyButton" type="button" disabled>コピー</button>
-        <p id="copyStatus" role="status" aria-live="polite"></p>
-      </div>
-    </section>
-
-    <footer><span>Browser Tools</span><span>時刻は計算に含みません</span></footer>
+    <footer><span>Browser Tools</span><span>土日・祝日を除いて算出</span></footer>
   </main>
   <script src="./app.js" defer></script>
 </body>
