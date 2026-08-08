@@ -9,6 +9,7 @@
 
 | ツール | できること |
 | --- | --- |
+| [ビンゴシミュレーター](https://maruyamamasaya.github.io/tool/bingo-simulator/) | 最大16人のランダムなカードで、75球ビンゴの抽選と進行をシミュレーションできます。 |
 | [くじ・抽選シミュレーター](https://maruyamamasaya.github.io/tool/lottery-simulator/) | 均等なくじ・確率付きガチャを抽選し、履歴・当選率・理論値との差を確認できます。 |
 | [Linux Command Explorer](https://maruyamamasaya.github.io/tool/linux-command-explorer/) | 18カテゴリ・162のLinuxコマンドを検索し、オプションや使用例の確認・コピー、お気に入り登録ができます。 |
 | [Simple Calculator](https://maruyamamasaya.github.io/tool/simple-calculator/) | 四則演算と括弧を使った式を直接入力し、計算結果と直近の履歴を確認できます。 |
