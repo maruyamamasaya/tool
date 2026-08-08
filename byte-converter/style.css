@@ -16,13 +16,22 @@ h1 { margin: 0; font-size: clamp(24px, 5vw, 30px); letter-spacing: -.04em; }
 header p { margin: 4px 0 0; color: #777772; font-size: 13px; }
 
 .input-card { padding: 22px; border: 1px solid #deded9; border-radius: 16px; background: white; box-shadow: 0 8px 30px #24241e0a; }
-.input-card label { display: block; margin-bottom: 10px; color: #686864; font-size: 12px; font-weight: 700; }
+.input-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.input-card #input-title { color: #686864; font-size: 12px; font-weight: 700; }
+.mode-switch { display: flex; margin: 0; padding: 3px; border: 0; border-radius: 9px; background: #f0f0ec; }
+.mode-switch label { position: relative; cursor: pointer; }
+.mode-switch input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.mode-switch span { display: block; padding: 6px 9px; border-radius: 7px; color: #7b7b76; font-size: 11px; font-weight: 700; }
+.mode-switch input:checked + span { background: white; color: #20201e; box-shadow: 0 1px 4px #24241e18; }
+.mode-switch input:focus-visible + span { outline: 2px solid #555550; outline-offset: 2px; }
 .input-row { display: grid; grid-template-columns: 1fr 110px; gap: 10px; }
+.input-row:has(select[hidden]) { grid-template-columns: 1fr; }
 input, select { height: 56px; border: 1px solid #d5d5cf; border-radius: 10px; outline: none; background: #fafaf8; }
 input { width: 100%; min-width: 0; padding: 0 16px; color: #20201e; font-size: 22px; font-variant-numeric: tabular-nums; }
 select { padding: 0 14px; color: #20201e; font-weight: 700; cursor: pointer; }
 input:focus, select:focus { border-color: #555550; box-shadow: 0 0 0 3px #20201e12; }
-.error { min-height: 18px; margin: 8px 0 -6px; color: #b53c32; font-size: 12px; }
+.input-hint { margin: 9px 2px 0; color: #8b8b86; font-size: 11px; }
+.error { min-height: 18px; margin: 4px 2px -6px; color: #b53c32; font-size: 12px; }
 
 .results { margin-top: 30px; }
 .section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
@@ -42,6 +51,7 @@ h2 { margin: 0; font-size: 15px; }
   .converter { width: min(100% - 24px, 680px); padding-top: 32px; }
   header { margin-bottom: 28px; }
   .input-card { padding: 16px; }
+  .input-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
   .input-row { grid-template-columns: 1fr 90px; }
   .section-title { align-items: flex-start; flex-direction: column; gap: 5px; }
   .result-row { grid-template-columns: 52px minmax(0, 1fr) auto; gap: 8px; padding-left: 14px; }
