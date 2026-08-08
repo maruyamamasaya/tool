@@ -37,7 +37,8 @@
           <span id="digitsControl" class="digits-control" hidden>
             <span class="digits-caption">桁数</span>
             <span class="number-wrap"><input id="digits" type="number" min="1" max="32" value="16" inputmode="numeric" aria-describedby="digitsHelp"><span>桁</span></span>
-            <small id="digitsHelp">1〜32桁</small>
+            <span class="zero-start"><input id="zeroStart" type="checkbox"><span>0から開始する</span></span>
+            <small id="digitsHelp">1〜32桁（例：3桁なら100〜999）</small>
           </span>
         </label>
         <label>生成する数
