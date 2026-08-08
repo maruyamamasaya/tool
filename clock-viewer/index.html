@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080a0f">
+  <meta name="description" content="現在時刻と予定までの残り時間を大きく表示するシンプルな時計">
+  <title>Clock Viewer</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main id="app" class="app" data-mode="clock" data-layout="auto">
+    <button id="displayTap" class="display" type="button" aria-label="Clock / Countdownモードを切り替え">
+      <section class="clock-block" aria-label="現在時刻">
+        <div class="time-line"><span id="clock">--:--</span><span id="seconds" class="seconds">:--</span></div>
+        <p class="clock-caption">CURRENT TIME</p>
+      </section>
+
+      <section id="countdownBlock" class="countdown-block" aria-live="polite">
+        <p id="targetLabel" class="target-label">目標時刻を設定</p>
+        <p id="remaining" class="remaining">あと--分</p>
+        <p id="remainingDetail" class="remaining-detail"></p>
+      </section>
+
+      <p id="calendar" class="calendar"><span id="date">----/--/--</span><span id="weekday">---曜日</span></p>
+    </button>
+
+    <div id="quickDock" class="quick-dock controls-visible" aria-label="クイック操作">
+      <div class="orientation-mini" role="group" aria-label="画面レイアウト">
+        <button type="button" data-layout="portrait">縦</button><button type="button" data-layout="auto">自動</button><button type="button" data-layout="landscape">横</button>
+      </div>
+      <button id="fullscreenQuick" type="button" aria-label="フルスクリーン">⛶</button>
+      <button id="settingsButton" class="settings-button" type="button" aria-label="設定を開く" aria-expanded="false">⚙</button>
+    </div>
+  </main>
+
+  <div id="backdrop" class="backdrop" hidden></div>
+  <aside id="settings" class="settings" aria-labelledby="settingsTitle" aria-hidden="true">
+    <header><div><p>CLOCK VIEWER</p><h1 id="settingsTitle">表示設定</h1></div><button id="closeSettings" type="button" aria-label="設定を閉じる">×</button></header>
+    <div class="settings-body">
+      <section class="setting-section">
+        <h2>目標時刻</h2>
+        <div class="target-row"><input id="targetTime" type="time" aria-label="目標時刻"><button id="setTarget" class="primary" type="button">設定</button><button id="clearTarget" type="button">解除</button></div>
+        <div class="quick-buttons" aria-label="クイック設定"><button data-add="5">+5分</button><button data-add="10">+10分</button><button data-add="15">+15分</button><button data-add="30">+30分</button><button data-add="60">+60分</button></div>
+      </section>
+      <section class="setting-section">
+        <h2>表示</h2>
+        <div class="toggle-grid">
+          <label><span>秒</span><input id="showSeconds" type="checkbox" role="switch"></label>
+          <label><span>日付</span><input id="showDate" type="checkbox" role="switch"></label>
+          <label><span>曜日</span><input id="showWeekday" type="checkbox" role="switch"></label>
+          <label><span>残り時間</span><input id="showCountdown" type="checkbox" role="switch"></label>
+        </div>
+      </section>
+      <section class="setting-section">
+        <h2>メイン表示</h2>
+        <div class="segmented" id="modeButtons"><button data-mode="clock">Clock</button><button data-mode="countdown">Countdown</button></div>
+      </section>
+      <section class="setting-section">
+        <h2>テーマ</h2>
+        <div class="themes" id="themeButtons"><button data-theme="light"><i></i>Minimal Light</button><button data-theme="dark"><i></i>Minimal Dark</button><button data-theme="digital"><i></i>Digital</button><button data-theme="night"><i></i>Night</button><button data-theme="color"><i></i>Color</button></div>
+      </section>
+      <section class="setting-section">
+        <h2>画面レイアウト</h2>
+        <div class="segmented" id="layoutButtons"><button data-layout="portrait">縦向き</button><button data-layout="auto">自動</button><button data-layout="landscape">横向き</button></div>
+        <button id="fullscreen" class="fullscreen" type="button">⛶ フルスクリーンで表示</button>
+        <p id="orientationNote" class="note" role="status"></p>
+      </section>
+    </div>
+  </aside>
+</body>
+</html>
