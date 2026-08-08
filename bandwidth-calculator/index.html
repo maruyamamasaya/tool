@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="データ容量と転送時間から必要な帯域幅を計算するシンプルなツール">
+  <meta name="description" content="データ容量・転送時間・帯域幅から、必要な帯域幅や転送時間を計算するシンプルなツール">
   <title>Bandwidth Calculator</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
@@ -12,34 +12,19 @@
     <header>
       <p class="eyebrow">NETWORK TOOL</p>
       <h1>Bandwidth Calculator</h1>
-      <p class="description">データ容量と転送時間から、必要な帯域幅を計算します。</p>
+      <p id="description" class="description">データ容量と転送時間から、必要な帯域幅を計算します。</p>
     </header>
 
-    <section class="card" aria-labelledby="calculatorTitle">
-      <h2 id="calculatorTitle">転送条件</h2>
+    <div class="tabs" role="tablist" aria-label="計算方法">
+      <button id="bandwidthTab" class="tab is-active" type="button" role="tab" aria-selected="true" aria-controls="bandwidthPanel">必要な帯域幅</button>
+      <button id="timeTab" class="tab" type="button" role="tab" aria-selected="false" aria-controls="timePanel" tabindex="-1">転送時間</button>
+    </div>
+
+    <section id="bandwidthPanel" class="card" role="tabpanel" aria-labelledby="bandwidthTab">
+      <h2>転送条件</h2>
       <div class="field-grid">
-        <label>
-          <span>データ容量</span>
-          <span class="input-group">
-            <input id="dataSize" type="number" min="0" step="any" value="1" inputmode="decimal">
-            <select id="dataUnit" aria-label="データ容量の単位">
-              <option value="MB">MB</option>
-              <option value="GB" selected>GB</option>
-              <option value="TB">TB</option>
-            </select>
-          </span>
-        </label>
-        <label>
-          <span>転送時間</span>
-          <span class="input-group">
-            <input id="duration" type="number" min="0" step="any" value="1" inputmode="decimal">
-            <select id="timeUnit" aria-label="転送時間の単位">
-              <option value="second">秒</option>
-              <option value="minute" selected>分</option>
-              <option value="hour">時間</option>
-            </select>
-          </span>
-        </label>
+        <label><span>データ容量</span><span class="input-group"><input id="dataSize" type="number" min="0" step="any" value="1" inputmode="decimal"><select id="dataUnit" aria-label="データ容量の単位"><option value="MB">MB</option><option value="GB" selected>GB</option><option value="TB">TB</option></select></span></label>
+        <label><span>転送時間</span><span class="input-group"><input id="duration" type="number" min="0" step="any" value="1" inputmode="decimal"><select id="timeUnit" aria-label="転送時間の単位"><option value="second">秒</option><option value="minute" selected>分</option><option value="hour">時間</option></select></span></label>
       </div>
 
       <div class="result" aria-live="polite">
@@ -48,6 +33,20 @@
         <p id="secondaryResult" class="secondary-result">16.67 MB/s</p>
       </div>
       <p id="error" class="error" role="alert" hidden>0より大きい数値を入力してください。</p>
+    </section>
+
+    <section id="timePanel" class="card" role="tabpanel" aria-labelledby="timeTab" hidden>
+      <h2>転送条件</h2>
+      <div class="field-grid">
+        <label><span>データ容量</span><span class="input-group"><input id="reverseDataSize" type="number" min="0" step="any" value="1" inputmode="decimal"><select id="reverseDataUnit" aria-label="データ容量の単位"><option value="MB">MB</option><option value="GB" selected>GB</option><option value="TB">TB</option></select></span></label>
+        <label><span>帯域幅</span><span class="input-group"><input id="bandwidth" type="number" min="0" step="any" value="100" inputmode="decimal"><select id="bandwidthUnit" aria-label="帯域幅の単位"><option value="Mbps" selected>Mbps</option><option value="Gbps">Gbps</option><option value="MBps">MB/s</option><option value="GBps">GB/s</option></select></span></label>
+      </div>
+      <div class="result" aria-live="polite">
+        <p>転送にかかる時間</p>
+        <output id="timePrimaryResult">1分 20秒</output>
+        <p id="timeSecondaryResult" class="secondary-result">80秒</p>
+      </div>
+      <p id="timeError" class="error" role="alert" hidden>0より大きい数値を入力してください。</p>
     </section>
 
     <p class="note">1 byte = 8 bits、1 GB = 1,000 MB として計算します。</p>

@@ -6,7 +6,13 @@ header { margin-bottom: 24px; }
 .eyebrow { margin: 0 0 8px; color: var(--accent); font-size: .72rem; font-weight: 800; letter-spacing: .16em; }
 h1 { margin: 0; font-size: clamp(2rem, 7vw, 3rem); line-height: 1.15; letter-spacing: -.04em; }
 .description { margin: 12px 0 0; color: var(--muted); }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 10px; padding: 4px; border: 1px solid var(--line); border-radius: 12px; background: #e9edf3; }
+.tab { padding: 10px 12px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font: inherit; font-size: .86rem; font-weight: 700; cursor: pointer; }
+.tab:hover { color: var(--ink); }
+.tab:focus-visible { outline: 3px solid rgba(37, 99, 235, .25); outline-offset: 1px; }
+.tab.is-active { background: #fff; color: var(--accent); box-shadow: 0 2px 6px rgba(23, 32, 51, .1); }
 .card { padding: 30px; border: 1px solid var(--line); border-radius: 16px; background: #fff; box-shadow: 0 14px 40px rgba(23, 32, 51, .07); }
+.card[hidden] { display: none; }
 h2 { margin: 0 0 22px; font-size: 1rem; }
 .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 label > span:first-child { display: block; margin-bottom: 7px; font-size: .82rem; font-weight: 700; }
@@ -17,7 +23,7 @@ input { width: 100%; padding: 12px 13px; font-variant-numeric: tabular-nums; }
 select { padding: 0 10px; border-left: 1px solid var(--line); color: #4c586c; cursor: pointer; }
 .result { margin-top: 28px; padding: 25px; border-radius: 12px; background: #eef4ff; text-align: center; }
 .result p { margin: 0; color: #5d6a80; font-size: .8rem; }
-#primaryResult { display: block; margin: 5px 0 2px; color: var(--accent); font-size: clamp(2rem, 8vw, 3.2rem); font-weight: 750; letter-spacing: -.04em; line-height: 1.2; }
+.result output { display: block; margin: 5px 0 2px; color: var(--accent); font-size: clamp(2rem, 8vw, 3.2rem); font-weight: 750; letter-spacing: -.04em; line-height: 1.2; }
 .secondary-result { font-variant-numeric: tabular-nums; }
 .error { margin: 14px 0 0; color: #b42318; font-size: .82rem; text-align: center; }
 .note { margin: 14px 2px 0; color: var(--muted); font-size: .75rem; text-align: center; }
