@@ -1,0 +1,11 @@
+const assert = require("assert");
+const { parseItems, validateWeights, theoretical, pickIndex, draw } = require("./app.js");
+assert.deepStrictEqual(parseItems(" A賞\n\n B賞 \r\nC賞"), ["A賞", "B賞", "C賞"]);
+assert.strictEqual(validateWeights([1, 5, 14, 80]), true);
+assert.strictEqual(validateWeights([10, 10]), false);
+assert.deepStrictEqual(theoretical(["A", "B", "C"]), [1 / 3, 1 / 3, 1 / 3]);
+assert.strictEqual(pickIndex([0.1, 0.2, 0.7], 0.29), 1);
+assert.deepStrictEqual(draw(["A", "B"], [0.25, 0.75], 2, true, () => 0.9), ["B", "B"]);
+assert.deepStrictEqual(draw(["A", "B"], [0.5, 0.5], 2, false, () => 0), ["A", "B"]);
+assert.throws(() => draw(["A"], [1], 2, false), /最大1回/);
+console.log("lottery-simulator tests passed");
