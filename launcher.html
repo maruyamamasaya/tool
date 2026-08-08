@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ツールランチャー | Browser Tools</title>
+    <link rel="stylesheet" href="launcher.css">
+    <script src="launcher.js" defer></script>
+  </head>
+  <body>
+    <main class="launcher" aria-labelledby="tool-title">
+      <p class="eyebrow">Browser Tools</p>
+      <h1 id="tool-title">ツールを開く</h1>
+      <p id="launcher-description" class="description">
+        ブラウザツールをミニウィンドウで起動します。
+      </p>
+
+      <div id="launcher-actions" class="actions" hidden>
+        <button id="open-mini" class="button button-primary" type="button">
+          ミニウィンドウで開く
+        </button>
+        <a id="open-normal" class="button button-secondary" href="./">
+          通常表示で開く
+        </a>
+      </div>
+
+      <p id="launcher-error" class="error" role="alert" hidden>
+        指定されたツールが見つかりません。README のツール一覧から選び直してください。
+      </p>
+      <a class="back-link" href="./">← ツール一覧へ戻る</a>
+    </main>
+  </body>
+</html>
