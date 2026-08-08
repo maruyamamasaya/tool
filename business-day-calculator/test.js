@@ -5,6 +5,11 @@ const { calculateRange, formatRangeText, getCalendarCells, getJapaneseHolidays, 
 assert.strictEqual(parseDate("2026-02-29"), null);
 assert.ok(parseDate("2024-02-29"));
 assert.strictEqual(formatRangeText("2026-08-08", "2026-08-14"), "8月8日\n〜\n8月14日");
+assert.strictEqual(formatRangeText("2026-08-08", "2026-08-14", "tilde"), "8月8日〜8月14日");
+assert.strictEqual(formatRangeText("2026-08-08", "2026-08-14", "weekday"), "8月8日（土）〜8月14日（金）");
+assert.strictEqual(formatRangeText("2026-08-08", "2026-08-14", "hyphen"), "8月8日 - 8月14日");
+assert.strictEqual(formatRangeText("2026-08-08", "2026-08-14", "duration"), "8月8日〜8月14日（7日間）");
+assert.strictEqual(formatRangeText("2026-08-08", "2026-08-14", "unknown"), "8月8日\n〜\n8月14日");
 assert.strictEqual(formatRangeText("2026-08-14", "2026-08-08"), "");
 
 assert.deepStrictEqual(calculateRange("2026-08-08", "2026-08-14"), { totalDays: 7, weekendDays: 2, holidayDays: 1, businessDays: 4 });
