@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SQLを貼り付けるだけで、読みやすく整形してコピーできるブラウザツール">
+  <title>SQL Formatter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div class="title-wrap">
+        <span class="mark" aria-hidden="true">SQL</span>
+        <div>
+          <p class="eyebrow">BROWSER DEVELOPER TOOL</p>
+          <h1>SQL Formatter</h1>
+          <p class="lead">崩れたSQLを、読みやすい形に。</p>
+        </div>
+      </div>
+      <p class="privacy"><span aria-hidden="true">●</span> 入力内容はブラウザ内だけで処理されます</p>
+    </header>
+
+    <section class="controls" aria-label="整形設定">
+      <fieldset class="case-switch">
+        <legend>キーワード</legend>
+        <label><input type="radio" name="keywordCase" value="upper" checked><span>大文字</span></label>
+        <label><input type="radio" name="keywordCase" value="lower"><span>小文字</span></label>
+      </fieldset>
+      <button class="format-button" id="formatButton" type="button"><span aria-hidden="true">✦</span> 整形する</button>
+    </section>
+
+    <div class="notice" id="notice" role="status" aria-live="polite" hidden></div>
+
+    <section class="editors">
+      <article class="panel">
+        <header class="panel-header">
+          <div><span class="panel-number">01</span><h2>入力</h2></div>
+          <span class="count" id="inputCount">0 文字</span>
+        </header>
+        <label class="sr-only" for="sqlInput">整形するSQL</label>
+        <textarea id="sqlInput" spellcheck="false" autocapitalize="off" placeholder="ここにSQLを貼り付けてください
+
+SELECT * FROM users WHERE active=true;"></textarea>
+      </article>
+
+      <article class="panel result-panel">
+        <header class="panel-header">
+          <div><span class="panel-number">02</span><h2>結果</h2></div>
+          <span class="count" id="outputCount">0 文字</span>
+        </header>
+        <label class="sr-only" for="sqlOutput">整形結果</label>
+        <textarea id="sqlOutput" spellcheck="false" readonly placeholder="整形結果がここに表示されます"></textarea>
+        <div class="panel-actions">
+          <button class="copy-button" id="copyButton" type="button" disabled>結果をコピー</button>
+          <button class="clear-button" id="clearButton" type="button">クリア</button>
+        </div>
+      </article>
+    </section>
+
+    <footer><span><kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>Enter</kbd> で整形</span><span>外部ライブラリ不使用</span></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
