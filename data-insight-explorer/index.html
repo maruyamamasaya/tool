@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="貼り付けたCSV・数値データをブラウザ内ですばやく可視化・分析します。">
+  <title>Data Insight Explorer</title><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="../"><span class="logo">D</span><span>Data Insight<br><b>Explorer</b></span></a><div class="secure">● データはブラウザ内だけで処理されます</div><button id="theme" class="icon-btn" aria-label="ダークモード切替">☾</button></header>
+  <main>
+    <section class="hero"><div><p class="eyebrow">DATA, MADE CLEAR</p><h1>貼り付けるだけで、<br><em>データの傾向</em>が見えてくる。</h1><p>CSVや数値を入力すると、グラフと統計情報をリアルタイムに生成します。</p></div><div class="hero-art" aria-hidden="true"><i style="--h:45%"></i><i style="--h:72%"></i><i style="--h:55%"></i><i style="--h:90%"></i><i style="--h:66%"></i><svg viewBox="0 0 280 120"><polyline points="5,95 60,62 110,76 165,25 220,45 275,10"/></svg></div></section>
+    <section class="workspace">
+      <aside class="panel input-panel">
+        <div class="panel-title"><div><span class="step">01</span><h2>データを入力</h2></div><button id="sample" class="link-btn">サンプルを使う</button></div>
+        <label id="dropzone" class="dropzone" for="file"><span>↑</span><b>CSVをドロップ</b><small>またはクリックしてファイルを選択</small></label><input id="file" type="file" accept=".csv,text/csv" hidden>
+        <div class="or"><span>または直接貼り付け</span></div>
+        <textarea id="input" spellcheck="false" placeholder="例:&#10;月,売上,カテゴリー&#10;1月,120,オンライン&#10;2月,180,店舗"></textarea>
+        <div class="input-meta"><span id="dataCount">0 行 · 0 列</span><button id="clear" class="link-btn">クリア</button></div>
+        <div class="options"><label>入力形式<select id="format"><option value="auto">自動判定</option><option value="lines">改行区切り</option><option value="comma">カンマ区切り</option><option value="csv-header">CSV（ヘッダーあり）</option><option value="csv-noheader">CSV（ヘッダーなし）</option></select></label><label>区切り文字<select id="delimiter"><option value="auto">自動</option><option value=",">カンマ</option><option value="\t">タブ</option><option value=";">セミコロン</option></select></label></div>
+        <p id="message" class="message" role="alert"></p>
+      </aside>
+      <section class="content">
+        <article class="panel chart-panel">
+          <div class="panel-title chart-head"><div><span class="step">02</span><div><h2>可視化</h2><p id="chartSubtitle">データを入力してください</p></div></div><div class="actions"><button id="downloadPng" title="PNG保存">⇩ PNG</button></div></div>
+          <div id="chartTypes" class="chart-types" aria-label="グラフ種類"></div>
+          <div class="chart-tools"><label>対象列 <select id="column"></select></label><label id="xWrap">X軸 <select id="xColumn"></select></label><label>フィルター <input id="filter" placeholder="値を検索…"></label><button id="sortAsc">↑ 昇順</button><button id="sortDesc">↓ 降順</button></div>
+          <div class="canvas-wrap"><canvas id="chart" width="900" height="420"></canvas><div id="empty" class="empty"><span>▥</span><b>データを入力するとグラフが表示されます</b></div></div>
+        </article>
+        <article class="panel stats-panel"><div class="panel-title"><div><span class="step">03</span><div><h2>統計サマリー</h2><p id="statsFor">—</p></div></div><div class="actions"><button id="copy">□ データコピー</button><button id="downloadCsv">⇩ CSV</button></div></div><div id="stats" class="stats-grid"></div><div id="outlier" class="outlier"></div></article>
+      </section>
+    </section>
+  </main><footer>Data Insight Explorer <span>·</span> すべての処理はこのブラウザ内で完結します</footer><div id="toast">コピーしました</div>
+  <script src="app.js" defer></script>
+</body></html>
