@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="改行区切りのリストを、カンマ区切り・SQL IN・JSON配列などへ変換するブラウザツール">
+  <title>List Converter - リスト変換</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <p class="eyebrow">LIST CONVERTER</p>
+      <h1>リストを、使いたい形に。</h1>
+      <p class="lead">1行に1項目のテキストを、SQLやJSON、各種区切り形式へすばやく変換します。</p>
+    </header>
+
+    <section class="settings" aria-label="変換設定">
+      <div class="setting-group format-group">
+        <label for="format">変換形式</label>
+        <select id="format">
+          <option value="newline">改行区切り</option>
+          <option value="comma">カンマ区切り</option>
+          <option value="space">スペース区切り</option>
+          <option value="comma-space">カンマ＋スペース区切り</option>
+          <option value="single-quote">シングルクォート付き</option>
+          <option value="double-quote">ダブルクォート付き</option>
+          <option value="sql-in">SQL IN形式</option>
+          <option value="json">JSON配列</option>
+        </select>
+      </div>
+      <div class="setting-group affix-group">
+        <label for="prefix">Prefix <span>各項目の先頭</span></label>
+        <input id="prefix" type="text" placeholder="例：ID_" autocomplete="off">
+      </div>
+      <div class="setting-group affix-group">
+        <label for="suffix">Suffix <span>各項目の末尾</span></label>
+        <input id="suffix" type="text" placeholder="例：_01" autocomplete="off">
+      </div>
+      <fieldset class="options">
+        <legend>オプション</legend>
+        <label><input id="removeEmpty" type="checkbox" checked> 空行を削除</label>
+        <label><input id="trimWhitespace" type="checkbox" checked> 前後の空白を削除</label>
+        <label><input id="removeDuplicates" type="checkbox"> 重複を削除</label>
+        <label><input id="sortAscending" type="checkbox"> 昇順ソート</label>
+        <label><input id="sortDescending" type="checkbox"> 降順ソート</label>
+      </fieldset>
+    </section>
+
+    <section class="workspace" aria-label="リスト変換エリア">
+      <div class="panel">
+        <div class="panel-heading">
+          <label for="inputText">入力</label>
+          <span id="inputCount" class="count">0 件</span>
+        </div>
+        <textarea id="inputText" rows="14" autofocus spellcheck="false" placeholder="apple&#10;banana&#10;orange"></textarea>
+      </div>
+      <div class="flow" aria-hidden="true">→</div>
+      <div class="panel result-panel">
+        <div class="panel-heading">
+          <label for="outputText">変換結果</label>
+          <span id="outputCount" class="count" aria-live="polite">0 件</span>
+        </div>
+        <textarea id="outputText" rows="14" readonly spellcheck="false" placeholder="変換結果がここに表示されます"></textarea>
+      </div>
+    </section>
+
+    <div class="action-bar">
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+      <div class="actions">
+        <button id="clearButton" class="secondary" type="button">クリア</button>
+        <button id="convertButton" class="primary" type="button">変換</button>
+        <button id="copyButton" class="dark" type="button" disabled>コピー</button>
+      </div>
+    </div>
+    <p class="privacy"><span aria-hidden="true">●</span> 入力内容は外部へ送信されず、すべてブラウザ内で処理されます。</p>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
