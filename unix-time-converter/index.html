@@ -37,7 +37,10 @@
     <div class="divider" aria-hidden="true"><span>⇅</span></div>
 
     <section class="card" aria-labelledby="datetime-title">
-      <div class="card-heading"><div><span class="step">02</span><h2 id="datetime-title">日時 → timestamp</h2></div></div>
+      <div class="card-heading">
+        <div><span class="step">02</span><h2 id="datetime-title">日時 → timestamp</h2></div>
+        <button id="setDatetimeNow" class="text-button" type="button">現在時刻を入力</button>
+      </div>
       <label for="datetimeInput">日時</label>
       <div class="input-row">
         <input id="datetimeInput" type="text" value="2024-01-01 00:00:00" autocomplete="off" spellcheck="false" aria-describedby="datetimeHint datetimeError">

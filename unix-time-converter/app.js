@@ -35,7 +35,11 @@
     return `${get('FullYear')}-${pad(get('Month') + 1)}-${pad(get('Date'))} ${pad(get('Hours'))}:${pad(get('Minutes'))}:${pad(get('Seconds'))}`;
   }
 
-  if (typeof module !== 'undefined') module.exports = { timestampToDate, datetimeToTimestamp, formatDate };
+  function formatDatetimeInput(date, timezone) {
+    return formatDate(date, timezone === 'utc');
+  }
+
+  if (typeof module !== 'undefined') module.exports = { timestampToDate, datetimeToTimestamp, formatDate, formatDatetimeInput };
   if (typeof document === 'undefined') return;
 
   const byId = (id) => document.getElementById(id);
@@ -64,6 +68,10 @@
   byId('setNow').addEventListener('click', () => {
     timestampInput.value = String(Math.floor(Date.now() / 1000));
     renderTimestamp();
+  });
+  byId('setDatetimeNow').addEventListener('click', () => {
+    datetimeInput.value = formatDatetimeInput(new Date(), timezoneInput.value);
+    renderDatetime();
   });
   document.querySelectorAll('.copy').forEach((button) => button.addEventListener('click', async () => {
     const value = byId(button.dataset.copyTarget).textContent;
