@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="YAMLの階層構造をツリーで確認・検索・コピーできるブラウザツール">
+  <title>YAML Viewer</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div><span class="logo" aria-hidden="true">Y</span><h1>YAML Viewer</h1><span class="tagline">Explore configuration at a glance</span></div>
+    <p><span class="safe-dot"></span>100% browser-based &middot; Nothing is uploaded</p>
+  </header>
+  <main class="workspace">
+    <section class="panel input-panel" id="dropZone">
+      <div class="panel-head">
+        <div><span class="step">01</span><div><h2>YAML Input</h2><small>Paste or drop a .yaml / .yml file</small></div></div>
+        <div class="actions"><button id="sampleButton" class="button subtle">Load sample</button><button id="clearButton" class="button ghost">Clear</button></div>
+      </div>
+      <div class="editor-wrap">
+        <div id="lineNumbers" class="line-numbers" aria-hidden="true">1</div>
+        <textarea id="yamlInput" aria-label="YAML input" spellcheck="false" autocomplete="off" placeholder="Paste YAML here…"></textarea>
+        <div id="dropOverlay" class="drop-overlay">Drop YAML file here</div>
+      </div>
+      <div id="inputError" class="input-error" role="alert" hidden><strong>YAML Parse Error</strong><span id="errorDetail"></span></div>
+      <div class="input-foot"><span id="inputStats">1 line &middot; 0 B</span><span>Tab inserts two spaces</span></div>
+      <button id="viewButton" class="button primary">View YAML <span aria-hidden="true">→</span></button>
+    </section>
+
+    <section class="panel viewer-panel">
+      <div class="panel-head viewer-head">
+        <div><span class="step">02</span><div><h2>YAML Viewer</h2><small id="documentStats">Waiting for input</small></div></div>
+        <label class="search"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Search keys or values" aria-label="Search keys or values"></label>
+      </div>
+      <div class="toolbar">
+        <div class="tabs" role="tablist" aria-label="View mode">
+          <button class="tab active" data-view="tree" role="tab" aria-selected="true">Tree</button>
+          <button class="tab" data-view="yaml" role="tab" aria-selected="false">Formatted YAML</button>
+          <button class="tab" data-view="json" role="tab" aria-selected="false">JSON</button>
+        </div>
+        <div id="treeControls" class="actions"><button id="expandButton" class="button ghost" disabled>Expand all</button><button id="collapseButton" class="button ghost" disabled>Collapse all</button></div>
+        <button id="copyOutputButton" class="button ghost copy-output" hidden>Copy</button>
+      </div>
+      <div id="emptyState" class="empty-state"><div class="empty-icon">⌥</div><strong>Your YAML structure will appear here</strong><span>Paste YAML on the left, then click “View YAML”.</span></div>
+      <div id="treeView" class="tree-view" role="tree" aria-label="YAML tree" hidden></div>
+      <pre id="codeView" class="code-view" tabindex="0" hidden><code></code></pre>
+      <div id="selectionBar" class="selection-bar" hidden>
+        <div><span class="selection-label">Selected path</span><button id="copyPathButton" title="Copy path"><code id="selectedPath"></code> <span>⧉</span></button></div>
+        <button id="copyValueButton" class="button subtle">Copy value</button>
+      </div>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite">Copied!</div>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
