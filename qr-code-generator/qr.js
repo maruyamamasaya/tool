@@ -33,11 +33,15 @@
     let generator = [1];
     let value = 1;
     for (let i = 0; i < count; i += 1) {
-      generator.push(0);
-      for (let j = generator.length - 1; j > 0; j -= 1) {
-        generator[j] = generator[j - 1] ^ multiply(generator[j], value);
+      const next = Array(generator.length + 1).fill(0);
+      for (let j = 0; j < generator.length; j += 1) {
+        // Keep the highest-degree coefficient first. The previous implementation
+        // built the polynomial in the opposite order, so the Reed-Solomon
+        // remainder did not match the data written into the QR code.
+        next[j] ^= generator[j];
+        next[j + 1] ^= multiply(generator[j], value);
       }
-      generator[0] = multiply(generator[0], value);
+      generator = next;
       value = multiply(value, 2);
     }
     const result = Array(count).fill(0);
