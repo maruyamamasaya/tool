@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SELECT文の構造と意味を、ブラウザだけで分かりやすい日本語に変換するSQL Explainer">
+  <title>SQL Explainer — SQLを日本語で理解する</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div class="logo" aria-hidden="true">SQL<span>?</span></div>
+      <div class="hero-copy"><p class="eyebrow">READ YOUR QUERY</p><h1>SQL Explainer</h1><p>SQLを貼り付けて、構造と意味を日本語で理解できます。</p></div>
+      <div class="local"><i></i> ブラウザ内で処理</div>
+    </header>
+
+    <section class="editor-card" aria-labelledby="sql-title">
+      <div class="section-head">
+        <div><span class="step">01</span><h2 id="sql-title">SQLを入力</h2></div>
+        <button id="sampleButton" class="link-button" type="button">サンプルを入力</button>
+      </div>
+      <div class="editor-shell">
+        <div class="editor-bar"><span><i></i><i></i><i></i></span><b>query.sql</b><small>SELECT文に対応</small></div>
+        <textarea id="sqlInput" aria-label="解析するSQL" spellcheck="false" placeholder="SELECT *&#10;FROM users&#10;WHERE active = true;">SELECT
+    u.name,
+    o.amount
+FROM users u
+INNER JOIN orders o ON u.id = o.user_id
+WHERE o.status = 'paid'
+    AND o.amount &gt;= 10000
+ORDER BY o.amount DESC
+LIMIT 10;</textarea>
+      </div>
+      <div class="editor-actions">
+        <p><span>✓</span> 入力内容は外部に送信されません</p>
+        <button id="analyzeButton" class="primary" type="button">SQLを解析 <span>→</span></button>
+      </div>
+      <div id="errorMessage" class="warning" role="alert" hidden><b>⚠ SQLを完全には解析できませんでした。</b><span>解析できた範囲のみ表示しています。</span></div>
+    </section>
+
+    <section id="results" class="results" aria-labelledby="result-title" hidden>
+      <div class="result-heading"><div><span class="step">02</span><h2 id="result-title">解析結果</h2></div><div><button id="copyButton" class="secondary" type="button">説明をコピー</button><button id="clearButton" class="link-button" type="button">クリア</button></div></div>
+      <article class="summary"><p class="eyebrow">SUMMARY</p><h3>概要</h3><p id="summaryText"></p></article>
+      <div id="detailGrid" class="detail-grid"></div>
+      <article class="structure-card"><div><p class="eyebrow">STRUCTURE</p><h3>SQLの構造</h3></div><pre id="structureText"></pre></article>
+    </section>
+    <footer><span>SQL Explainer</span><span>外部API・生成AIは使用していません</span></footer>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
