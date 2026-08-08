@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="開始・終了・休憩時刻や複数の時間帯から、実時間と稼働時間を計算するツール">
+  <meta name="theme-color" content="#f4f7fb">
+  <title>Time Calculator</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="page-header">
+      <div class="brand-mark" aria-hidden="true">◷</div>
+      <div><p class="eyebrow">TIME UTILITY</p><h1>Time Calculator</h1><p class="lead">時間の差と、複数の時間帯をすばやく合計。</p></div>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="計算方法">
+      <button id="tab-work" class="tab is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-work" data-mode="work">勤務時間</button>
+      <button id="tab-ranges" class="tab" type="button" role="tab" aria-selected="false" aria-controls="panel-ranges" data-mode="ranges" tabindex="-1">複数行を合計</button>
+    </nav>
+
+    <section class="calculator-card">
+      <section id="panel-work" class="panel is-active" role="tabpanel" aria-labelledby="tab-work" data-mode="work">
+        <div class="panel-heading"><div><p class="step">01</p><h2>開始・終了から計算</h2></div><p>日付をまたぐ時間にも対応しています</p></div>
+        <div class="time-fields">
+          <label><span>開始</span><input id="start" type="time" value="09:15"></label>
+          <span class="field-arrow" aria-hidden="true">→</span>
+          <label><span>終了</span><input id="end" type="time" value="18:30"></label>
+          <span class="field-divider" aria-hidden="true"></span>
+          <label><span>休憩</span><input id="break" type="time" value="01:00" min="00:00"></label>
+        </div>
+        <div id="work-error" class="error-message" role="alert" hidden></div>
+        <div class="result-block" aria-live="polite">
+          <div class="result-main"><span>稼働時間</span><output id="work-duration">8時間15分</output></div>
+          <div class="metrics"><div><span>実時間</span><strong id="elapsed-duration">9時間15分</strong></div><div><span>10進数</span><strong id="decimal-hours">8.25時間</strong></div><div><span>分</span><strong id="total-minutes">495分</strong></div></div>
+        </div>
+      </section>
+
+      <section id="panel-ranges" class="panel" role="tabpanel" aria-labelledby="tab-ranges" data-mode="ranges" hidden>
+        <div class="panel-heading"><div><p class="step">02</p><h2>複数の時間帯を合計</h2></div><p>1行に1つずつ時間帯を入力してください</p></div>
+        <label class="range-field"><span>時間帯</span><textarea id="ranges" rows="7" spellcheck="false" placeholder="09:00 - 10:30&#10;11:15 - 12:00&#10;13:00 - 16:45">09:00 - 10:30
+11:15 - 12:00
+13:00 - 16:45</textarea><small>「09:00 - 10:30」のほか、「09:00〜10:30」でも入力できます</small></label>
+        <div id="ranges-error" class="error-message" role="alert" hidden></div>
+        <div class="result-block compact" aria-live="polite"><div class="result-main"><span>合計</span><output id="ranges-duration">6時間00分</output></div><div class="metrics two"><div><span>10進数</span><strong id="ranges-decimal">6時間</strong></div><div><span>分</span><strong id="ranges-minutes">360分</strong></div></div></div>
+      </section>
+
+      <div class="actions"><button id="reset" class="reset-button" type="button">↻ リセット</button><button id="copy" class="copy-button" type="button">▣ 結果をコピー</button></div>
+    </section>
+    <footer>入力内容はブラウザ内だけで処理されます</footer>
+  </main>
+</body>
+</html>
