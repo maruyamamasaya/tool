@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="貼り付けた数値の合計・平均・中央値などをすぐに集計できる無料ツール">
+  <meta name="theme-color" content="#f4f7fb">
+  <title>Number Calculator</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="page-header">
+      <div class="brand-mark" aria-hidden="true">Σ</div>
+      <div>
+        <p class="eyebrow">QUICK SUMMARY</p>
+        <h1>Number Calculator</h1>
+        <p class="lead">数値を貼り付けて、一瞬で基本集計。</p>
+      </div>
+    </header>
+
+    <section class="calculator-card" aria-labelledby="input-title">
+      <div class="section-heading">
+        <div>
+          <p class="step">01 / INPUT</p>
+          <h2 id="input-title">数値を貼り付け</h2>
+        </div>
+        <p>改行・カンマ・空白・タブに対応</p>
+      </div>
+      <label class="sr-only" for="number-input">集計する数値</label>
+      <textarea id="number-input" placeholder="11&#10;19&#10;38&#10;42&#10;46" spellcheck="false" autofocus></textarea>
+      <div class="input-footer">
+        <p>整数・小数・負の数を入力できます</p>
+        <button class="clear-button" id="clear" type="button">クリア</button>
+      </div>
+      <button class="calculate-button" id="calculate" type="button"><span aria-hidden="true">Σ</span> 計算</button>
+    </section>
+
+    <section class="results" id="results" aria-labelledby="results-title" aria-live="polite">
+      <div class="results-heading">
+        <div><p class="step">02 / RESULT</p><h2 id="results-title">集計結果</h2></div>
+        <p class="parse-status" id="parse-status">数値を入力して「計算」を押してください</p>
+      </div>
+      <p class="ignored-status" id="ignored-status" hidden></p>
+
+      <div class="result-grid">
+        <article class="result-card featured"><span>合計 <small>SUM</small></span><output id="sum">—</output></article>
+        <article class="result-card featured accent"><span>平均 <small>AVERAGE</small></span><output id="average">—</output></article>
+        <article class="result-card"><span>件数 <small>COUNT</small></span><output id="count">—</output></article>
+        <article class="result-card"><span>最大 <small>MAX</small></span><output id="max">—</output></article>
+        <article class="result-card"><span>最小 <small>MIN</small></span><output id="min">—</output></article>
+        <article class="result-card"><span>中央値 <small>MEDIAN</small></span><output id="median">—</output></article>
+        <article class="result-card"><span>範囲 <small>RANGE</small></span><output id="range">—</output></article>
+      </div>
+      <button class="copy-button" id="copy" type="button" disabled>結果をコピー</button>
+      <p class="copy-status" id="copy-status" role="status"></p>
+    </section>
+
+    <footer>入力データは外部へ送信されず、ブラウザ内だけで計算されます。</footer>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
