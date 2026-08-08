@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="日本語の条件を並べるだけで正規表現を作成できるRegex Builder">
+  <title>Regex Builder — 正規表現ジェネレーター</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<main class="app">
+  <header class="header"><div><p class="eyebrow">BROWSER DEVELOPER TOOL</p><h1><span aria-hidden="true">/</span> Regex Builder</h1><p class="intro">日本語の条件を並べて、正規表現をかんたん作成。</p></div><span class="local-badge"><i></i> ブラウザ内で処理</span></header>
+
+  <section class="panel" aria-labelledby="add-title">
+    <div class="section-title"><div><span class="step">01</span><h2 id="add-title">条件を追加</h2></div></div>
+    <div id="addButtons" class="add-grid">
+      <button data-type="digit">数字 <code>0–9</code></button><button data-type="letter">英字 <code>A–Z</code></button><button data-type="alnum">英数字</button><button data-type="literal">固定文字</button>
+      <button data-type="space">空白</button><button data-type="nonspace">空白以外</button><button data-type="any">任意の文字</button><button data-type="word">単語文字</button>
+      <button data-type="nonword">単語文字以外</button><button data-type="class">文字クラス</button><button data-type="group">グループ</button><button data-type="or">ORグループ</button>
+    </div>
+    <div class="preset-area"><h3>よく使うプリセット</h3><div id="presets" class="preset-row"><button data-preset="postal">郵便番号</button><button data-preset="digits">数字のみ</button><button data-preset="alnum">英数字のみ</button><button data-preset="email">メール簡易版</button><button data-preset="url">URL簡易版</button><button data-preset="ipv4">IPv4簡易版</button></div><p class="hint">※ IPv4簡易版は構造のみを確認し、厳密なIPアドレス範囲は検証しません。</p></div>
+  </section>
+
+  <section class="panel" aria-labelledby="list-title">
+    <div class="section-title"><div><span class="step">02</span><h2 id="list-title">条件一覧</h2><span id="itemCount" class="count"></span></div><button id="resetButton" class="secondary" type="button">リセット</button></div>
+    <div id="conditionList" class="condition-list"></div><p id="emptyState" class="empty">上のボタンから条件を追加してください。</p>
+    <div class="anchors"><label><input id="startAnchor" type="checkbox" checked> 文字列の先頭から一致 <code>^</code></label><label><input id="endAnchor" type="checkbox" checked> 文字列の末尾まで一致 <code>$</code></label></div>
+  </section>
+
+  <section class="panel result-panel" aria-labelledby="result-title">
+    <div class="section-title"><div><span class="step">03</span><h2 id="result-title">生成結果</h2></div><div class="format-switch"><label><input type="radio" name="format" value="plain" checked> パターン</label><label><input type="radio" name="format" value="literal"> /…/形式</label></div></div>
+    <div id="regexBox" class="regex-box"><code id="regexOutput"></code><button id="copyButton" type="button">コピー</button></div><p id="copyStatus" class="copy-status" aria-live="polite"></p><p id="regexError" class="error" role="alert" hidden>正規表現として無効です</p>
+    <fieldset class="flags"><legend>フラグ</legend><label><input type="checkbox" value="g"> <b>g</b>：すべて検索</label><label><input type="checkbox" value="i"> <b>i</b>：大文字小文字を区別しない</label><label><input type="checkbox" value="m"> <b>m</b>：複数行</label><label><input type="checkbox" value="s"> <b>s</b>：改行を . に含める</label></fieldset>
+    <div class="explanation"><h3>この正規表現の意味</h3><ul id="explanationList"></ul></div>
+  </section>
+
+  <section class="panel" aria-labelledby="test-title"><div class="section-title"><div><span class="step">04</span><h2 id="test-title">テスト</h2></div></div><label class="field-label" for="testInput">テスト文字列（1行ずつ判定）</label><textarea id="testInput" placeholder="123-4567&#10;1234-567&#10;abc-1234" spellcheck="false"></textarea><div id="testResults" class="test-results" aria-live="polite"></div></section>
+  <footer><span>JavaScript <code>RegExp</code> の仕様に準拠</span><span>条件はこのブラウザに自動保存されます</span></footer>
+</main>
+<script src="./app.js" defer></script>
+</body></html>

@@ -1,0 +1,12 @@
+'use strict';
+const assert=require('assert');
+const {escapeLiteral,itemPattern,buildPattern,classPattern,presets}=require('./app.js');
+assert.strictEqual(escapeLiteral('.com'), '\\.com');
+assert.strictEqual(itemPattern({type:'digit',repeat:'exact',min:3}), '\\d{3}');
+assert.strictEqual(itemPattern({type:'letter',case:'lower',repeat:'range',min:3,max:5}), '[a-z]{3,5}');
+assert.strictEqual(classPattern('0-9',true), '[^0-9]');
+assert.strictEqual(itemPattern({type:'or',a:'cat',b:'dog'}), '(cat|dog)');
+assert.strictEqual(buildPattern(presets.postal), '^\\d{3}-\\d{4}$');
+assert.strictEqual(buildPattern(presets.email), '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$');
+assert.doesNotThrow(()=>new RegExp(buildPattern(presets.ipv4)));
+console.log('regex-builder: all tests passed');
