@@ -19,9 +19,15 @@
     </header>
 
     <section class="input-card" aria-labelledby="input-title">
-      <label id="input-title" for="valueInput">変換する値</label>
+      <div class="input-heading">
+        <label id="input-title" for="valueInput">変換する値</label>
+        <fieldset class="mode-switch" aria-label="入力方法">
+          <label><input type="radio" name="inputMode" value="auto" checked><span>自動読み取り</span></label>
+          <label><input type="radio" name="inputMode" value="manual"><span>プルダウン</span></label>
+        </fieldset>
+      </div>
       <div class="input-row">
-        <input id="valueInput" type="number" value="1" min="0" step="any" inputmode="decimal" aria-describedby="errorMessage">
+        <input id="valueInput" type="text" value="1 MB" inputmode="text" autocomplete="off" placeholder="例: 1234567kB" aria-describedby="inputHint errorMessage">
         <select id="unitInput" aria-label="変換元の単位">
           <option value="B">B</option>
           <option value="KB">KB</option>
@@ -34,6 +40,7 @@
           <option value="TiB">TiB</option>
         </select>
       </div>
+      <p id="inputHint" class="input-hint">数値と単位を含むテキストを、そのまま貼り付けられます。</p>
       <p id="errorMessage" class="error" role="alert"></p>
     </section>
 
