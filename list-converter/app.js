@@ -7,8 +7,70 @@ function splitLines(text) {
   return normalized === "" ? [] : normalized.split("\n");
 }
 
+function parseDelimited(text, delimiter) {
+  const items = [];
+  let item = "";
+  let quote = "";
+
+  for (let index = 0; index < text.length; index += 1) {
+    const character = text[index];
+    if (quote) {
+      if (character === quote && text[index + 1] === quote) {
+        item += quote;
+        index += 1;
+      } else if (character === quote) {
+        quote = "";
+      } else {
+        item += character;
+      }
+    } else if ((character === '"' || character === "'") && item.trim() === "") {
+      quote = character;
+    } else if (text.startsWith(delimiter, index)) {
+      items.push(item);
+      item = "";
+      index += delimiter.length - 1;
+    } else {
+      item += character;
+    }
+  }
+  items.push(item);
+  return items;
+}
+
+function splitItems(text, inputFormat = "auto", customSeparator = "") {
+  const normalized = String(text).replace(/\r\n?/g, "\n");
+  if (normalized === "") return [];
+
+  if (inputFormat === "json") {
+    try {
+      const parsed = JSON.parse(normalized);
+      if (Array.isArray(parsed)) return parsed.map((item) => String(item));
+    } catch { /* Keep the original text when the JSON is incomplete. */ }
+    return [normalized];
+  }
+  if (inputFormat === "custom") {
+    return customSeparator ? parseDelimited(normalized, customSeparator) : [normalized];
+  }
+  if (inputFormat === "space") return normalized.split(/\s+/);
+
+  const delimiters = {
+    newline: "\n",
+    comma: ",",
+    tab: "\t",
+    semicolon: ";"
+  };
+  if (delimiters[inputFormat]) return parseDelimited(normalized, delimiters[inputFormat]);
+
+  // 自動判定では、文章中の空白は項目の一部として残し、代表的な区切り文字だけを対象にする。
+  const delimiter = normalized.includes("\n") ? "\n"
+    : normalized.includes("\t") ? "\t"
+      : normalized.includes(",") ? ","
+        : normalized.includes(";") ? ";" : null;
+  return delimiter ? parseDelimited(normalized, delimiter) : [normalized];
+}
+
 function processItems(text, options = {}) {
-  let items = splitLines(text);
+  let items = splitItems(text, options.inputFormat, options.customSeparator);
   if (options.trimWhitespace) items = items.map((item) => item.trim());
   if (options.removeEmpty) items = items.filter((item) => item !== "");
   if (options.removeDuplicates) items = [...new Set(items)];
@@ -45,6 +107,7 @@ if (typeof document !== "undefined") {
   const elements = {
     input: document.querySelector("#inputText"), output: document.querySelector("#outputText"),
     inputCount: document.querySelector("#inputCount"), outputCount: document.querySelector("#outputCount"),
+    inputFormat: document.querySelector("#inputFormat"), customSeparator: document.querySelector("#customSeparator"),
     format: document.querySelector("#format"), prefix: document.querySelector("#prefix"), suffix: document.querySelector("#suffix"),
     removeEmpty: document.querySelector("#removeEmpty"), trimWhitespace: document.querySelector("#trimWhitespace"),
     removeDuplicates: document.querySelector("#removeDuplicates"), sortAscending: document.querySelector("#sortAscending"),
@@ -56,6 +119,7 @@ if (typeof document !== "undefined") {
 
   function options() {
     return {
+      inputFormat: elements.inputFormat.value, customSeparator: elements.customSeparator.value,
       format: elements.format.value, prefix: elements.prefix.value, suffix: elements.suffix.value,
       removeEmpty: elements.removeEmpty.checked, trimWhitespace: elements.trimWhitespace.checked,
       removeDuplicates: elements.removeDuplicates.checked,
@@ -69,9 +133,10 @@ if (typeof document !== "undefined") {
   function render() {
     const result = convertList(elements.input.value, options());
     elements.output.value = result.output;
-    elements.inputCount.textContent = countLabel(splitLines(elements.input.value).length);
+    elements.inputCount.textContent = countLabel(splitItems(elements.input.value, elements.inputFormat.value, elements.customSeparator.value).length);
     elements.outputCount.textContent = countLabel(result.items.length);
     elements.copy.disabled = result.items.length === 0;
+    elements.customSeparator.hidden = elements.inputFormat.value !== "custom";
   }
   function makeSortExclusive(selected, other) {
     if (selected.checked) other.checked = false;
@@ -79,8 +144,8 @@ if (typeof document !== "undefined") {
   }
 
   elements.input.addEventListener("input", render);
-  [elements.format, elements.removeEmpty, elements.trimWhitespace, elements.removeDuplicates].forEach((element) => element.addEventListener("change", render));
-  [elements.prefix, elements.suffix].forEach((element) => element.addEventListener("input", render));
+  [elements.inputFormat, elements.format, elements.removeEmpty, elements.trimWhitespace, elements.removeDuplicates].forEach((element) => element.addEventListener("change", render));
+  [elements.customSeparator, elements.prefix, elements.suffix].forEach((element) => element.addEventListener("input", render));
   elements.sortAscending.addEventListener("change", () => makeSortExclusive(elements.sortAscending, elements.sortDescending));
   elements.sortDescending.addEventListener("change", () => makeSortExclusive(elements.sortDescending, elements.sortAscending));
   elements.convert.addEventListener("click", () => { render(); showStatus("変換しました"); });
@@ -93,4 +158,4 @@ if (typeof document !== "undefined") {
   render();
 }
 
-if (typeof module !== "undefined") module.exports = { splitLines, processItems, formatItems, convertList };
+if (typeof module !== "undefined") module.exports = { splitLines, splitItems, parseDelimited, processItems, formatItems, convertList };
