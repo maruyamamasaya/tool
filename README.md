@@ -29,6 +29,7 @@
 | [Line Sorter](https://maruyamamasaya.github.io/tool/line-sorter/) | 複数行のテキストを、ABC順・数値順・数字を考慮した自然順で並べ替えられます。 |
 | [CIDR Analyzer](https://maruyamamasaya.github.io/tool/cidr-analyzer/) | 複数の IPv4/CIDR を整形し、ネットワーク・範囲・アドレス数と包含関係を一括で確認できます。 |
 | [Calendar](https://maruyamamasaya.github.io/tool/calendar/) | 日本の祝日が分かるカレンダーから候補日時を選び、日程調整用テキストをまとめてコピーできます。 |
+| [営業日カウンター](https://maruyamamasaya.github.io/tool/business-day-calculator/) | 開始日と終了日から、期間・土日・日本の祝日・営業日の日数をまとめて確認できます。 |
 | [Checklist Builder](https://maruyamamasaya.github.io/tool/checklist-builder/) | 3階層のチェックリストを作成・保存し、Markdownで入出力できます。 |
 | [Pomodoro Timer](https://maruyamamasaya.github.io/tool/pomodoro-timer/) | 作業と休憩を自動で切り替え、今日の完了回数を記録できるポモドーロタイマーです。 |
 | [Color Palette](https://maruyamamasaya.github.io/tool/color-palette/) | 約120色のパレットから色を選び、HEX・RGBカラーコードをプレビューしてコピーできます。 |
