@@ -14,6 +14,8 @@ const elements = {
   filteredCount: document.querySelector("#filteredCount"),
   searchInput: document.querySelector("#searchInput"),
   autoFitButton: document.querySelector("#autoFitButton"),
+  fullscreenButton: document.querySelector("#fullscreenButton"),
+  fullscreenButtonLabel: document.querySelector("#fullscreenButtonLabel"),
   dataTable: document.querySelector("#dataTable"),
   tableColumns: document.querySelector("#tableColumns"),
   tableHead: document.querySelector("#tableHead"),
@@ -44,6 +46,11 @@ elements.dropZone.addEventListener("keydown", (event) => {
 elements.fileInput.addEventListener("change", () => loadFile(elements.fileInput.files[0]));
 elements.searchInput.addEventListener("input", renderBody);
 elements.autoFitButton.addEventListener("click", autoFitAllColumns);
+elements.fullscreenButton.addEventListener("click", toggleFullscreen);
+document.addEventListener("fullscreenchange", updateFullscreenControl);
+const desktopMedia = window.matchMedia("(min-width: 701px)");
+desktopMedia.addEventListener("change", updateFullscreenControl);
+updateFullscreenControl();
 
 ["dragenter", "dragover"].forEach((name) => elements.dropZone.addEventListener(name, (event) => {
   event.preventDefault();
@@ -54,6 +61,24 @@ elements.autoFitButton.addEventListener("click", autoFitAllColumns);
   elements.dropZone.classList.remove("is-dragging");
 }));
 elements.dropZone.addEventListener("drop", (event) => loadFile(event.dataTransfer.files[0]));
+
+function updateFullscreenControl() {
+  const isFullscreen = document.fullscreenElement === elements.viewer;
+  const isAvailable = typeof elements.viewer.requestFullscreen === "function" && desktopMedia.matches;
+  elements.fullscreenButton.hidden = !isAvailable;
+  elements.fullscreenButtonLabel.textContent = isFullscreen ? "全画面を終了" : "全画面表示";
+  elements.fullscreenButton.setAttribute("aria-pressed", String(isFullscreen));
+  elements.fullscreenButton.title = isFullscreen ? "全画面表示を終了" : "CSVビューアーを全画面表示";
+}
+
+async function toggleFullscreen() {
+  try {
+    if (document.fullscreenElement === elements.viewer) await document.exitFullscreen();
+    else await elements.viewer.requestFullscreen();
+  } catch {
+    showError("全画面表示を開始できませんでした。ブラウザの設定をご確認ください。");
+  }
+}
 
 async function loadFile(file) {
   if (!file) return;
