@@ -105,7 +105,6 @@
   const error = document.querySelector('#errorMessage'); const description = document.querySelector('#description');
   const copyDescription = document.querySelector('#copyDescriptionButton');
   const guideIds = ['guideMinute','guideHour','guideDay','guideMonth','guideWeekday'];
-  const detailIds = ['detailMinute','detailHour','detailDay','detailMonth','detailWeekday'];
   let currentFields = [];
 
   const builderCron = document.querySelector('#builderCron');
@@ -153,7 +152,7 @@
   function render() {
     try {
       currentFields = parseCron(input.value); const text = describeCron(currentFields);
-      currentFields.forEach((field, index) => { document.querySelector(`#${guideIds[index]}`).textContent = field; document.querySelector(`#${detailIds[index]}`).textContent = field; });
+      currentFields.forEach((field, index) => { document.querySelector(`#${guideIds[index]}`).textContent = field; });
       description.textContent = text; wrap.classList.remove('invalid'); input.setAttribute('aria-invalid', 'false'); error.hidden = true; copyDescription.disabled = false;
     } catch (reason) {
       const looseFields = input.value.trim().split(/\s+/).filter(Boolean);
