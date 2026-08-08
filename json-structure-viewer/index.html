@@ -42,11 +42,17 @@
         <div class="panel-heading viewer-heading">
           <div>
             <span class="step">02</span>
-            <h2>Structure</h2>
+            <h2 id="viewerTitle">Structure</h2>
           </div>
-          <div class="tree-actions" aria-label="ツリー操作">
-            <button id="expandButton" type="button" disabled>Expand All</button>
-            <button id="collapseButton" type="button" disabled>Collapse All</button>
+          <div class="viewer-controls">
+            <div class="view-switcher" role="group" aria-label="表示形式">
+              <button id="treeViewButton" class="is-active" type="button" aria-pressed="true">Tree</button>
+              <button id="tableViewButton" type="button" aria-pressed="false">Table</button>
+            </div>
+            <div id="treeActions" class="tree-actions" aria-label="ツリー操作">
+              <button id="expandButton" type="button" disabled>Expand All</button>
+              <button id="collapseButton" type="button" disabled>Collapse All</button>
+            </div>
           </div>
         </div>
 
@@ -60,12 +66,20 @@
           <span id="errorDetail"></span>
         </div>
         <div id="tree" class="tree" role="tree" aria-label="JSON 構造" hidden></div>
+        <div id="tableView" class="table-view" hidden>
+          <table>
+            <thead><tr><th scope="col">Path</th><th scope="col">Key</th><th scope="col">Type</th><th scope="col">Value</th></tr></thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+          <p id="tableNotice" class="table-notice" hidden></p>
+        </div>
       </section>
     </section>
 
     <footer>
       <span>表示上限: 10 階層</span>
       <span>配列の初期表示: 10 件</span>
+      <span>表の表示上限: 1,000 行</span>
     </footer>
   </main>
   <script src="./app.js"></script>
