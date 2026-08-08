@@ -9,6 +9,7 @@
 
 | ツール | できること |
 | --- | --- |
+| [Linux Command Explorer](https://maruyamamasaya.github.io/tool/linux-command-explorer/) | 18カテゴリ・162のLinuxコマンドを検索し、オプションや使用例の確認・コピー、お気に入り登録ができます。 |
 | [Simple Calculator](https://maruyamamasaya.github.io/tool/simple-calculator/) | 四則演算と括弧を使った式を直接入力し、計算結果と直近の履歴を確認できます。 |
 | [Percentage Calculator](https://maruyamamasaya.github.io/tool/percentage-calculator/) | 増減率・割合・○%の値・増減後の結果から元の値をすばやく計算できます。 |
 | [QR Code Generator](https://maruyamamasaya.github.io/tool/qr-code-generator/) | URLを入力または貼り付けてQRコードを生成し、PNG画像として保存できます。 |

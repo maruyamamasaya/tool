@@ -1,0 +1,2920 @@
+[
+  {
+    "name": "ls",
+    "category": "ファイル操作",
+    "description": "ファイルやディレクトリの一覧を表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "ls -lah"
+    ],
+    "related": [
+      "cp",
+      "mv"
+    ],
+    "icon": "▤"
+  },
+  {
+    "name": "cp",
+    "category": "ファイル操作",
+    "description": "ファイルやディレクトリをコピー",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "cp -r src backup"
+    ],
+    "related": [
+      "mv",
+      "rm"
+    ],
+    "icon": "▤"
+  },
+  {
+    "name": "mv",
+    "category": "ファイル操作",
+    "description": "ファイルの移動や名前変更",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "mv old.txt new.txt"
+    ],
+    "related": [
+      "rm",
+      "touch"
+    ],
+    "icon": "▤"
+  },
+  {
+    "name": "rm",
+    "category": "ファイル操作",
+    "description": "ファイルやディレクトリを削除",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "rm -i old.log"
+    ],
+    "related": [
+      "touch",
+      "cat"
+    ],
+    "icon": "▤"
+  },
+  {
+    "name": "touch",
+    "category": "ファイル操作",
+    "description": "空ファイルの作成や時刻更新",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "touch memo.txt"
+    ],
+    "related": [
+      "cat",
+      "less"
+    ],
+    "icon": "▤"
+  },
+  {
+    "name": "cat",
+    "category": "ファイル操作",
+    "description": "ファイル内容を連結して表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "cat /etc/os-release"
+    ],
+    "related": [
+      "less",
+      "head"
+    ],
+    "icon": "▤"
+  },
+  {
+    "name": "less",
+    "category": "ファイル操作",
+    "description": "ファイル内容をページ単位で表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "less /var/log/syslog"
+    ],
+    "related": [
+      "head",
+      "tail"
+    ],
+    "icon": "▤"
+  },
+  {
+    "name": "head",
+    "category": "ファイル操作",
+    "description": "ファイルの先頭部分を表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "head -n 20 access.log"
+    ],
+    "related": [
+      "tail",
+      "ls"
+    ],
+    "icon": "▤"
+  },
+  {
+    "name": "tail",
+    "category": "ファイル操作",
+    "description": "ファイルの末尾部分を表示・追跡",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "tail -f app.log"
+    ],
+    "related": [
+      "ls",
+      "cp"
+    ],
+    "icon": "▤"
+  },
+  {
+    "name": "pwd",
+    "category": "ディレクトリ",
+    "description": "現在のディレクトリを表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "pwd"
+    ],
+    "related": [
+      "cd",
+      "mkdir"
+    ],
+    "icon": "📁"
+  },
+  {
+    "name": "cd",
+    "category": "ディレクトリ",
+    "description": "作業ディレクトリを移動",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "cd /var/log"
+    ],
+    "related": [
+      "mkdir",
+      "rmdir"
+    ],
+    "icon": "📁"
+  },
+  {
+    "name": "mkdir",
+    "category": "ディレクトリ",
+    "description": "ディレクトリを作成",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "mkdir -p work/output"
+    ],
+    "related": [
+      "rmdir",
+      "find"
+    ],
+    "icon": "📁"
+  },
+  {
+    "name": "rmdir",
+    "category": "ディレクトリ",
+    "description": "空のディレクトリを削除",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "rmdir old"
+    ],
+    "related": [
+      "find",
+      "locate"
+    ],
+    "icon": "📁"
+  },
+  {
+    "name": "find",
+    "category": "ディレクトリ",
+    "description": "条件を指定してファイルを検索",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "find . -name \"*.log\""
+    ],
+    "related": [
+      "locate",
+      "tree"
+    ],
+    "icon": "📁"
+  },
+  {
+    "name": "locate",
+    "category": "ディレクトリ",
+    "description": "データベースからファイルを高速検索",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "locate nginx.conf"
+    ],
+    "related": [
+      "tree",
+      "basename"
+    ],
+    "icon": "📁"
+  },
+  {
+    "name": "tree",
+    "category": "ディレクトリ",
+    "description": "ディレクトリ構造をツリー表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "tree -L 2"
+    ],
+    "related": [
+      "basename",
+      "dirname"
+    ],
+    "icon": "📁"
+  },
+  {
+    "name": "basename",
+    "category": "ディレクトリ",
+    "description": "パスからファイル名部分を取得",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "basename /tmp/file.txt"
+    ],
+    "related": [
+      "dirname",
+      "pwd"
+    ],
+    "icon": "📁"
+  },
+  {
+    "name": "dirname",
+    "category": "ディレクトリ",
+    "description": "パスからディレクトリ部分を取得",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "dirname /tmp/file.txt"
+    ],
+    "related": [
+      "pwd",
+      "cd"
+    ],
+    "icon": "📁"
+  },
+  {
+    "name": "chmod",
+    "category": "権限",
+    "description": "ファイルのアクセス権を変更",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "chmod 755 script.sh"
+    ],
+    "related": [
+      "chown",
+      "chgrp"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "chown",
+    "category": "権限",
+    "description": "所有者とグループを変更",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "chown user:group file"
+    ],
+    "related": [
+      "chgrp",
+      "umask"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "chgrp",
+    "category": "権限",
+    "description": "所有グループを変更",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "chgrp developers app"
+    ],
+    "related": [
+      "umask",
+      "getfacl"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "umask",
+    "category": "権限",
+    "description": "新規ファイルの権限マスクを設定",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "umask 022"
+    ],
+    "related": [
+      "getfacl",
+      "setfacl"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "getfacl",
+    "category": "権限",
+    "description": "ACLを表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "getfacl shared.txt"
+    ],
+    "related": [
+      "setfacl",
+      "sudo"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "setfacl",
+    "category": "権限",
+    "description": "ACLを設定",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "setfacl -m u:alice:rw file"
+    ],
+    "related": [
+      "sudo",
+      "su"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "sudo",
+    "category": "権限",
+    "description": "別ユーザーの権限でコマンドを実行",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo systemctl restart nginx"
+    ],
+    "related": [
+      "su",
+      "stat"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "su",
+    "category": "権限",
+    "description": "別ユーザーへ切り替え",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "su - deploy"
+    ],
+    "related": [
+      "stat",
+      "chmod"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "stat",
+    "category": "権限",
+    "description": "ファイル属性や時刻を詳細表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "stat file.txt"
+    ],
+    "related": [
+      "chmod",
+      "chown"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "whoami",
+    "category": "ユーザー",
+    "description": "現在のユーザー名を表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "whoami"
+    ],
+    "related": [
+      "id",
+      "who"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "id",
+    "category": "ユーザー",
+    "description": "ユーザーIDと所属グループを表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "id alice"
+    ],
+    "related": [
+      "who",
+      "w"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "who",
+    "category": "ユーザー",
+    "description": "ログイン中のユーザーを表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "who"
+    ],
+    "related": [
+      "w",
+      "useradd"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "w",
+    "category": "ユーザー",
+    "description": "ログインユーザーと実行状況を表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "w"
+    ],
+    "related": [
+      "useradd",
+      "usermod"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "useradd",
+    "category": "ユーザー",
+    "description": "ユーザーを作成",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo useradd -m alice"
+    ],
+    "related": [
+      "usermod",
+      "userdel"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "usermod",
+    "category": "ユーザー",
+    "description": "ユーザー設定を変更",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo usermod -aG docker alice"
+    ],
+    "related": [
+      "userdel",
+      "passwd"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "userdel",
+    "category": "ユーザー",
+    "description": "ユーザーを削除",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo userdel -r alice"
+    ],
+    "related": [
+      "passwd",
+      "groups"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "passwd",
+    "category": "ユーザー",
+    "description": "パスワードを変更",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "passwd"
+    ],
+    "related": [
+      "groups",
+      "whoami"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "groups",
+    "category": "ユーザー",
+    "description": "所属グループを表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "groups alice"
+    ],
+    "related": [
+      "whoami",
+      "id"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "ip",
+    "category": "ネットワーク",
+    "description": "ネットワークインターフェースや経路を管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "ip addr show"
+    ],
+    "related": [
+      "ping",
+      "curl"
+    ],
+    "icon": "⌁"
+  },
+  {
+    "name": "ping",
+    "category": "ネットワーク",
+    "description": "ホストへの疎通を確認",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "ping -c 4 example.com"
+    ],
+    "related": [
+      "curl",
+      "wget"
+    ],
+    "icon": "⌁"
+  },
+  {
+    "name": "curl",
+    "category": "ネットワーク",
+    "description": "URLとデータを送受信",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "curl -I https://example.com"
+    ],
+    "related": [
+      "wget",
+      "ss"
+    ],
+    "icon": "⌁"
+  },
+  {
+    "name": "wget",
+    "category": "ネットワーク",
+    "description": "ネットワークからファイルを取得",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "wget https://example.com/file.zip"
+    ],
+    "related": [
+      "ss",
+      "dig"
+    ],
+    "icon": "⌁"
+  },
+  {
+    "name": "ss",
+    "category": "ネットワーク",
+    "description": "ソケットと待受ポートを表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "ss -tulpen"
+    ],
+    "related": [
+      "dig",
+      "nslookup"
+    ],
+    "icon": "⌁"
+  },
+  {
+    "name": "dig",
+    "category": "ネットワーク",
+    "description": "DNS情報を問い合わせ",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "dig example.com A"
+    ],
+    "related": [
+      "nslookup",
+      "traceroute"
+    ],
+    "icon": "⌁"
+  },
+  {
+    "name": "nslookup",
+    "category": "ネットワーク",
+    "description": "DNSで名前やIPを検索",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "nslookup example.com"
+    ],
+    "related": [
+      "traceroute",
+      "tcpdump"
+    ],
+    "icon": "⌁"
+  },
+  {
+    "name": "traceroute",
+    "category": "ネットワーク",
+    "description": "宛先までの経路を調査",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "traceroute example.com"
+    ],
+    "related": [
+      "tcpdump",
+      "ip"
+    ],
+    "icon": "⌁"
+  },
+  {
+    "name": "tcpdump",
+    "category": "ネットワーク",
+    "description": "ネットワークパケットを取得・解析",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo tcpdump -i eth0 port 443"
+    ],
+    "related": [
+      "ip",
+      "ping"
+    ],
+    "icon": "⌁"
+  },
+  {
+    "name": "ssh",
+    "category": "SSH",
+    "description": "リモートホストへ安全に接続",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "ssh user@example.com"
+    ],
+    "related": [
+      "scp",
+      "sftp"
+    ],
+    "icon": "🔐"
+  },
+  {
+    "name": "scp",
+    "category": "SSH",
+    "description": "SSH経由でファイルをコピー",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "scp file.txt user@host:/tmp/"
+    ],
+    "related": [
+      "sftp",
+      "ssh-keygen"
+    ],
+    "icon": "🔐"
+  },
+  {
+    "name": "sftp",
+    "category": "SSH",
+    "description": "SSH経由で対話的にファイル転送",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sftp user@host"
+    ],
+    "related": [
+      "ssh-keygen",
+      "ssh-copy-id"
+    ],
+    "icon": "🔐"
+  },
+  {
+    "name": "ssh-keygen",
+    "category": "SSH",
+    "description": "SSH鍵ペアを生成・管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "ssh-keygen -t ed25519"
+    ],
+    "related": [
+      "ssh-copy-id",
+      "ssh-add"
+    ],
+    "icon": "🔐"
+  },
+  {
+    "name": "ssh-copy-id",
+    "category": "SSH",
+    "description": "公開鍵をリモートへ登録",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "ssh-copy-id user@host"
+    ],
+    "related": [
+      "ssh-add",
+      "ssh-agent"
+    ],
+    "icon": "🔐"
+  },
+  {
+    "name": "ssh-add",
+    "category": "SSH",
+    "description": "認証エージェントへ秘密鍵を追加",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "ssh-add ~/.ssh/id_ed25519"
+    ],
+    "related": [
+      "ssh-agent",
+      "ssh-keyscan"
+    ],
+    "icon": "🔐"
+  },
+  {
+    "name": "ssh-agent",
+    "category": "SSH",
+    "description": "SSH鍵を保持するエージェントを起動",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "eval \"$(ssh-agent -s)\""
+    ],
+    "related": [
+      "ssh-keyscan",
+      "autossh"
+    ],
+    "icon": "🔐"
+  },
+  {
+    "name": "ssh-keyscan",
+    "category": "SSH",
+    "description": "ホストの公開鍵を取得",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "ssh-keyscan github.com"
+    ],
+    "related": [
+      "autossh",
+      "ssh"
+    ],
+    "icon": "🔐"
+  },
+  {
+    "name": "autossh",
+    "category": "SSH",
+    "description": "切断時にSSH接続を自動再確立",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "autossh -M 0 -N user@host"
+    ],
+    "related": [
+      "ssh",
+      "scp"
+    ],
+    "icon": "🔐"
+  },
+  {
+    "name": "ps",
+    "category": "プロセス",
+    "description": "実行中のプロセスを表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "ps aux"
+    ],
+    "related": [
+      "top",
+      "htop"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "top",
+    "category": "プロセス",
+    "description": "プロセスと負荷をリアルタイム表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "top"
+    ],
+    "related": [
+      "htop",
+      "kill"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "htop",
+    "category": "プロセス",
+    "description": "プロセスを対話的に監視",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "htop"
+    ],
+    "related": [
+      "kill",
+      "killall"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "kill",
+    "category": "プロセス",
+    "description": "PIDを指定してシグナルを送信",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "kill -TERM 1234"
+    ],
+    "related": [
+      "killall",
+      "pkill"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "killall",
+    "category": "プロセス",
+    "description": "名前を指定してプロセスを終了",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "killall nginx"
+    ],
+    "related": [
+      "pkill",
+      "pgrep"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "pkill",
+    "category": "プロセス",
+    "description": "条件に一致するプロセスへシグナル送信",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "pkill -f worker"
+    ],
+    "related": [
+      "pgrep",
+      "nice"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "pgrep",
+    "category": "プロセス",
+    "description": "条件に一致するプロセスIDを検索",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "pgrep -a nginx"
+    ],
+    "related": [
+      "nice",
+      "nohup"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "nice",
+    "category": "プロセス",
+    "description": "優先度を指定してプロセスを開始",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "nice -n 10 command"
+    ],
+    "related": [
+      "nohup",
+      "ps"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "nohup",
+    "category": "プロセス",
+    "description": "ログアウト後もコマンドを継続",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "nohup ./job.sh &"
+    ],
+    "related": [
+      "ps",
+      "top"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "df",
+    "category": "ディスク",
+    "description": "ファイルシステムの空き容量を表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "df -h"
+    ],
+    "related": [
+      "du",
+      "lsblk"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "du",
+    "category": "ディスク",
+    "description": "ファイルやディレクトリの使用量を集計",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "du -sh /var/log"
+    ],
+    "related": [
+      "lsblk",
+      "blkid"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "lsblk",
+    "category": "ディスク",
+    "description": "ブロックデバイスを一覧表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "lsblk -f"
+    ],
+    "related": [
+      "blkid",
+      "mount"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "blkid",
+    "category": "ディスク",
+    "description": "デバイスのUUIDや形式を表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo blkid"
+    ],
+    "related": [
+      "mount",
+      "umount"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "mount",
+    "category": "ディスク",
+    "description": "ファイルシステムをマウント",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo mount /dev/sdb1 /mnt"
+    ],
+    "related": [
+      "umount",
+      "fdisk"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "umount",
+    "category": "ディスク",
+    "description": "ファイルシステムをアンマウント",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo umount /mnt"
+    ],
+    "related": [
+      "fdisk",
+      "iostat"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "fdisk",
+    "category": "ディスク",
+    "description": "パーティションテーブルを操作",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo fdisk -l"
+    ],
+    "related": [
+      "iostat",
+      "free"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "iostat",
+    "category": "ディスク",
+    "description": "CPUとディスクI/O統計を表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "iostat -xz 1"
+    ],
+    "related": [
+      "free",
+      "df"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "free",
+    "category": "ディスク",
+    "description": "メモリ使用量を表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "free -h"
+    ],
+    "related": [
+      "df",
+      "du"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "journalctl",
+    "category": "ログ",
+    "description": "systemdジャーナルを検索・表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "journalctl -u nginx -f"
+    ],
+    "related": [
+      "dmesg",
+      "logger"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "dmesg",
+    "category": "ログ",
+    "description": "カーネルメッセージを表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "dmesg --level=err,warn"
+    ],
+    "related": [
+      "logger",
+      "last"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "logger",
+    "category": "ログ",
+    "description": "syslogへメッセージを送信",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "logger \"deploy completed\""
+    ],
+    "related": [
+      "last",
+      "lastlog"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "last",
+    "category": "ログ",
+    "description": "ログイン履歴を表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "last -n 20"
+    ],
+    "related": [
+      "lastlog",
+      "logrotate"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "lastlog",
+    "category": "ログ",
+    "description": "全ユーザーの最終ログインを表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "lastlog"
+    ],
+    "related": [
+      "logrotate",
+      "ausearch"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "logrotate",
+    "category": "ログ",
+    "description": "ログのローテーションを実行",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo logrotate -d /etc/logrotate.conf"
+    ],
+    "related": [
+      "ausearch",
+      "aureport"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "ausearch",
+    "category": "ログ",
+    "description": "監査ログを検索",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo ausearch -m USER_LOGIN"
+    ],
+    "related": [
+      "aureport",
+      "zgrep"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "aureport",
+    "category": "ログ",
+    "description": "監査ログの集計レポートを作成",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo aureport --summary"
+    ],
+    "related": [
+      "zgrep",
+      "journalctl"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "zgrep",
+    "category": "ログ",
+    "description": "圧縮ログ内の文字列を検索",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "zgrep ERROR app.log.gz"
+    ],
+    "related": [
+      "journalctl",
+      "dmesg"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "systemctl",
+    "category": "systemd",
+    "description": "systemdのサービスやユニットを管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo systemctl restart nginx"
+    ],
+    "related": [
+      "hostnamectl",
+      "timedatectl"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "hostnamectl",
+    "category": "systemd",
+    "description": "ホスト名やシステム情報を管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "hostnamectl status"
+    ],
+    "related": [
+      "timedatectl",
+      "localectl"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "timedatectl",
+    "category": "systemd",
+    "description": "日時やタイムゾーンを管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "timedatectl status"
+    ],
+    "related": [
+      "localectl",
+      "loginctl"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "localectl",
+    "category": "systemd",
+    "description": "ロケールとキーマップを管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "localectl status"
+    ],
+    "related": [
+      "loginctl",
+      "systemd-analyze"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "loginctl",
+    "category": "systemd",
+    "description": "ログインセッションを管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "loginctl list-sessions"
+    ],
+    "related": [
+      "systemd-analyze",
+      "busctl"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "systemd-analyze",
+    "category": "systemd",
+    "description": "起動時間やユニット依存を分析",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "systemd-analyze blame"
+    ],
+    "related": [
+      "busctl",
+      "coredumpctl"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "busctl",
+    "category": "systemd",
+    "description": "D-Busを調査・操作",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "busctl list"
+    ],
+    "related": [
+      "coredumpctl",
+      "machinectl"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "coredumpctl",
+    "category": "systemd",
+    "description": "コアダンプを検索・表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "coredumpctl list"
+    ],
+    "related": [
+      "machinectl",
+      "systemctl"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "machinectl",
+    "category": "systemd",
+    "description": "仮想マシンやコンテナを管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "machinectl list"
+    ],
+    "related": [
+      "systemctl",
+      "hostnamectl"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "apt",
+    "category": "パッケージ管理",
+    "description": "Debian系でパッケージを管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo apt update"
+    ],
+    "related": [
+      "apt-cache",
+      "dpkg"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "apt-cache",
+    "category": "パッケージ管理",
+    "description": "APTパッケージ情報を検索",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "apt-cache search nginx"
+    ],
+    "related": [
+      "dpkg",
+      "dnf"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "dpkg",
+    "category": "パッケージ管理",
+    "description": "Debianパッケージを管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "dpkg -l"
+    ],
+    "related": [
+      "dnf",
+      "yum"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "dnf",
+    "category": "パッケージ管理",
+    "description": "Fedora/RHEL系でパッケージを管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo dnf install nginx"
+    ],
+    "related": [
+      "yum",
+      "rpm"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "yum",
+    "category": "パッケージ管理",
+    "description": "RHEL系でパッケージを管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo yum update"
+    ],
+    "related": [
+      "rpm",
+      "pacman"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "rpm",
+    "category": "パッケージ管理",
+    "description": "RPMパッケージを管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "rpm -qa"
+    ],
+    "related": [
+      "pacman",
+      "snap"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "pacman",
+    "category": "パッケージ管理",
+    "description": "Arch Linuxでパッケージを管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo pacman -Syu"
+    ],
+    "related": [
+      "snap",
+      "flatpak"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "snap",
+    "category": "パッケージ管理",
+    "description": "Snapパッケージを管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "snap list"
+    ],
+    "related": [
+      "flatpak",
+      "apt"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "flatpak",
+    "category": "パッケージ管理",
+    "description": "Flatpakアプリを管理",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "flatpak list"
+    ],
+    "related": [
+      "apt",
+      "apt-cache"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "tar",
+    "category": "圧縮・解凍",
+    "description": "アーカイブの作成・展開",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "tar -czf backup.tar.gz src/"
+    ],
+    "related": [
+      "gzip",
+      "gunzip"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "gzip",
+    "category": "圧縮・解凍",
+    "description": "gzip形式で圧縮",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "gzip access.log"
+    ],
+    "related": [
+      "gunzip",
+      "bzip2"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "gunzip",
+    "category": "圧縮・解凍",
+    "description": "gzip形式を展開",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "gunzip access.log.gz"
+    ],
+    "related": [
+      "bzip2",
+      "xz"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "bzip2",
+    "category": "圧縮・解凍",
+    "description": "bzip2形式で圧縮",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "bzip2 large.txt"
+    ],
+    "related": [
+      "xz",
+      "zip"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "xz",
+    "category": "圧縮・解凍",
+    "description": "xz形式で圧縮・展開",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "xz -z archive.tar"
+    ],
+    "related": [
+      "zip",
+      "unzip"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "zip",
+    "category": "圧縮・解凍",
+    "description": "ZIPアーカイブを作成",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "zip -r files.zip files/"
+    ],
+    "related": [
+      "unzip",
+      "7z"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "unzip",
+    "category": "圧縮・解凍",
+    "description": "ZIPアーカイブを展開",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "unzip files.zip -d output"
+    ],
+    "related": [
+      "7z",
+      "zcat"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "7z",
+    "category": "圧縮・解凍",
+    "description": "7-Zip形式などを操作",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "7z x archive.7z"
+    ],
+    "related": [
+      "zcat",
+      "tar"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "zcat",
+    "category": "圧縮・解凍",
+    "description": "gzipファイルを展開せず表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "zcat access.log.gz"
+    ],
+    "related": [
+      "tar",
+      "gzip"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "grep",
+    "category": "grep / sed / awk",
+    "description": "文字列や正規表現を検索",
+    "options": [
+      "-i: 大文字・小文字を区別しない",
+      "-r: ディレクトリを再帰検索",
+      "-v: 一致しない行を表示",
+      "-n: 行番号を表示",
+      "-E: 拡張正規表現を使用"
+    ],
+    "examples": [
+      "grep -rn \"ERROR\" /var/log"
+    ],
+    "related": [
+      "sed",
+      "awk"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "sed",
+    "category": "grep / sed / awk",
+    "description": "ストリーム上で文字列を変換",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sed \"s/old/new/g\" file"
+    ],
+    "related": [
+      "awk",
+      "cut"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "awk",
+    "category": "grep / sed / awk",
+    "description": "列指向のテキスト処理を実行",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "awk \"{print $1}\" file"
+    ],
+    "related": [
+      "cut",
+      "sort"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "cut",
+    "category": "grep / sed / awk",
+    "description": "行から指定した列を切り出す",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "cut -d: -f1 /etc/passwd"
+    ],
+    "related": [
+      "sort",
+      "uniq"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "sort",
+    "category": "grep / sed / awk",
+    "description": "テキスト行を並べ替える",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sort -u names.txt"
+    ],
+    "related": [
+      "uniq",
+      "tr"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "uniq",
+    "category": "grep / sed / awk",
+    "description": "隣接する重複行を集計・除去",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sort data | uniq -c"
+    ],
+    "related": [
+      "tr",
+      "xargs"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "tr",
+    "category": "grep / sed / awk",
+    "description": "文字の置換や削除を行う",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "tr \"a-z\" \"A-Z\" < file"
+    ],
+    "related": [
+      "xargs",
+      "wc"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "xargs",
+    "category": "grep / sed / awk",
+    "description": "標準入力からコマンド引数を組み立てる",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "find . -name \"*.tmp\" -print0 | xargs -0 rm"
+    ],
+    "related": [
+      "wc",
+      "grep"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "wc",
+    "category": "grep / sed / awk",
+    "description": "行数・単語数・バイト数を数える",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "wc -l access.log"
+    ],
+    "related": [
+      "grep",
+      "sed"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "crontab",
+    "category": "Cron",
+    "description": "ユーザーのCronジョブを編集",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "crontab -e"
+    ],
+    "related": [
+      "at",
+      "atq"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "at",
+    "category": "Cron",
+    "description": "指定時刻に一度だけコマンドを実行",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "echo \"job.sh\" | at 23:00"
+    ],
+    "related": [
+      "atq",
+      "atrm"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "atq",
+    "category": "Cron",
+    "description": "予約済みatジョブを一覧表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "atq"
+    ],
+    "related": [
+      "atrm",
+      "batch"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "atrm",
+    "category": "Cron",
+    "description": "予約済みatジョブを削除",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "atrm 3"
+    ],
+    "related": [
+      "batch",
+      "anacron"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "batch",
+    "category": "Cron",
+    "description": "負荷が低い時にジョブを実行",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "echo \"job.sh\" | batch"
+    ],
+    "related": [
+      "anacron",
+      "watch"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "anacron",
+    "category": "Cron",
+    "description": "停止中に逃した定期ジョブを補完",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sudo anacron -f"
+    ],
+    "related": [
+      "watch",
+      "sleep"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "watch",
+    "category": "Cron",
+    "description": "コマンドを一定間隔で繰り返し表示",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "watch -n 2 df -h"
+    ],
+    "related": [
+      "sleep",
+      "timeout"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "sleep",
+    "category": "Cron",
+    "description": "指定時間だけ処理を停止",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "sleep 5"
+    ],
+    "related": [
+      "timeout",
+      "crontab"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "timeout",
+    "category": "Cron",
+    "description": "コマンドの実行時間を制限",
+    "options": [
+      "-h / --help: ヘルプを表示",
+      "-v: 詳細な出力を表示",
+      "-f: 強制または追跡モード（対応時）"
+    ],
+    "examples": [
+      "timeout 30s ./job.sh"
+    ],
+    "related": [
+      "crontab",
+      "at"
+    ],
+    "icon": "⌘"
+  },
+  {
+    "name": "docker run",
+    "category": "Docker",
+    "description": "イメージからコンテナを作成・実行",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "docker run --rm -it ubuntu bash"
+    ],
+    "related": [
+      "docker ps",
+      "docker images"
+    ],
+    "icon": "🐳"
+  },
+  {
+    "name": "docker ps",
+    "category": "Docker",
+    "description": "コンテナを一覧表示",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "docker ps -a"
+    ],
+    "related": [
+      "docker images",
+      "docker build"
+    ],
+    "icon": "🐳"
+  },
+  {
+    "name": "docker images",
+    "category": "Docker",
+    "description": "ローカルイメージを一覧表示",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "docker images"
+    ],
+    "related": [
+      "docker build",
+      "docker pull"
+    ],
+    "icon": "🐳"
+  },
+  {
+    "name": "docker build",
+    "category": "Docker",
+    "description": "Dockerfileからイメージを構築",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "docker build -t myapp:latest ."
+    ],
+    "related": [
+      "docker pull",
+      "docker exec"
+    ],
+    "icon": "🐳"
+  },
+  {
+    "name": "docker pull",
+    "category": "Docker",
+    "description": "レジストリからイメージを取得",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "docker pull nginx:alpine"
+    ],
+    "related": [
+      "docker exec",
+      "docker logs"
+    ],
+    "icon": "🐳"
+  },
+  {
+    "name": "docker exec",
+    "category": "Docker",
+    "description": "実行中コンテナ内でコマンドを実行",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "docker exec -it web sh"
+    ],
+    "related": [
+      "docker logs",
+      "docker compose"
+    ],
+    "icon": "🐳"
+  },
+  {
+    "name": "docker logs",
+    "category": "Docker",
+    "description": "コンテナのログを表示",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "docker logs -f web"
+    ],
+    "related": [
+      "docker compose",
+      "docker system"
+    ],
+    "icon": "🐳"
+  },
+  {
+    "name": "docker compose",
+    "category": "Docker",
+    "description": "複数コンテナの構成を管理",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "docker compose up -d"
+    ],
+    "related": [
+      "docker system",
+      "docker run"
+    ],
+    "icon": "🐳"
+  },
+  {
+    "name": "docker system",
+    "category": "Docker",
+    "description": "Dockerリソースや情報を管理",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "docker system df"
+    ],
+    "related": [
+      "docker run",
+      "docker ps"
+    ],
+    "icon": "🐳"
+  },
+  {
+    "name": "git clone",
+    "category": "Git",
+    "description": "リポジトリを複製",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "git clone https://github.com/user/repo.git"
+    ],
+    "related": [
+      "git status",
+      "git add"
+    ],
+    "icon": "⑂"
+  },
+  {
+    "name": "git status",
+    "category": "Git",
+    "description": "作業ツリーの状態を表示",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "git status --short"
+    ],
+    "related": [
+      "git add",
+      "git commit"
+    ],
+    "icon": "⑂"
+  },
+  {
+    "name": "git add",
+    "category": "Git",
+    "description": "変更をステージへ追加",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "git add ."
+    ],
+    "related": [
+      "git commit",
+      "git branch"
+    ],
+    "icon": "⑂"
+  },
+  {
+    "name": "git commit",
+    "category": "Git",
+    "description": "ステージした変更を記録",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "git commit -m \"Update docs\""
+    ],
+    "related": [
+      "git branch",
+      "git switch"
+    ],
+    "icon": "⑂"
+  },
+  {
+    "name": "git branch",
+    "category": "Git",
+    "description": "ブランチを一覧・作成・削除",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "git branch -a"
+    ],
+    "related": [
+      "git switch",
+      "git pull"
+    ],
+    "icon": "⑂"
+  },
+  {
+    "name": "git switch",
+    "category": "Git",
+    "description": "作業ブランチを切り替え",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "git switch -c feature"
+    ],
+    "related": [
+      "git pull",
+      "git push"
+    ],
+    "icon": "⑂"
+  },
+  {
+    "name": "git pull",
+    "category": "Git",
+    "description": "リモート変更を取得して統合",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "git pull --rebase"
+    ],
+    "related": [
+      "git push",
+      "git log"
+    ],
+    "icon": "⑂"
+  },
+  {
+    "name": "git push",
+    "category": "Git",
+    "description": "ローカル変更をリモートへ送信",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "git push -u origin feature"
+    ],
+    "related": [
+      "git log",
+      "git clone"
+    ],
+    "icon": "⑂"
+  },
+  {
+    "name": "git log",
+    "category": "Git",
+    "description": "コミット履歴を表示",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "git log --oneline --graph"
+    ],
+    "related": [
+      "git clone",
+      "git status"
+    ],
+    "icon": "⑂"
+  },
+  {
+    "name": "kubectl get",
+    "category": "Kubernetes",
+    "description": "リソースを一覧表示",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "kubectl get pods -A"
+    ],
+    "related": [
+      "kubectl describe",
+      "kubectl apply"
+    ],
+    "icon": "⎈"
+  },
+  {
+    "name": "kubectl describe",
+    "category": "Kubernetes",
+    "description": "リソースの詳細を表示",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "kubectl describe pod web"
+    ],
+    "related": [
+      "kubectl apply",
+      "kubectl delete"
+    ],
+    "icon": "⎈"
+  },
+  {
+    "name": "kubectl apply",
+    "category": "Kubernetes",
+    "description": "マニフェストの状態を適用",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "kubectl apply -f deployment.yaml"
+    ],
+    "related": [
+      "kubectl delete",
+      "kubectl logs"
+    ],
+    "icon": "⎈"
+  },
+  {
+    "name": "kubectl delete",
+    "category": "Kubernetes",
+    "description": "リソースを削除",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "kubectl delete pod web"
+    ],
+    "related": [
+      "kubectl logs",
+      "kubectl exec"
+    ],
+    "icon": "⎈"
+  },
+  {
+    "name": "kubectl logs",
+    "category": "Kubernetes",
+    "description": "Pod内コンテナのログを表示",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "kubectl logs -f deploy/web"
+    ],
+    "related": [
+      "kubectl exec",
+      "kubectl config"
+    ],
+    "icon": "⎈"
+  },
+  {
+    "name": "kubectl exec",
+    "category": "Kubernetes",
+    "description": "Pod内でコマンドを実行",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "kubectl exec -it web -- sh"
+    ],
+    "related": [
+      "kubectl config",
+      "kubectl rollout"
+    ],
+    "icon": "⎈"
+  },
+  {
+    "name": "kubectl config",
+    "category": "Kubernetes",
+    "description": "kubeconfigを管理",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "kubectl config get-contexts"
+    ],
+    "related": [
+      "kubectl rollout",
+      "kubectl port-forward"
+    ],
+    "icon": "⎈"
+  },
+  {
+    "name": "kubectl rollout",
+    "category": "Kubernetes",
+    "description": "ワークロードの更新を管理",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "kubectl rollout status deploy/web"
+    ],
+    "related": [
+      "kubectl port-forward",
+      "kubectl get"
+    ],
+    "icon": "⎈"
+  },
+  {
+    "name": "kubectl port-forward",
+    "category": "Kubernetes",
+    "description": "ローカルポートをPodへ転送",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "kubectl port-forward svc/web 8080:80"
+    ],
+    "related": [
+      "kubectl get",
+      "kubectl describe"
+    ],
+    "icon": "⎈"
+  },
+  {
+    "name": "oc login",
+    "category": "OpenShift",
+    "description": "OpenShiftクラスターへログイン",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "oc login https://api.example.com:6443"
+    ],
+    "related": [
+      "oc project",
+      "oc new-app"
+    ],
+    "icon": "◉"
+  },
+  {
+    "name": "oc project",
+    "category": "OpenShift",
+    "description": "プロジェクトを表示・切り替え",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "oc project my-app"
+    ],
+    "related": [
+      "oc new-app",
+      "oc get"
+    ],
+    "icon": "◉"
+  },
+  {
+    "name": "oc new-app",
+    "category": "OpenShift",
+    "description": "ソースやイメージからアプリを作成",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "oc new-app nginx"
+    ],
+    "related": [
+      "oc get",
+      "oc describe"
+    ],
+    "icon": "◉"
+  },
+  {
+    "name": "oc get",
+    "category": "OpenShift",
+    "description": "OpenShiftリソースを一覧表示",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "oc get pods"
+    ],
+    "related": [
+      "oc describe",
+      "oc logs"
+    ],
+    "icon": "◉"
+  },
+  {
+    "name": "oc describe",
+    "category": "OpenShift",
+    "description": "リソースの詳細を表示",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "oc describe route web"
+    ],
+    "related": [
+      "oc logs",
+      "oc rsh"
+    ],
+    "icon": "◉"
+  },
+  {
+    "name": "oc logs",
+    "category": "OpenShift",
+    "description": "PodやBuildのログを表示",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "oc logs -f deploy/web"
+    ],
+    "related": [
+      "oc rsh",
+      "oc expose"
+    ],
+    "icon": "◉"
+  },
+  {
+    "name": "oc rsh",
+    "category": "OpenShift",
+    "description": "Pod内にリモートシェルで接続",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "oc rsh deploy/web"
+    ],
+    "related": [
+      "oc expose",
+      "oc rollout"
+    ],
+    "icon": "◉"
+  },
+  {
+    "name": "oc expose",
+    "category": "OpenShift",
+    "description": "Serviceなどを外部公開",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "oc expose service web"
+    ],
+    "related": [
+      "oc rollout",
+      "oc login"
+    ],
+    "icon": "◉"
+  },
+  {
+    "name": "oc rollout",
+    "category": "OpenShift",
+    "description": "Deploymentの更新を管理",
+    "options": [
+      "--help: ヘルプを表示",
+      "-q: 出力を簡潔にする",
+      "--no-color: 色なしで表示"
+    ],
+    "examples": [
+      "oc rollout status deploy/web"
+    ],
+    "related": [
+      "oc login",
+      "oc project"
+    ],
+    "icon": "◉"
+  }
+]
