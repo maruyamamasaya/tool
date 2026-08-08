@@ -3,6 +3,14 @@
 
   const STORAGE_KEY = "meeting-timer.v1";
 
+  function todayAt(time, referenceMs) {
+    const match = /^(\d{2}):(\d{2})$/.exec(time || "");
+    if (!match) return "";
+    const date = new Date(referenceMs);
+    date.setHours(Number(match[1]), Number(match[2]), 0, 0);
+    return date.toISOString();
+  }
+
   function calculateSchedule(settings, nowMs) {
     const start = new Date(settings.startAt).getTime();
     const end = settings.endMode === "duration"
@@ -25,7 +33,7 @@
   }
 
   if (typeof module !== "undefined" && module.exports) {
-    module.exports = { calculateSchedule };
+    module.exports = { calculateSchedule, todayAt };
     return;
   }
 
@@ -33,25 +41,32 @@
   const form = $("#settings");
   let settings = loadSettings();
 
-  function localInputValue(date) {
-    const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-    return local.toISOString().slice(0, 16);
-  }
+  function timeValue(date) { return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`; }
+  function roundToFive(date) { const rounded = new Date(date); rounded.setSeconds(0, 0); rounded.setMinutes(Math.floor(rounded.getMinutes() / 5) * 5); return rounded; }
 
   function defaultSettings() {
-    const start = new Date();
-    start.setSeconds(0, 0);
+    const start = roundToFive(new Date());
     const end = new Date(start.getTime() + 60 * 60000);
-    return { startAt: localInputValue(start), endAt: localInputValue(end), endMode: "datetime", durationHours: 1, splitAt: localInputValue(start), splitCount: 4, startTurn: 1 };
+    return { startTime: timeValue(start), endTime: timeValue(end), endMode: "datetime", durationHours: 1, splitDelay: 0, splitCount: 4, startTurn: 1 };
   }
 
   function loadSettings() {
-    try { return { ...defaultSettings(), ...JSON.parse(localStorage.getItem(STORAGE_KEY)) }; }
+    try {
+      const loaded = { ...defaultSettings(), ...JSON.parse(localStorage.getItem(STORAGE_KEY)) };
+      if (loaded.startTime) loaded.startAt = todayAt(loaded.startTime, Date.now());
+      if (loaded.endTime) loaded.endAt = todayAt(loaded.endTime, Date.now());
+      if (!loaded.splitAt) loaded.splitAt = new Date(Math.max(new Date(loaded.startAt).getTime(), Date.now())).toISOString();
+      return loaded;
+    }
     catch (_) { return defaultSettings(); }
   }
 
   function setFormValues() {
-    ["startAt", "endAt", "durationHours", "splitAt", "splitCount", "startTurn"].forEach(id => { $("#" + id).value = settings[id]; });
+    const defaults = defaultSettings();
+    const startTime = settings.startTime || (settings.startAt ? timeValue(new Date(settings.startAt)) : defaults.startTime);
+    const endTime = settings.endTime || (settings.endAt ? timeValue(new Date(settings.endAt)) : defaults.endTime);
+    [["startHour", startTime.slice(0, 2)], ["startMinute", startTime.slice(3)], ["endHour", endTime.slice(0, 2)], ["endMinute", endTime.slice(3)]].forEach(([id, value]) => { $("#" + id).value = value; });
+    ["durationHours", "splitDelay", "splitCount", "startTurn"].forEach(id => { $("#" + id).value = settings[id] ?? defaults[id]; });
     setEndMode(settings.endMode);
   }
 
@@ -60,11 +75,17 @@
     document.querySelectorAll("[data-end-mode]").forEach(button => button.classList.toggle("active", button.dataset.endMode === mode));
     $("#endAtField").hidden = mode !== "datetime";
     $("#durationField").hidden = mode !== "duration";
-    $("#endAt").required = mode === "datetime";
+    ["endHour", "endMinute"].forEach(id => { $("#" + id).required = mode === "datetime"; });
   }
 
   function collectSettings() {
-    return { startAt: $("#startAt").value, endAt: $("#endAt").value, endMode: settings.endMode, durationHours: Number($("#durationHours").value), splitAt: $("#splitAt").value, splitCount: Number($("#splitCount").value), startTurn: Number($("#startTurn").value) };
+    const now = Date.now();
+    const startTime = `${$("#startHour").value}:${$("#startMinute").value}`;
+    const endTime = `${$("#endHour").value}:${$("#endMinute").value}`;
+    const splitDelay = Number($("#splitDelay").value);
+    const startAt = todayAt(startTime, now);
+    const splitAt = Math.max(new Date(startAt).getTime(), now + splitDelay * 60000);
+    return { startTime, endTime, startAt, endAt: todayAt(endTime, now), endMode: settings.endMode, durationHours: Number($("#durationHours").value), splitDelay, splitAt: new Date(splitAt).toISOString(), splitCount: Number($("#splitCount").value), startTurn: Number($("#startTurn").value) };
   }
 
   function formatClock(ms) { return new Date(ms).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit", hour12: false }); }
@@ -96,7 +117,10 @@
   }
 
   document.querySelectorAll("[data-end-mode]").forEach(button => button.addEventListener("click", () => setEndMode(button.dataset.endMode)));
-  $("#startAt").addEventListener("change", () => { if (!$("#splitAt").value) $("#splitAt").value = $("#startAt").value; });
+  function fillTimeSelects() {
+    ["startHour", "endHour"].forEach(id => { $("#" + id).innerHTML = Array.from({ length: 24 }, (_, value) => `<option value="${String(value).padStart(2, "0")}">${String(value).padStart(2, "0")}</option>`).join(""); });
+    ["startMinute", "endMinute"].forEach(id => { $("#" + id).innerHTML = Array.from({ length: 12 }, (_, index) => `<option value="${String(index * 5).padStart(2, "0")}">${String(index * 5).padStart(2, "0")}</option>`).join(""); });
+  }
   form.addEventListener("submit", event => {
     event.preventDefault();
     const next = collectSettings();
@@ -108,6 +132,7 @@
     render();
   });
 
+  fillTimeSelects();
   setFormValues();
   render();
   setInterval(render, 1000);

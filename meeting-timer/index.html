@@ -20,18 +20,18 @@
 
     <section class="workspace">
       <form id="settings" class="settings" autocomplete="off">
-        <div class="section-heading"><span>01</span><div><h2>会議時間</h2><p>終了日時、または会議時間を設定</p></div></div>
-        <label class="field"><span>開始日時</span><input id="startAt" type="datetime-local" required></label>
+        <div class="section-heading"><span>01</span><div><h2>会議時間</h2><p>今日の開始・終了時刻を設定</p></div></div>
+        <label class="field"><span>開始時刻</span><span class="time-selects"><select id="startHour" aria-label="開始時刻（時）" required></select><b>時</b><select id="startMinute" aria-label="開始時刻（分）" required></select><b>分</b></span></label>
         <div class="end-mode" role="group" aria-label="終了の指定方法">
-          <button class="active" data-end-mode="datetime" type="button">終了日時</button>
+          <button class="active" data-end-mode="datetime" type="button">終了時刻</button>
           <button data-end-mode="duration" type="button">何時間</button>
         </div>
-        <label id="endAtField" class="field"><span>終了日時</span><input id="endAt" type="datetime-local" required></label>
+        <label id="endAtField" class="field"><span>終了時刻</span><span class="time-selects"><select id="endHour" aria-label="終了時刻（時）" required></select><b>時</b><select id="endMinute" aria-label="終了時刻（分）" required></select><b>分</b></span></label>
         <label id="durationField" class="field" hidden><span>会議時間</span><span class="input-suffix"><input id="durationHours" type="number" min="0.1" max="168" step="0.1" value="1"><b>時間</b></span></label>
 
         <div class="divider"></div>
         <div class="section-heading"><span>02</span><div><h2>ターン分割</h2><p>交代の開始と回数を設定</p></div></div>
-        <label class="field"><span>分割開始</span><input id="splitAt" type="datetime-local"></label>
+        <label class="field"><span>分割開始</span><span class="input-suffix"><select id="splitDelay"><option value="0">今すぐ開始</option><option value="5">5分後に開始</option><option value="10">10分後に開始</option><option value="15">15分後に開始</option><option value="30">30分後に開始</option><option value="45">45分後に開始</option><option value="60">60分後に開始</option></select><b>自動設定</b></span></label>
         <div class="field-row">
           <label class="field"><span>分割数</span><span class="input-suffix"><input id="splitCount" type="number" min="1" max="99" value="4"><b>分割</b></span></label>
           <label class="field"><span>開始ターン</span><span class="input-suffix"><input id="startTurn" type="number" min="1" max="99" value="1"><b>ターン</b></span></label>
