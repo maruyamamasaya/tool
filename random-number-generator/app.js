@@ -23,7 +23,7 @@
     return numbers.join(SEPARATORS[format] === undefined ? SEPARATORS.newline : SEPARATORS[format]);
   }
 
-  function randomDigitString(digitCount, fillRandomValues) {
+  function randomDigitString(digitCount, fillRandomValues, startsAtZero = false) {
     const digits = Number(digitCount);
     if (!Number.isInteger(digits) || digits < 1 || digits > 32) {
       throw new RangeError("桁数は1〜32の整数で指定してください");
@@ -35,7 +35,7 @@
       const buffer = new Uint8Array(Math.max(16, digits - result.length));
       fill(buffer);
       for (const value of buffer) {
-        if (result.length === 0) {
+        if (result.length === 0 && !startsAtZero) {
           if (value >= 252) continue;
           result += String((value % 9) + 1);
         } else {
@@ -45,7 +45,7 @@
         if (result.length === digits) break;
       }
     }
-    return result;
+    return startsAtZero ? result.replace(/^0+(?=\d)/, "") : result;
   }
 
   if (typeof module !== "undefined") module.exports = { formatNumbers, parseRange, randomDigitString, randomInteger, SEPARATORS };
@@ -54,6 +54,8 @@
   const range = document.querySelector("#range");
   const digits = document.querySelector("#digits");
   const digitsControl = document.querySelector("#digitsControl");
+  const zeroStart = document.querySelector("#zeroStart");
+  const digitsHelp = document.querySelector("#digitsHelp");
   const count = document.querySelector("#count");
   const separator = document.querySelector("#separator");
   const output = document.querySelector("#output");
@@ -71,7 +73,7 @@
     if (range.value === "digits") {
       const digitCount = Math.min(32, Math.max(1, Number.parseInt(digits.value, 10) || 1));
       digits.value = String(digitCount);
-      numbers = Array.from({ length: Number(count.value) }, () => randomDigitString(digitCount));
+      numbers = Array.from({ length: Number(count.value) }, () => randomDigitString(digitCount, undefined, zeroStart.checked));
     } else {
       const { minimum, maximum } = parseRange(range.value);
       numbers = Array.from({ length: Number(count.value) }, () => randomInteger(minimum, maximum));
@@ -83,6 +85,17 @@
     const usesDigits = range.value === "digits";
     digitsControl.hidden = !usesDigits;
     if (usesDigits) digits.focus();
+    if (usesDigits) updateZeroStart();
+    else generate();
+  }
+
+  function updateZeroStart() {
+    const digitCount = Math.min(32, Math.max(1, Number.parseInt(digits.value, 10) || 1));
+    const maximum = "9".repeat(digitCount);
+    const minimum = digitCount === 1 ? "1" : `1${"0".repeat(digitCount - 1)}`;
+    digitsHelp.textContent = zeroStart.checked
+      ? `0〜${maximum}の範囲`
+      : `1〜32桁（例：${digitCount}桁なら${minimum}〜${maximum}）`;
     generate();
   }
 
@@ -107,7 +120,8 @@
   document.querySelector("#copy").addEventListener("click", copyResult);
   separator.addEventListener("change", render);
   range.addEventListener("change", updateRangeMode);
-  digits.addEventListener("change", generate);
+  digits.addEventListener("change", updateZeroStart);
+  zeroStart.addEventListener("change", updateZeroStart);
   count.addEventListener("change", generate);
   generate();
 })();
