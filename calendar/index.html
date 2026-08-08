@@ -38,13 +38,15 @@
         <p id="selectionHelp" class="help">カレンダーから日付を1つ選んでください。</p>
 
         <div class="time-section">
-          <h3>時間</h3>
+          <div class="section-title"><h3>時間</h3><span>日付ごとに変更できます</span></div>
+          <p class="time-description">新しく選ぶ日付に使う時間</p>
           <div class="time-fields">
             <label><span>開始</span><select id="startTime" aria-label="開始時間"></select></label>
             <span aria-hidden="true">〜</span>
             <label><span>終了</span><select id="endTime" aria-label="終了時間"></select></label>
           </div>
           <p id="timeError" class="error" role="alert"></p>
+          <div id="dateTimeList" class="date-time-list" aria-live="polite"></div>
         </div>
 
         <section class="output-section" aria-labelledby="outputTitle">
