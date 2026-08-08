@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="文章やドラッグ＆ドロップでサーバー・ネットワーク構成図を作成">
+  <title>Infrastructure Diagram Builder</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">⬡</span><div><strong>Infrastructure</strong><small>Diagram Builder</small></div></div>
+    <nav class="actions" aria-label="操作">
+      <button data-action="new" title="新しい図">＋ 新規</button>
+      <button data-action="prompt" class="primary">✦ 文章から生成</button>
+      <button data-action="layout">⌘ 自動整列</button>
+      <span class="divider"></span>
+      <button data-action="undo" aria-label="元に戻す">↶</button><button data-action="redo" aria-label="やり直す">↷</button>
+      <button data-action="save">JSON保存</button><button data-action="import">読込</button><button data-action="png">PNG</button><button data-action="output">出力</button>
+      <button data-action="theme" aria-label="テーマ切替">◐</button>
+    </nav>
+  </header>
+  <main class="workspace">
+    <aside class="palette panel">
+      <div class="panel-title"><div><span class="kicker">COMPONENTS</span><h2>パーツ</h2></div><button class="icon-btn" id="collapsePalette">‹</button></div>
+      <label class="search">⌕ <input id="partSearch" placeholder="パーツを検索" aria-label="パーツを検索"></label>
+      <div id="parts" class="parts"></div>
+      <p class="drag-hint">キャンバスへドラッグして追加</p>
+    </aside>
+    <section class="canvas-wrap" aria-label="構成図エリア">
+      <div class="canvas-tools"><button data-action="zoomout">−</button><span id="zoomLabel">100%</span><button data-action="zoomin">＋</button><button data-action="fit">全体表示</button></div>
+      <div id="canvas" tabindex="0"><div id="world"><svg id="edges" aria-hidden="true"><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z"/></marker><marker id="arrowStart" markerWidth="10" markerHeight="10" refX="1" refY="3" orient="auto"><path d="M9,0 L9,6 L0,3 z"/></marker></defs><g id="edgeLayer"></g></svg><div id="nodes"></div></div></div>
+      <div class="status"><span><i class="status-dot"></i><b id="nodeCount">0</b> ノード</span><span><b id="edgeCount">0</b> 接続</span><span>ダブルクリックで接続</span></div>
+    </section>
+    <aside class="properties panel">
+      <div class="panel-title"><div><span class="kicker">INSPECTOR</span><h2>プロパティ</h2></div></div>
+      <div id="emptyInspector" class="empty"><span>⬡</span><strong>ノードを選択</strong><p>キャンバス上のノードまたは接続線をクリックして編集します</p></div>
+      <form id="nodeInspector" hidden>
+        <label>名前<input id="nodeName"></label><label>種類<select id="nodeType"></select></label><label>メモ<textarea id="nodeNote" rows="3" placeholder="役割や補足情報"></textarea></label>
+        <div class="form-actions"><button type="button" data-action="duplicate">複製</button><button type="button" class="danger" data-action="delete">削除</button></div>
+        <button type="button" class="wide" data-action="connect">このノードから接続</button>
+      </form>
+      <form id="edgeInspector" hidden>
+        <label>接続ラベル<input id="edgeLabel" placeholder="HTTPS :443"></label>
+        <label>矢印<select id="edgeDirection"><option value="forward">→ 一方向</option><option value="both">↔ 双方向</option><option value="none">— なし</option></select></label>
+        <button type="button" class="danger wide" data-action="delete">接続を削除</button>
+      </form>
+    </aside>
+  </main>
+
+  <dialog id="promptDialog"><form method="dialog"><div class="dialog-head"><div><span class="kicker">QUICK GENERATE</span><h2>文章から構成図を生成</h2></div><button value="cancel" class="close">×</button></div><p>1行ずつ、つながりや台数を入力してください。</p><textarea id="promptText" rows="9">InternetからALBへ443
+ALBからWebサーバー2台
+WebサーバーからDBへ3306
+DBはRDS</textarea><div class="examples"><b>入力のヒント</b><span>「→」「->」「から」「へ」「↓」に対応</span><span>ポートから HTTPS / HTTP / SSH / TCP を推定</span></div><div class="dialog-actions"><button value="cancel">キャンセル</button><button value="default" id="generateBtn" class="primary">✦ 構成図を生成</button></div></form></dialog>
+  <dialog id="outputDialog"><div class="dialog-head"><div><span class="kicker">EXPORT</span><h2>図をテキストで共有</h2></div><button class="close" data-close>×</button></div><div class="tabs"><button class="active" data-tab="text">テキスト</button><button data-tab="mermaid">Mermaid</button></div><textarea id="outputText" rows="14" readonly></textarea><div class="dialog-actions"><button id="copyOutput" class="primary">コピー</button></div></dialog>
+  <input type="file" id="jsonFile" accept="application/json" hidden>
+  <div id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
