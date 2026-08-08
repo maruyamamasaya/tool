@@ -13,6 +13,7 @@
 | [くじ・抽選シミュレーター](https://maruyamamasaya.github.io/tool/lottery-simulator/) | 均等なくじ・確率付きガチャを抽選し、履歴・当選率・理論値との差を確認できます。 |
 | [Linux Command Explorer](https://maruyamamasaya.github.io/tool/linux-command-explorer/) | 18カテゴリ・162のLinuxコマンドを検索し、オプションや使用例の確認・コピー、お気に入り登録ができます。 |
 | [Simple Calculator](https://maruyamamasaya.github.io/tool/simple-calculator/) | 四則演算と括弧を使った式を直接入力し、計算結果と直近の履歴を確認できます。 |
+| [Time Calculator](https://maruyamamasaya.github.io/tool/time-calculator/) | 開始・終了・休憩から勤務時間を計算し、複数の時間帯も合計してテキストでコピーできます。 |
 | [Number Calculator](https://maruyamamasaya.github.io/tool/number-calculator/) | 改行・カンマ・空白区切りの数値を貼り付けて、合計・平均・中央値などをまとめて確認できます。 |
 | [Percentage Calculator](https://maruyamamasaya.github.io/tool/percentage-calculator/) | 増減率・割合・○%の値・増減後の結果から元の値をすばやく計算できます。 |
 | [QR Code Generator](https://maruyamamasaya.github.io/tool/qr-code-generator/) | URLを入力または貼り付けてQRコードを生成し、PNG画像として保存できます。 |
