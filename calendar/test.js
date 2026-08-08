@@ -1,16 +1,17 @@
 "use strict";
 const assert = require("assert");
-const { calculateDateRange, getCalendarCells, parseDate } = require("./app.js");
+const { formatScheduleText, getCalendarCells, getJapaneseHolidays, parseDate } = require("./app.js");
 
 assert.strictEqual(parseDate("2026-02-29"), null);
 assert.ok(parseDate("2024-02-29"));
 
-let result = calculateDateRange("2026-08-03", "2026-08-09", true);
-assert.deepStrictEqual({ total: result.totalDays, business: result.businessDays, weekend: result.weekendDays }, { total: 7, business: 5, weekend: 2 });
+assert.strictEqual(formatScheduleText(new Set(["2026-08-08"]), 12, 13, false), "8月8日　12：00　〜　13：00");
+assert.strictEqual(formatScheduleText(new Set(["2026-08-10", "2026-08-08"]), 9, 18, true), "・8月8日　09：00　〜　18：00\n・8月10日　09：00　〜　18：00");
 
-result = calculateDateRange("2026-08-07", "2026-08-10", false);
-assert.deepStrictEqual({ total: result.totalDays, business: result.businessDays, weekend: result.weekendDays }, { total: 3, business: 1, weekend: 2 });
-assert.strictEqual(calculateDateRange("2026-08-10", "2026-08-07", true).valid, false);
+const holidays2026 = getJapaneseHolidays(2026);
+assert.strictEqual(holidays2026.get("2026-02-11"), "建国記念の日");
+assert.strictEqual(holidays2026.get("2026-05-06"), "振替休日");
+assert.strictEqual(holidays2026.get("2026-09-22"), "国民の休日");
 
 const cells = getCalendarCells(2026, 7);
 assert.strictEqual(cells.length, 42);

@@ -3,59 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="月間カレンダーを見ながら、2つの日付の経過日数や営業日数を数えられるシンプルなカレンダー">
-  <meta name="theme-color" content="#f7f3eb">
-  <title>Calendar — 日付カウンター</title>
+  <meta name="description" content="候補日と時間を選び、予定調整用のテキストをすぐにコピーできるシンプルなカレンダー">
+  <meta name="theme-color" content="#f6f7f8">
+  <title>Calendar — 日程候補を作成</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   <main class="app-shell">
     <header class="topbar">
-      <a class="brand" href="../" aria-label="Browser Tools トップへ">
-        <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
-        <span><b>CALENDAR</b><small>日付を、もっとわかりやすく。</small></span>
-      </a>
-      <button id="todayButton" class="today-button" type="button">今日に戻る</button>
+      <a class="brand" href="../" aria-label="Browser Tools トップへ"><span class="brand-icon" aria-hidden="true">□</span><span><b>Calendar</b><small>日程候補をかんたん作成</small></span></a>
+      <button id="todayButton" class="subtle-button" type="button">今日</button>
     </header>
 
-    <section class="workspace">
-      <section class="calendar-panel" aria-labelledby="monthLabel">
+    <div class="workspace">
+      <section class="calendar-card" aria-labelledby="monthLabel">
         <div class="month-nav">
-          <button id="previousMonth" class="icon-button" type="button" aria-label="前の月">←</button>
+          <button id="previousMonth" class="nav-button" type="button" aria-label="前の月">‹</button>
           <div><p id="yearLabel"></p><h1 id="monthLabel"></h1></div>
-          <button id="nextMonth" class="icon-button" type="button" aria-label="次の月">→</button>
+          <button id="nextMonth" class="nav-button" type="button" aria-label="次の月">›</button>
         </div>
         <div class="weekdays" aria-hidden="true"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
         <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="月間カレンダー"></div>
-        <div class="legend"><span><i class="range-dot"></i>選択期間</span><span><i class="today-dot"></i>今日</span><span>土日を除いて営業日を計算</span></div>
+        <div class="legend" aria-label="カレンダーの色分け"><span><i class="weekday-key"></i>平日</span><span><i class="saturday-key"></i>土曜</span><span><i class="holiday-key"></i>日曜・祝日</span><span><i class="selected-key"></i>選択中</span></div>
       </section>
 
-      <aside class="counter-panel" aria-labelledby="counterTitle">
-        <div class="counter-heading"><p>DATE COUNTER</p><h2 id="counterTitle">日付をカウント</h2><span>開始日と終了日を選んでください</span></div>
-        <div class="date-fields">
-          <label><span>開始日</span><input id="startDate" type="date"></label>
-          <button id="swapDates" class="swap-button" type="button" aria-label="開始日と終了日を入れ替える">⇄</button>
-          <label><span>終了日</span><input id="endDate" type="date"></label>
-        </div>
-        <p id="dateError" class="error" role="alert"></p>
+      <aside class="control-card" aria-labelledby="controlTitle">
+        <div class="panel-heading"><p>候補を選択</p><h2 id="controlTitle">日程テキストを作る</h2></div>
 
-        <div class="primary-result">
-          <span>期間の日数</span>
-          <div><strong id="totalDays">—</strong><b>日</b></div>
-          <small id="rangeCaption">日付を選択すると結果が表示されます</small>
+        <fieldset class="mode-switch">
+          <legend>選択モード</legend>
+          <label><input type="radio" name="selectionMode" value="single" checked><span>1日だけ</span></label>
+          <label><input type="radio" name="selectionMode" value="multiple"><span>複数の候補日</span></label>
+        </fieldset>
+        <p id="selectionHelp" class="help">カレンダーから日付を1つ選んでください。</p>
+
+        <div class="time-section">
+          <h3>時間</h3>
+          <div class="time-fields">
+            <label><span>開始</span><select id="startTime" aria-label="開始時間"></select></label>
+            <span aria-hidden="true">〜</span>
+            <label><span>終了</span><select id="endTime" aria-label="終了時間"></select></label>
+          </div>
+          <p id="timeError" class="error" role="alert"></p>
         </div>
 
-        <div class="stats">
-          <article><span>営業日</span><strong id="businessDays">—</strong><small>月〜金</small></article>
-          <article><span>土日</span><strong id="weekendDays">—</strong><small>期間内</small></article>
-          <article><span>週 + 日</span><strong id="weeksDays">—</strong><small>経過期間</small></article>
-        </div>
+        <section class="output-section" aria-labelledby="outputTitle">
+          <div class="section-title"><h3 id="outputTitle">出力テキスト</h3><span id="selectedCount">0件</span></div>
+          <textarea id="outputText" rows="5" readonly placeholder="日付を選択すると、ここに表示されます"></textarea>
+          <button id="copyButton" class="primary-button" type="button" disabled><span>テキストをコピー</span></button>
+          <p id="copyStatus" class="status" role="status" aria-live="polite"></p>
+        </section>
 
-        <label class="count-mode"><input id="includeBoth" type="checkbox" checked><span><b>開始日と終了日を含める</b><small>オフにすると2つの日付の差を表示します</small></span></label>
-        <p class="notice">営業日は土・日曜日を除いて算出します。祝日は含まれます。</p>
+        <details class="holiday-settings">
+          <summary>独自の祝日を追加</summary>
+          <p>このページを開いている間だけカレンダーに反映します。</p>
+          <div class="holiday-form">
+            <label><span>日付</span><input id="customHolidayDate" type="date"></label>
+            <label><span>祝日名</span><input id="customHolidayName" type="text" maxlength="30" placeholder="例：会社休日"></label>
+            <button id="addHoliday" class="subtle-button" type="button">追加</button>
+          </div>
+          <p id="holidayError" class="error" role="alert"></p>
+          <ul id="customHolidayList" class="holiday-list"></ul>
+        </details>
       </aside>
-    </section>
-    <footer><span>Browser Tools</span><span>すべての計算はブラウザ内で行われます</span></footer>
+    </div>
+    <footer><span>Browser Tools</span><span>入力内容は保存されません</span></footer>
   </main>
   <script src="./app.js" defer></script>
 </body>
