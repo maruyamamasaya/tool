@@ -13,6 +13,9 @@ const elements = {
   columnCount: document.querySelector("#columnCount"),
   filteredCount: document.querySelector("#filteredCount"),
   searchInput: document.querySelector("#searchInput"),
+  autoFitButton: document.querySelector("#autoFitButton"),
+  dataTable: document.querySelector("#dataTable"),
+  tableColumns: document.querySelector("#tableColumns"),
   tableHead: document.querySelector("#tableHead"),
   tableBody: document.querySelector("#tableBody"),
   emptyResult: document.querySelector("#emptyResult")
@@ -21,6 +24,10 @@ const elements = {
 let headers = [];
 let rows = [];
 let sortState = { column: -1, direction: "none" };
+const MIN_COLUMN_WIDTH = 90;
+const MAX_COLUMN_WIDTH = 420;
+const DEFAULT_COLUMN_WIDTH = 180;
+let columnWidths = [];
 
 elements.selectButton.addEventListener("click", (event) => {
   event.stopPropagation();
@@ -36,6 +43,7 @@ elements.dropZone.addEventListener("keydown", (event) => {
 });
 elements.fileInput.addEventListener("change", () => loadFile(elements.fileInput.files[0]));
 elements.searchInput.addEventListener("input", renderBody);
+elements.autoFitButton.addEventListener("click", autoFitAllColumns);
 
 ["dragenter", "dragover"].forEach((name) => elements.dropZone.addEventListener(name, (event) => {
   event.preventDefault();
@@ -69,6 +77,7 @@ async function loadFile(file) {
       originalIndex
     }));
     sortState = { column: -1, direction: "none" };
+    columnWidths = headers.map(() => DEFAULT_COLUMN_WIDTH);
     elements.searchInput.value = "";
     elements.fileName.textContent = file.name;
     elements.encodingLabel.textContent = decoded.encoding;
@@ -76,6 +85,7 @@ async function loadFile(file) {
     elements.columnCount.textContent = headers.length.toLocaleString("ja-JP");
     renderHeader();
     renderBody();
+    autoFitAllColumns();
     elements.dropZone.hidden = true;
     elements.viewer.hidden = false;
   } catch (error) {
@@ -140,8 +150,12 @@ function parseCsv(text) {
 
 function renderHeader() {
   elements.tableHead.replaceChildren();
+  elements.tableColumns.replaceChildren();
   const headerRow = document.createElement("tr");
   headers.forEach((header, index) => {
+    const column = document.createElement("col");
+    column.style.width = `${columnWidths[index]}px`;
+    elements.tableColumns.append(column);
     const th = document.createElement("th");
     const button = document.createElement("button");
     const label = document.createElement("span");
@@ -152,12 +166,79 @@ function renderHeader() {
     label.textContent = header;
     mark.className = "sort-mark";
     mark.textContent = "◇";
+    const resizer = document.createElement("button");
+    resizer.type = "button";
+    resizer.className = "column-resizer";
+    resizer.setAttribute("aria-label", `${header}列の幅を調節`);
+    resizer.title = "ドラッグで列幅を調節・ダブルクリックで自動調節";
+    resizer.addEventListener("click", (event) => event.stopPropagation());
+    resizer.addEventListener("dblclick", (event) => {
+      event.stopPropagation();
+      autoFitColumn(index);
+    });
+    resizer.addEventListener("keydown", (event) => resizeColumnWithKeyboard(event, index));
+    resizer.addEventListener("pointerdown", (event) => startColumnResize(event, index, resizer));
     button.append(label, mark);
-    th.append(button);
+    th.append(button, resizer);
     headerRow.append(th);
   });
   elements.tableHead.append(headerRow);
   updateSortIndicators();
+}
+
+function clampColumnWidth(width) {
+  return Math.min(MAX_COLUMN_WIDTH, Math.max(MIN_COLUMN_WIDTH, Math.round(width)));
+}
+
+function setColumnWidth(index, width) {
+  columnWidths[index] = clampColumnWidth(width);
+  const column = elements.tableColumns.children[index];
+  if (column) column.style.width = `${columnWidths[index]}px`;
+}
+
+function startColumnResize(event, index, resizer) {
+  if (event.button !== 0) return;
+  event.preventDefault();
+  const startX = event.clientX;
+  const startWidth = columnWidths[index];
+  resizer.classList.add("is-resizing");
+  resizer.setPointerCapture(event.pointerId);
+  const move = (moveEvent) => setColumnWidth(index, startWidth + moveEvent.clientX - startX);
+  const end = () => {
+    resizer.classList.remove("is-resizing");
+    resizer.removeEventListener("pointermove", move);
+    resizer.removeEventListener("pointerup", end);
+    resizer.removeEventListener("pointercancel", end);
+  };
+  resizer.addEventListener("pointermove", move);
+  resizer.addEventListener("pointerup", end);
+  resizer.addEventListener("pointercancel", end);
+}
+
+function resizeColumnWithKeyboard(event, index) {
+  if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+  event.preventDefault();
+  setColumnWidth(index, columnWidths[index] + (event.key === "ArrowRight" ? 10 : -10));
+}
+
+function measureColumnWidth(index) {
+  const canvas = measureColumnWidth.canvas || (measureColumnWidth.canvas = document.createElement("canvas"));
+  const context = canvas.getContext("2d");
+  if (!context) return DEFAULT_COLUMN_WIDTH;
+  context.font = getComputedStyle(elements.dataTable).font;
+  let widest = context.measureText(headers[index]).width + 58;
+  rows.forEach((row) => {
+    widest = Math.max(widest, context.measureText(row.cells[index]).width + 28);
+  });
+  return clampColumnWidth(widest);
+}
+
+function autoFitColumn(index) {
+  setColumnWidth(index, measureColumnWidth(index));
+}
+
+function autoFitAllColumns() {
+  headers.forEach((_, index) => autoFitColumn(index));
 }
 
 function updateSort(column) {
@@ -201,6 +282,7 @@ function renderBody() {
     row.cells.forEach((cell) => {
       const td = document.createElement("td");
       td.textContent = cell;
+      td.title = cell;
       tr.append(td);
     });
     fragment.append(tr);

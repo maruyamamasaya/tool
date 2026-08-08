@@ -41,14 +41,19 @@
         <button id="changeFileButton" class="secondary-button" type="button">別のCSVを開く</button>
       </div>
 
-      <label class="search-box" for="searchInput">
-        <span aria-hidden="true">&#128269;</span>
-        <input id="searchInput" type="search" placeholder="キーワードで全列を検索" autocomplete="off">
-        <span id="filteredCount" class="filtered-count"></span>
-      </label>
+      <div class="viewer-controls">
+        <label class="search-box" for="searchInput">
+          <span aria-hidden="true">&#128269;</span>
+          <input id="searchInput" type="search" placeholder="キーワードで全列を検索" autocomplete="off">
+          <span id="filteredCount" class="filtered-count"></span>
+        </label>
+        <button id="autoFitButton" class="secondary-button auto-fit-button" type="button">列幅を自動調節</button>
+      </div>
+      <p class="width-help">列名の右端をドラッグして幅を調節できます。ダブルクリックすると、その列だけ自動調節します。</p>
 
       <div class="table-shell" tabindex="0" aria-label="CSVデータ（横方向にスクロールできます）">
-        <table>
+        <table id="dataTable">
+          <colgroup id="tableColumns"></colgroup>
           <thead id="tableHead"></thead>
           <tbody id="tableBody"></tbody>
         </table>
