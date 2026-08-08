@@ -54,6 +54,15 @@
 
         <section class="output-section" aria-labelledby="outputTitle">
           <div class="section-title"><h3 id="outputTitle">期間テキスト</h3></div>
+          <label class="format-field" for="outputFormat"><span>フォーマット</span>
+            <select id="outputFormat">
+              <option value="multiline">改行＋〜</option>
+              <option value="tilde">〜（1行）</option>
+              <option value="weekday">曜日つき</option>
+              <option value="hyphen">ハイフン</option>
+              <option value="duration">日数つき</option>
+            </select>
+          </label>
           <textarea id="outputText" rows="3" readonly placeholder="期間を選択すると、ここに表示されます"></textarea>
           <button id="copyButton" class="primary-button" type="button" disabled>テキストをコピー</button>
           <p id="copyStatus" class="status" role="status" aria-live="polite"></p>

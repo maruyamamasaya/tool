@@ -64,10 +64,19 @@
     return { totalDays, weekendDays, holidayDays, businessDays };
   }
 
-  function formatRangeText(startValue, endValue) {
+  function formatRangeText(startValue, endValue, formatType = "multiline") {
     const start = parseDate(startValue); const end = parseDate(endValue); if (!start || !end || start > end) return "";
     const format = date => `${date.getUTCMonth() + 1}月${date.getUTCDate()}日`;
-    return `${format(start)}\n〜\n${format(end)}`;
+    const withWeekday = date => `${format(date)}（${["日", "月", "火", "水", "木", "金", "土"][date.getUTCDay()]}）`;
+    const totalDays = Math.round((end - start) / 86400000) + 1;
+    const formats = {
+      multiline: `${format(start)}\n〜\n${format(end)}`,
+      tilde: `${format(start)}〜${format(end)}`,
+      weekday: `${withWeekday(start)}〜${withWeekday(end)}`,
+      hyphen: `${format(start)} - ${format(end)}`,
+      duration: `${format(start)}〜${format(end)}（${totalDays}日間）`
+    };
+    return formats[formatType] || formats.multiline;
   }
 
   function getCalendarCells(year, month) {
@@ -115,12 +124,13 @@
     const start = $("#startDate").value; const end = $("#endDate").value; const result = calculateRange(start, end, customHolidays);
     $("#dateError").textContent = start && end && !result ? "終了日は開始日以降を選択してください。" : "";
     ["businessDays", "totalDays", "weekendDays", "holidayDays"].forEach(id => { $("#" + id).textContent = result ? result[id] : "—"; });
-    const text = result ? formatRangeText(start, end) : ""; $("#outputText").value = text; $("#copyButton").disabled = !text;
+    const text = result ? formatRangeText(start, end, $("#outputFormat").value) : ""; $("#outputText").value = text; $("#copyButton").disabled = !text;
     $("#selectionHelp").textContent = pendingStart ? "終了日を選んでください。" : "カレンダーで開始日を選んでください。";
     renderCalendar();
   }
   function setRange(start, end) { $("#startDate").value = localKey(start); $("#endDate").value = localKey(end); pendingStart = false; displayDate = new Date(start.getFullYear(), start.getMonth(), 1); render(); }
   ["#startDate", "#endDate"].forEach(id => $(id).addEventListener("change", render));
+  $("#outputFormat").addEventListener("change", render);
   document.querySelectorAll("[data-range]").forEach(button => button.addEventListener("click", () => { const start = new Date(); const end = new Date(start); end.setDate(start.getDate() + Number(button.dataset.range) - 1); setRange(start, end); }));
   $("#thisMonth").addEventListener("click", () => { const today = new Date(); setRange(new Date(today.getFullYear(), today.getMonth(), 1), new Date(today.getFullYear(), today.getMonth() + 1, 0)); });
   $("#calendarGrid").addEventListener("click", event => {

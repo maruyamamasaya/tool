@@ -33,6 +33,9 @@ button { color: inherit; }
 select, input[type="date"], input[type="text"] { width: 100%; height: 40px; padding: 7px 9px; border: 1px solid #d5d9dc; border-radius: 7px; outline: none; background: #fff; font-size: 12px; } select:focus, input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px #306b5f15; }
 .error { min-height: 15px; margin: 5px 0 0; color: #c24444; font-size: 9px; }
 .output-section { margin-top: 13px; padding-top: 17px; }.section-title { display: flex; align-items: center; justify-content: space-between; }.section-title span { color: var(--muted); font-size: 10px; }
+.format-field { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px; margin-top: 10px; }
+.format-field > span { color: var(--muted); font-size: 9px; font-weight: 700; }
+.format-field select { height: 36px; }
 textarea { width: 100%; margin-top: 9px; padding: 12px; resize: vertical; border: 1px solid #d5d9dc; border-radius: 7px; outline: none; background: #fafbfb; font-size: 12px; line-height: 1.8; }
 .primary-button { width: 100%; min-height: 42px; margin-top: 8px; border: 0; border-radius: 7px; background: var(--accent); color: white; cursor: pointer; font-size: 12px; font-weight: 800; }.primary-button:hover:not(:disabled) { background: #285c52; }.primary-button:disabled { cursor: not-allowed; opacity: .35; }
 .status { min-height: 14px; margin: 4px 0 0; color: var(--accent); text-align: center; font-size: 10px; }
