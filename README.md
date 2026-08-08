@@ -41,6 +41,7 @@
 | [Cron Reader](https://maruyamamasaya.github.io/tool/cron-reader/) | 標準的な5フィールドCron式を、読みやすい日本語へリアルタイムに変換できます。 |
 | [SLA Calculator](https://maruyamamasaya.github.io/tool/sla-calculator/) | 目標稼働率から、日・週・月・年ごとの停止可能時間を計算できます。 |
 | [Dummy Data Generator](https://maruyamamasaya.github.io/tool/dummy-data-generator/) | 条件を選ぶだけで、テスト用の文章やCSVデータをすばやく生成・コピーできます。 |
+| [SQL Explainer](https://maruyamamasaya.github.io/tool/sql-explainer/) | SELECT文を貼り付けて、構造と処理内容を分かりやすい日本語で確認できます。 |
 
 ## 特長
 
