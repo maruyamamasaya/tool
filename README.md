@@ -14,7 +14,7 @@
 | [Byte Converter](https://maruyamamasaya.github.io/tool/byte-converter/) | B / KB / MB / GB / TB と KiB / MiB / GiB / TiB を相互変換し、結果をコピーできます。 |
 | [Number Base Converter](https://maruyamamasaya.github.io/tool/number-base-converter/) | 2進数・10進数・16進数と2〜36の任意進数をリアルタイムで相互変換できます。 |
 | [Base64 Converter](https://maruyamamasaya.github.io/tool/base64-converter/) | テキストをBase64に変換したり、Base64からテキストへ復元したりできます。 |
-| [JSON Structure Viewer](https://maruyamamasaya.github.io/tool/json-structure-viewer/) | JSON の階層、データ型、要素数をツリー表示し、一括で展開・折りたたみできます。 |
+| [JSON Structure Viewer](https://maruyamamasaya.github.io/tool/json-structure-viewer/) | JSON の階層、データ型、要素数をツリーまたは表で表示し、ツリーを一括で展開・折りたたみできます。 |
 | [JSON Formatter](https://maruyamamasaya.github.io/tool/json-formatter/) | JSON の整形・圧縮・構文チェックと、整形結果のコピーができます。 |
 | [SQL Formatter](https://maruyamamasaya.github.io/tool/sql-formatter/) | SQLを貼り付けて、キーワードや句、条件を読みやすく整形し、結果をコピーできます。 |
 | [CSV ビューアー](https://maruyamamasaya.github.io/tool/csv-viewer/) | UTF-8 / Shift_JIS の CSV を表で表示し、全列検索や列ごとの並べ替えができます。 |
