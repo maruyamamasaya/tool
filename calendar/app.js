@@ -84,11 +84,13 @@
   }
 
   function formatScheduleText(dates, times, multiple) {
+    const weekdayLabels = ["日", "月", "火", "水", "木", "金", "土"];
     return [...dates].sort().map(value => {
       const date = parseDate(value);
       const time = times.get(value);
       if (!time || time.end <= time.start) return "";
-      const line = `${date.getUTCMonth() + 1}月${date.getUTCDate()}日　${String(time.start).padStart(2, "0")}：00　〜　${String(time.end).padStart(2, "0")}：00`;
+      const weekday = weekdayLabels[date.getUTCDay()];
+      const line = `${date.getUTCMonth() + 1}月${date.getUTCDate()}日（${weekday}）　${String(time.start).padStart(2, "0")}：00　〜　${String(time.end).padStart(2, "0")}：00`;
       return multiple ? `・${line}` : line;
     }).filter(Boolean).join("\n");
   }
