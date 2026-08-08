@@ -14,6 +14,7 @@
 | [Linux Command Explorer](https://maruyamamasaya.github.io/tool/linux-command-explorer/) | 18カテゴリ・162のLinuxコマンドを検索し、オプションや使用例の確認・コピー、お気に入り登録ができます。 |
 | [Simple Calculator](https://maruyamamasaya.github.io/tool/simple-calculator/) | 四則演算と括弧を使った式を直接入力し、計算結果と直近の履歴を確認できます。 |
 | [Time Calculator](https://maruyamamasaya.github.io/tool/time-calculator/) | 開始・終了・休憩から勤務時間を計算し、複数の時間帯も合計してテキストでコピーできます。 |
+| [Number Calculator](https://maruyamamasaya.github.io/tool/number-calculator/) | 改行・カンマ・空白区切りの数値を貼り付けて、合計・平均・中央値などをまとめて確認できます。 |
 | [Percentage Calculator](https://maruyamamasaya.github.io/tool/percentage-calculator/) | 増減率・割合・○%の値・増減後の結果から元の値をすばやく計算できます。 |
 | [QR Code Generator](https://maruyamamasaya.github.io/tool/qr-code-generator/) | URLを入力または貼り付けてQRコードを生成し、PNG画像として保存できます。 |
 | [Data Inspector](https://maruyamamasaya.github.io/tool/data-inspector/) | CSV / JSON / YAML / XML / TEXT の形式・サイズ・階層・型や、文字数・バイト数・半角全角の内訳をまとめて解析できます。 |
@@ -47,7 +48,7 @@
 | [Escape Tool](https://maruyamamasaya.github.io/tool/escape-tool/) | 改行・タブなどの特殊文字をエスケープ、復元、可視化できます。 |
 | [Regex Tester](https://maruyamamasaya.github.io/tool/regex-tester/) | JavaScriptの正規表現を入力し、マッチ箇所・位置・キャプチャグループをリアルタイムで確認できます。 |
 | [Regex Builder](https://maruyamamasaya.github.io/tool/regex-builder/) | 日本語の条件を並べ、正規表現の生成・コピー・テストができます。 |
-| [Cron Reader](https://maruyamamasaya.github.io/tool/cron-reader/) | 標準的な5フィールドCron式を、読みやすい日本語へリアルタイムに変換できます。 |
+| [Cron Builder & Reader](https://maruyamamasaya.github.io/tool/cron-reader/) | 選択肢からCron式を作成し、5フィールドCron式を読みやすい日本語へ変換できます。 |
 | [SLA Calculator](https://maruyamamasaya.github.io/tool/sla-calculator/) | 目標稼働率から、日・週・月・年ごとの停止可能時間を計算できます。 |
 | [Dummy Data Generator](https://maruyamamasaya.github.io/tool/dummy-data-generator/) | 条件を選ぶだけで、テスト用の文章やCSVデータをすばやく生成・コピーできます。 |
 | [SQL Explainer](https://maruyamamasaya.github.io/tool/sql-explainer/) | SELECT文を貼り付けて、構造と処理内容を分かりやすい日本語で確認できます。 |

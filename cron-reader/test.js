@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('assert');
-const { parseCron, describeCron } = require('./app.js');
+const { parseCron, describeCron, buildCron } = require('./app.js');
 const describe = cron => describeCron(parseCron(cron));
 
 assert.strictEqual(describe('0 9 * * *'), '毎日 9:00 に実行');
@@ -14,4 +14,10 @@ assert.throws(() => parseCron('0 25 * * *'), /時には0〜23/);
 assert.throws(() => parseCron('0 9 * *'), /フィールドは5つ/);
 assert.throws(() => parseCron('0 9 5-1 * *'), /小さい値から/);
 assert.throws(() => parseCron('0 9 * * MON'), /使用できない記号/);
+assert.strictEqual(buildCron('minute'), '* * * * *');
+assert.strictEqual(buildCron('hour', { minute: 15 }), '15 * * * *');
+assert.strictEqual(buildCron('day', { hour: 9, minute: 30 }), '30 9 * * *');
+assert.strictEqual(buildCron('week', { hour: 18, minute: 45, weekday: 5 }), '45 18 * * 5');
+assert.strictEqual(buildCron('month', { hour: 7, minute: 5, day: 20 }), '5 7 20 * *');
+assert.throws(() => buildCron('year'), /実行間隔/);
 console.log('Cron Reader tests passed');
