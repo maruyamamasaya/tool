@@ -32,7 +32,13 @@
             <option value="0,255">0 〜 255</option>
             <option value="-100,100">-100 〜 100</option>
             <option value="-1000,1000">-1,000 〜 1,000</option>
+            <option value="digits">桁数を指定…</option>
           </select></span>
+          <span id="digitsControl" class="digits-control" hidden>
+            <span class="digits-caption">桁数</span>
+            <span class="number-wrap"><input id="digits" type="number" min="1" max="32" value="16" inputmode="numeric" aria-describedby="digitsHelp"><span>桁</span></span>
+            <small id="digitsHelp">1〜32桁</small>
+          </span>
         </label>
         <label>生成する数
           <span class="select-wrap"><select id="count">

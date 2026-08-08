@@ -23,10 +23,37 @@
     return numbers.join(SEPARATORS[format] === undefined ? SEPARATORS.newline : SEPARATORS[format]);
   }
 
-  if (typeof module !== "undefined") module.exports = { formatNumbers, parseRange, randomInteger, SEPARATORS };
+  function randomDigitString(digitCount, fillRandomValues) {
+    const digits = Number(digitCount);
+    if (!Number.isInteger(digits) || digits < 1 || digits > 32) {
+      throw new RangeError("桁数は1〜32の整数で指定してください");
+    }
+
+    const fill = fillRandomValues || ((buffer) => crypto.getRandomValues(buffer));
+    let result = "";
+    while (result.length < digits) {
+      const buffer = new Uint8Array(Math.max(16, digits - result.length));
+      fill(buffer);
+      for (const value of buffer) {
+        if (result.length === 0) {
+          if (value >= 252) continue;
+          result += String((value % 9) + 1);
+        } else {
+          if (value >= 250) continue;
+          result += String(value % 10);
+        }
+        if (result.length === digits) break;
+      }
+    }
+    return result;
+  }
+
+  if (typeof module !== "undefined") module.exports = { formatNumbers, parseRange, randomDigitString, randomInteger, SEPARATORS };
   if (typeof document === "undefined") return;
 
   const range = document.querySelector("#range");
+  const digits = document.querySelector("#digits");
+  const digitsControl = document.querySelector("#digitsControl");
   const count = document.querySelector("#count");
   const separator = document.querySelector("#separator");
   const output = document.querySelector("#output");
@@ -41,9 +68,22 @@
   }
 
   function generate() {
-    const { minimum, maximum } = parseRange(range.value);
-    numbers = Array.from({ length: Number(count.value) }, () => randomInteger(minimum, maximum));
+    if (range.value === "digits") {
+      const digitCount = Math.min(32, Math.max(1, Number.parseInt(digits.value, 10) || 1));
+      digits.value = String(digitCount);
+      numbers = Array.from({ length: Number(count.value) }, () => randomDigitString(digitCount));
+    } else {
+      const { minimum, maximum } = parseRange(range.value);
+      numbers = Array.from({ length: Number(count.value) }, () => randomInteger(minimum, maximum));
+    }
     render();
+  }
+
+  function updateRangeMode() {
+    const usesDigits = range.value === "digits";
+    digitsControl.hidden = !usesDigits;
+    if (usesDigits) digits.focus();
+    generate();
   }
 
   function showToast(message) {
@@ -66,7 +106,8 @@
   document.querySelector("#generate").addEventListener("click", generate);
   document.querySelector("#copy").addEventListener("click", copyResult);
   separator.addEventListener("change", render);
-  range.addEventListener("change", generate);
+  range.addEventListener("change", updateRangeMode);
+  digits.addEventListener("change", generate);
   count.addEventListener("change", generate);
   generate();
 })();
