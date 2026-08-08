@@ -26,6 +26,8 @@ h1 { margin: 0; font-size: clamp(28px, 4vw, 42px); }
 .file-summary strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .file-summary span { color: #667085; font-size: 12px; }
 .statistics { display: flex; gap: 14px; color: #667085; font-size: 13px; }
+.fullscreen-button { display: none; align-items: center; gap: 7px; white-space: nowrap; }
+.fullscreen-icon { font-size: 18px; line-height: 1; }
 .viewer-controls { margin: 14px 14px 8px; display: flex; align-items: center; gap: 10px; }
 .search-box { min-width: 0; margin: 0; padding: 0 12px; display: flex; flex: 1; align-items: center; gap: 8px; border: 1px solid #cfd7e2; border-radius: 8px; }
 .search-box:focus-within { border-color: #4169e1; box-shadow: 0 0 0 3px #4169e122; }
@@ -47,4 +49,9 @@ td { padding: 10px 13px; overflow: hidden; border-top: 1px solid #edf0f4; text-o
 tbody tr:hover { background: #fafbfc; }
 .sort-mark { color: #667085; }
 .empty-result { padding: 35px; color: #667085; text-align: center; }
+@media (min-width: 701px) {
+  .fullscreen-button:not([hidden]) { display: inline-flex; }
+  .viewer:fullscreen { width: 100vw; height: 100vh; display: flex; flex-direction: column; border: 0; border-radius: 0; background: #fff; }
+  .viewer:fullscreen .table-shell { max-height: none; min-height: 0; flex: 1; }
+}
 @media (max-width: 700px) { .page-header, .toolbar { align-items: stretch; flex-direction: column; } .statistics { justify-content: space-around; } .viewer-controls { align-items: stretch; flex-direction: column; } }
