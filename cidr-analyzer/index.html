@@ -10,54 +10,67 @@
 <body>
   <main class="app">
     <header class="hero">
-      <div>
+      <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="hero-copy">
         <p class="eyebrow">NETWORK UTILITY</p>
-        <h1>CIDR <span>Analyzer</span></h1>
-        <p class="lead">IPv4とCIDRをまとめて整形・解析し、ネットワークの関係をひと目で確認。</p>
+        <h1>CIDR Analyzer</h1>
+        <p class="lead">IPv4 と CIDR をまとめて整形・解析。アドレス範囲とネットワークの関係を、ひとつの画面で確認できます。</p>
       </div>
-      <p class="privacy"><span aria-hidden="true">●</span> 入力内容は端末内だけで処理されます</p>
+      <p class="privacy"><span aria-hidden="true"></span> すべて端末内で処理</p>
     </header>
 
-    <section class="panel" aria-labelledby="formatTitle">
-      <div class="section-heading"><span class="step">01</span><div><h2 id="formatTitle">入力整形</h2><p>コピー元の表記ゆれを1行1件の形式に整えます。</p></div></div>
-      <div class="editor-grid">
-        <div class="field">
-          <label for="sourceInput">コピー元テキスト</label>
-          <textarea id="sourceInput" spellcheck="false" placeholder="192.168.1.10 / 24&#10;192.168.1.11 24"></textarea>
+    <div class="workspace">
+      <section class="panel format-panel" aria-labelledby="formatTitle">
+        <div class="section-heading">
+          <span class="step">01</span>
+          <div><p class="section-kicker">OPTIONAL</p><h2 id="formatTitle">入力を整える</h2></div>
         </div>
-        <button id="formatButton" class="round-action" type="button" aria-label="入力を整形"><span aria-hidden="true">→</span><b>整形</b></button>
+        <p class="section-description">空白や「/」の表記ゆれがある場合は、先に1行1件へ整えます。</p>
+
+        <div class="field">
+          <div class="label-row"><label for="sourceInput">コピー元テキスト</label><span class="field-hint">貼り付け</span></div>
+          <textarea id="sourceInput" class="compact-textarea" spellcheck="false" placeholder="192.168.1.10 / 24&#10;192.168.1.11 24"></textarea>
+        </div>
+        <button id="formatButton" class="button secondary format-button" type="button"><span aria-hidden="true">↓</span> 入力を整形</button>
         <div class="field">
           <div class="label-row"><label for="formattedOutput">整形結果</label><span id="formatCount" class="count"></span></div>
-          <textarea id="formattedOutput" class="output" readonly placeholder="整形結果がここに表示されます"></textarea>
-          <div class="field-actions">
-            <button id="copyButton" class="button secondary" type="button">コピー</button>
-            <button id="sendButton" class="button primary" type="button">解析へ送る <span aria-hidden="true">↓</span></button>
-          </div>
-          <p id="copyStatus" class="status" role="status" aria-live="polite"></p>
+          <textarea id="formattedOutput" class="compact-textarea output" readonly placeholder="整形結果がここに表示されます"></textarea>
         </div>
-      </div>
-    </section>
+        <div class="field-actions">
+          <button id="copyButton" class="button ghost" type="button">コピー</button>
+          <button id="sendButton" class="button dark" type="button">解析欄へ送る <span aria-hidden="true">→</span></button>
+        </div>
+        <p id="copyStatus" class="status" role="status" aria-live="polite"></p>
+      </section>
 
-    <section class="panel" aria-labelledby="analyzeTitle">
-      <div class="section-heading"><span class="step">02</span><div><h2 id="analyzeTitle">CIDR解析</h2><p>複数行を一度に解析できます。</p></div></div>
-      <div class="field analysis-input">
-        <label for="analysisInput">IPアドレス / CIDR</label>
-        <textarea id="analysisInput" spellcheck="false" placeholder="192.168.1.10/24&#10;192.168.1.11/24&#10;192.168.1.13/20"></textarea>
-      </div>
-      <button id="analyzeButton" class="button primary analyze-button" type="button">解析する <span aria-hidden="true">→</span></button>
-    </section>
+      <section class="panel analyze-panel" aria-labelledby="analyzeTitle">
+        <div class="section-heading">
+          <span class="step active">02</span>
+          <div><p class="section-kicker">MAIN</p><h2 id="analyzeTitle">CIDR を解析する</h2></div>
+        </div>
+        <p class="section-description">IPアドレス / CIDR を1行に1件入力してください。複数行をまとめて解析できます。</p>
+        <div class="field analysis-input">
+          <div class="label-row"><label for="analysisInput">解析するアドレス</label><span class="field-hint">IPv4 / CIDR</span></div>
+          <textarea id="analysisInput" spellcheck="false" placeholder="192.168.1.10/24&#10;192.168.1.11/24&#10;192.168.1.13/20"></textarea>
+        </div>
+        <div class="analyze-footer">
+          <p><span aria-hidden="true">i</span> /0 から /32 まで対応</p>
+          <button id="analyzeButton" class="button primary analyze-button" type="button">解析する <span aria-hidden="true">→</span></button>
+        </div>
+      </section>
+    </div>
 
     <section id="results" class="results" aria-live="polite" hidden>
       <div class="results-title"><div><p class="eyebrow">ANALYSIS RESULT</p><h2>解析結果</h2></div><span id="resultSummary" class="summary"></span></div>
       <div id="errorBox" class="error-box" role="alert" hidden></div>
-      <section class="result-card"><h3>アドレス詳細</h3><div class="table-wrap"><table><thead><tr><th>入力IP</th><th>CIDR</th><th>サブネットマスク</th><th>ネットワークアドレス</th><th>利用可能IP開始</th><th>利用可能IP終了</th><th>ブロードキャスト</th><th>総IP数</th><th>利用可能ホスト数</th></tr></thead><tbody id="resultBody"></tbody></table></div></section>
+      <section class="result-card"><div class="card-heading"><span class="card-icon">≡</span><h3>アドレス詳細</h3></div><div class="table-wrap"><table><thead><tr><th>入力IP</th><th>CIDR</th><th>サブネットマスク</th><th>ネットワークアドレス</th><th>利用可能IP開始</th><th>利用可能IP終了</th><th>ブロードキャスト</th><th>総IP数</th><th>利用可能ホスト数</th></tr></thead><tbody id="resultBody"></tbody></table></div></section>
       <div class="relation-grid">
-        <section class="result-card"><h3>ネットワーク一覧</h3><p class="card-note">同じネットワークのIPをグループ化</p><div id="networkList" class="network-list"></div></section>
-        <section class="result-card"><h3>包含関係</h3><p class="card-note">ネットワーク同士の親子関係</p><div id="containmentTree" class="tree"></div></section>
+        <section class="result-card"><div class="card-heading"><span class="card-icon">⌘</span><div><h3>ネットワーク一覧</h3><p class="card-note">同じネットワークのIPをグループ化</p></div></div><div id="networkList" class="network-list"></div></section>
+        <section class="result-card"><div class="card-heading"><span class="card-icon">⌁</span><div><h3>包含関係</h3><p class="card-note">ネットワーク同士の親子関係</p></div></div><div id="containmentTree" class="tree"></div></section>
       </div>
     </section>
   </main>
-  <footer>CIDR Analyzer · Client-side IPv4 utility</footer>
+  <footer>CIDR Analyzer <span>·</span> Client-side IPv4 utility</footer>
   <script src="./app.js" defer></script>
 </body>
 </html>
