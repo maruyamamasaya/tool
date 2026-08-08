@@ -46,7 +46,7 @@
 | [Escape Tool](https://maruyamamasaya.github.io/tool/escape-tool/) | 改行・タブなどの特殊文字をエスケープ、復元、可視化できます。 |
 | [Regex Tester](https://maruyamamasaya.github.io/tool/regex-tester/) | JavaScriptの正規表現を入力し、マッチ箇所・位置・キャプチャグループをリアルタイムで確認できます。 |
 | [Regex Builder](https://maruyamamasaya.github.io/tool/regex-builder/) | 日本語の条件を並べ、正規表現の生成・コピー・テストができます。 |
-| [Cron Reader](https://maruyamamasaya.github.io/tool/cron-reader/) | 標準的な5フィールドCron式を、読みやすい日本語へリアルタイムに変換できます。 |
+| [Cron Builder & Reader](https://maruyamamasaya.github.io/tool/cron-reader/) | 選択肢からCron式を作成し、5フィールドCron式を読みやすい日本語へ変換できます。 |
 | [SLA Calculator](https://maruyamamasaya.github.io/tool/sla-calculator/) | 目標稼働率から、日・週・月・年ごとの停止可能時間を計算できます。 |
 | [Dummy Data Generator](https://maruyamamasaya.github.io/tool/dummy-data-generator/) | 条件を選ぶだけで、テスト用の文章やCSVデータをすばやく生成・コピーできます。 |
 | [SQL Explainer](https://maruyamamasaya.github.io/tool/sql-explainer/) | SELECT文を貼り付けて、構造と処理内容を分かりやすい日本語で確認できます。 |
