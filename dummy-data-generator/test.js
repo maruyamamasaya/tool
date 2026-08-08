@@ -1,0 +1,15 @@
+"use strict";
+const assert=require("node:assert/strict");
+const {clamp,generateSentence,generateText,csvEscape,valueFor,generateCsv}=require("./app.js");
+assert.equal(clamp(99,1,10),10);
+assert.equal(generateText(3,"short","ja").split("\n").length,3);
+assert.match(generateSentence("en","normal"),/\./);
+assert.match(generateSentence("mixed","short"),/\[[a-z]+-\d{3}\]$/);
+assert.equal(csvEscape('hello, "world"'),'"hello, ""world"""');
+assert.match(valueFor("Email",0),/@/);
+const csv=generateCsv([{name:"id",type:"Number"},{name:"note",type:"Text"}],3);
+assert.equal(csv.split("\n").length,4);
+assert.equal(csv.split("\n")[0],"id,note");
+assert.match(csv.split("\n")[1],/^1,"/);
+assert.equal(generateCsv([{name:"",type:"ID"}],1).split("\n")[0],"column_1");
+console.log("dummy-data-generator tests passed");

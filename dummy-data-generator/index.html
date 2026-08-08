@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="テスト用のダミーテキストとCSVをブラウザ内で生成します。">
+  <title>Dummy Data Generator</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="page-header">
+      <div class="brand-mark" aria-hidden="true">D</div>
+      <div><p class="eyebrow">QUICK TEST DATA</p><h1>Dummy Data Generator</h1><p class="lead">条件を選んで、すぐに使えるテストデータを生成。</p></div>
+    </header>
+
+    <nav class="tabs" aria-label="生成モード" role="tablist">
+      <button id="textTab" class="tab active" type="button" role="tab" aria-selected="true" aria-controls="textPanel"><span aria-hidden="true">Aa</span> Dummy Text</button>
+      <button id="csvTab" class="tab" type="button" role="tab" aria-selected="false" aria-controls="csvPanel"><span aria-hidden="true">▦</span> Dummy CSV</button>
+    </nav>
+
+    <section id="textPanel" class="panel" role="tabpanel" aria-labelledby="textTab">
+      <div class="panel-heading"><div><p class="step">TEXT SETTINGS</p><h2>文章の設定</h2></div><p>用途に合わせて長さと言語を選択してください。</p></div>
+      <div class="settings-grid">
+        <label>文章数<span class="control"><input id="sentenceCount" type="number" min="1" max="10" value="3"><small>1〜10</small></span></label>
+        <label>文章の長さ<select id="textLength"><option value="short">短文</option><option value="normal" selected>通常文</option><option value="long">長文</option></select></label>
+        <label>言語<select id="textLanguage"><option value="ja" selected>日本語</option><option value="en">英語</option><option value="mixed">日本語＋英数字混在</option></select></label>
+      </div>
+      <button id="generateText" class="primary" type="button"><span aria-hidden="true">✦</span> 文章を生成</button>
+      <div class="result-block">
+        <div class="result-heading"><div><p class="step">GENERATED TEXT</p><h2>生成結果</h2></div><span id="textMeta"></span></div>
+        <textarea id="textOutput" class="output" readonly aria-label="生成した文章" spellcheck="false"></textarea>
+        <div class="actions"><button id="copyText" class="primary compact" type="button">コピー</button><button id="regenerateText" type="button">↻ 再生成</button><button id="clearText" class="danger" type="button">クリア</button></div>
+      </div>
+    </section>
+
+    <section id="csvPanel" class="panel" role="tabpanel" aria-labelledby="csvTab" hidden>
+      <div class="panel-heading"><div><p class="step">CSV SETTINGS</p><h2>CSVの設定</h2></div><p>カラム名と型を選ぶだけで生成できます。</p></div>
+      <div class="settings-grid csv-base">
+        <label>カラム数<span class="control"><input id="columnCount" type="number" min="1" max="10" value="5"><small>1〜10</small></span></label>
+        <label>行数<span class="control"><input id="rowCount" type="number" min="1" max="10" value="5"><small>1〜10</small></span></label>
+      </div>
+      <div class="column-section"><p class="step">COLUMN SETTINGS</p><h3>カラム設定</h3><div class="column-labels"><span>#</span><span>カラム名</span><span>型</span></div><div id="columnSettings"></div></div>
+      <button id="generateCsv" class="primary" type="button"><span aria-hidden="true">✦</span> CSVを生成</button>
+      <div class="result-block">
+        <div class="result-heading"><div><p class="step">GENERATED CSV</p><h2>生成結果</h2></div><span id="csvMeta"></span></div>
+        <textarea id="csvOutput" class="output csv-output" readonly aria-label="生成したCSV" spellcheck="false"></textarea>
+        <div class="actions"><button id="copyCsv" class="primary compact" type="button">コピー</button><button id="regenerateCsv" type="button">↻ 再生成</button><button id="clearCsv" class="danger" type="button">クリア</button></div>
+      </div>
+    </section>
+    <p class="privacy"><span aria-hidden="true">●</span> すべてブラウザ内で生成されます。入力内容が外部に送信されることはありません。</p>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden>コピーしました</div>
+  <script src="./app.js" defer></script>
+</body>
+</html>
