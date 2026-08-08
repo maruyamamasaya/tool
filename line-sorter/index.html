@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="複数行のテキストを、文字列・数値・自然順で手軽に並び替えるブラウザツール">
+  <title>Line Sorter - 行ソート</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <p class="eyebrow">LINE SORTER</p>
+      <h1>行を、気持ちよく並べる。</h1>
+      <p class="lead">1行を1つのデータとして、貼り付けるだけ。数字を含む文字列も自然な順番に整えます。</p>
+    </header>
+
+    <section class="workspace" aria-label="行ソート">
+      <div class="panel input-panel">
+        <div class="panel-heading">
+          <label for="inputText">入力</label>
+          <span id="inputCount" class="count">0 行</span>
+        </div>
+        <textarea id="inputText" rows="14" autofocus spellcheck="false" placeholder="10_abc&#10;2_xyz&#10;9_abc&#10;1_test"></textarea>
+      </div>
+
+      <div class="controls">
+        <fieldset>
+          <legend>並び順</legend>
+          <div class="sort-grid" id="sortModes">
+            <button type="button" data-mode="alpha-asc">ABC <span aria-hidden="true">↑</span><span class="sr-only">昇順</span></button>
+            <button type="button" data-mode="alpha-desc">ABC <span aria-hidden="true">↓</span><span class="sr-only">降順</span></button>
+            <button type="button" data-mode="number-asc">数値 <span aria-hidden="true">↑</span><span class="sr-only">昇順</span></button>
+            <button type="button" data-mode="number-desc">数値 <span aria-hidden="true">↓</span><span class="sr-only">降順</span></button>
+            <button type="button" data-mode="natural-asc" class="active" aria-pressed="true">自然順 <span aria-hidden="true">↑</span><span class="sr-only">昇順</span></button>
+            <button type="button" data-mode="natural-desc">自然順 <span aria-hidden="true">↓</span><span class="sr-only">降順</span></button>
+          </div>
+        </fieldset>
+
+        <div class="options" aria-label="追加オプション">
+          <label><input id="emptyLast" type="checkbox" checked> 空行を末尾へ</label>
+          <label><input id="removeDuplicates" type="checkbox"> 重複行を削除</label>
+        </div>
+
+        <div class="direction" aria-hidden="true">↓</div>
+      </div>
+
+      <div class="panel result-panel">
+        <div class="panel-heading">
+          <label for="outputText">結果</label>
+          <span id="resultCount" class="count" aria-live="polite">0 行</span>
+        </div>
+        <textarea id="outputText" rows="14" readonly spellcheck="false" placeholder="並び替えた結果がここに表示されます"></textarea>
+        <div class="actions">
+          <button id="restoreButton" class="secondary" type="button" disabled>元の順番</button>
+          <button id="clearButton" class="secondary" type="button" disabled>クリア</button>
+          <button id="copyButton" class="primary" type="button" disabled>結果をコピー</button>
+        </div>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <p class="privacy"><span aria-hidden="true">●</span> 入力内容はサーバーへ送信されず、ブラウザ内だけで処理されます。</p>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>

@@ -25,6 +25,7 @@
 | [RAID Calculator](https://maruyamamasaya.github.io/tool/raid-calculator/) | RAID 0 / 1 / 5 / 6 / 10 の使用可能容量、容量効率、耐障害性を計算できます。 |
 | [Text Diff Viewer](https://maruyamamasaya.github.io/tool/diff-viewer/) | 2 つのテキストを行単位で比較し、変更行は文字単位の差分まで確認できます。 |
 | [Text Cleaner](https://maruyamamasaya.github.io/tool/text-cleaner/) | リッチテキストをプレーンテキストとして貼り付け、不可視文字などを取り除いてコピーできます。 |
+| [Line Sorter](https://maruyamamasaya.github.io/tool/line-sorter/) | 複数行のテキストを、ABC順・数値順・数字を考慮した自然順で並べ替えられます。 |
 | [CIDR Analyzer](https://maruyamamasaya.github.io/tool/cidr-analyzer/) | 複数の IPv4/CIDR を整形し、ネットワーク・範囲・アドレス数と包含関係を一括で確認できます。 |
 | [Calendar](https://maruyamamasaya.github.io/tool/calendar/) | 月間カレンダーを見ながら、期間の日数・営業日・土日の日数をまとめて計算できます。 |
 | [Checklist Builder](https://maruyamamasaya.github.io/tool/checklist-builder/) | 3階層のチェックリストを作成・保存し、Markdownで入出力できます。 |
