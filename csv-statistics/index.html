@@ -16,9 +16,15 @@
 
     <section class="input-card" aria-labelledby="input-title">
       <div class="section-heading">
-        <div><h2 id="input-title">CSVを貼り付け</h2><p>ヘッダーを含むカンマ区切りのデータに対応しています。</p></div>
+        <div><h2 id="input-title">CSVを入力</h2><p>ファイルを選択するか、ヘッダーを含むCSVを貼り付けてください。</p></div>
         <button id="clearButton" class="text-button" type="button" disabled>クリア</button>
       </div>
+      <div class="file-picker">
+        <input id="fileInput" class="visually-hidden" type="file" accept=".csv,text/csv" aria-describedby="fileHint">
+        <label class="file-button" for="fileInput"><span aria-hidden="true">↑</span> CSVファイルを選択</label>
+        <div class="file-copy"><strong id="fileName">ファイル未選択</strong><span id="fileHint">.csv ファイルをブラウザ内で読み込みます</span></div>
+      </div>
+      <div class="divider"><span>または貼り付け</span></div>
       <textarea id="csvInput" spellcheck="false" autocomplete="off" placeholder="id,name,age,status&#10;1,Tanaka,30,active&#10;2,Sato,25,active&#10;3,Suzuki,,inactive" aria-describedby="inputHint"></textarea>
       <div class="input-footer"><span id="inputHint">ダブルクォート、値内のカンマ・改行にも対応</span><span id="inputSize">0 文字</span></div>
     </section>

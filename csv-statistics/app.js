@@ -1,7 +1,7 @@
 "use strict";
 
 const dom = typeof document === "undefined" ? {} : {
-  input: document.querySelector("#csvInput"), nullValues: document.querySelector("#nullValues"), clear: document.querySelector("#clearButton"), copy: document.querySelector("#copyButton"),
+  input: document.querySelector("#csvInput"), fileInput: document.querySelector("#fileInput"), fileName: document.querySelector("#fileName"), nullValues: document.querySelector("#nullValues"), clear: document.querySelector("#clearButton"), copy: document.querySelector("#copyButton"),
   inputSize: document.querySelector("#inputSize"), nullSummary: document.querySelector("#nullSummary"), status: document.querySelector("#status"), message: document.querySelector("#message"), results: document.querySelector("#results"),
   dimension: document.querySelector("#dimension"), rowCount: document.querySelector("#rowCount"), columnCount: document.querySelector("#columnCount"), nullCount: document.querySelector("#nullCount"), duplicateCount: document.querySelector("#duplicateCount"), nullDetail: document.querySelector("#nullDetail"), duplicateDetail: document.querySelector("#duplicateDetail"),
   columnBody: document.querySelector("#columnBody"), numericSection: document.querySelector("#numericSection"), numericBody: document.querySelector("#numericBody"), toast: document.querySelector("#toast")
@@ -10,10 +10,27 @@ let timer;
 let latestAnalysis;
 
 if (typeof document !== "undefined") {
-  dom.input.addEventListener("input", scheduleAnalysis);
+  dom.input.addEventListener("input", () => { dom.fileInput.value = ""; dom.fileName.textContent = "ファイル未選択"; scheduleAnalysis(); });
+  dom.fileInput.addEventListener("change", loadSelectedFile);
   dom.nullValues.addEventListener("input", scheduleAnalysis);
-  dom.clear.addEventListener("click", () => { dom.input.value = ""; scheduleAnalysis(); dom.input.focus(); });
+  dom.clear.addEventListener("click", () => { dom.input.value = ""; dom.fileInput.value = ""; dom.fileName.textContent = "ファイル未選択"; scheduleAnalysis(); dom.input.focus(); });
   dom.copy.addEventListener("click", copyResults);
+}
+
+async function loadSelectedFile() {
+  const [file] = dom.fileInput.files;
+  if (!file) return;
+  dom.fileName.textContent = file.name;
+  dom.message.hidden = true;
+  try {
+    dom.input.value = await file.text();
+    scheduleAnalysis();
+  } catch {
+    dom.input.value = "";
+    scheduleAnalysis();
+    dom.message.textContent = "ファイルを読み込めませんでした。別のCSVファイルを選択してください。";
+    dom.message.hidden = false;
+  }
 }
 
 function scheduleAnalysis() {
