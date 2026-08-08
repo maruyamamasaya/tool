@@ -1,0 +1,12 @@
+const assert=require("assert");
+const {targetDate,remainingInfo,quickTarget,load}=require("./app.js");
+const now=new Date(2026,7,8,18,23,0);
+assert.strictEqual(remainingInfo(now,"19:30").text,"あと67分");
+assert.strictEqual(remainingInfo(now,"20:28").detail,"2時間5分");
+assert.strictEqual(remainingInfo(new Date(2026,7,8,23,0),"07:00").text,"あと480分");
+assert.strictEqual(remainingInfo(new Date(2026,7,8,19,29,15),"19:30").text,"あと45秒");
+assert.strictEqual(remainingInfo(new Date(2026,7,8,19,30,0),"19:30").text,"時間になりました");
+assert.strictEqual(quickTarget(now,30),"18:53");
+assert.strictEqual(targetDate(now,"bad"),null);
+assert.strictEqual(load({getItem:()=>"{"}).theme,"dark");
+console.log("clock viewer tests passed");
