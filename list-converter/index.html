@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="改行区切りのリストを、カンマ区切り・SQL IN・JSON配列などへ変換するブラウザツール">
+  <meta name="description" content="改行・カンマ・タブなどで区切られたリストを、SQL IN・JSON配列などへ変換するブラウザツール">
   <title>List Converter - リスト変換</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
@@ -12,10 +12,24 @@
     <header class="hero">
       <p class="eyebrow">LIST CONVERTER</p>
       <h1>リストを、使いたい形に。</h1>
-      <p class="lead">1行に1項目のテキストを、SQLやJSON、各種区切り形式へすばやく変換します。</p>
+      <p class="lead">改行・カンマ・タブなどで区切られたテキストを、SQLやJSON、各種区切り形式へすばやく変換します。</p>
     </header>
 
     <section class="settings" aria-label="変換設定">
+      <div class="setting-group input-format-group">
+        <label for="inputFormat">入力の区切り</label>
+        <select id="inputFormat">
+          <option value="auto">自動判定</option>
+          <option value="newline">改行</option>
+          <option value="comma">カンマ</option>
+          <option value="tab">タブ</option>
+          <option value="space">空白</option>
+          <option value="semicolon">セミコロン</option>
+          <option value="json">JSON配列</option>
+          <option value="custom">カスタム</option>
+        </select>
+        <input id="customSeparator" class="custom-separator" type="text" aria-label="カスタム区切り文字" placeholder="区切り文字を入力" autocomplete="off" hidden>
+      </div>
       <div class="setting-group format-group">
         <label for="format">変換形式</label>
         <select id="format">
@@ -53,7 +67,7 @@
           <label for="inputText">入力</label>
           <span id="inputCount" class="count">0 件</span>
         </div>
-        <textarea id="inputText" rows="14" autofocus spellcheck="false" placeholder="apple&#10;banana&#10;orange"></textarea>
+        <textarea id="inputText" rows="14" autofocus spellcheck="false" placeholder="apple, banana, orange&#10;（改行・カンマ・タブなどに対応）"></textarea>
       </div>
       <div class="flow" aria-hidden="true">→</div>
       <div class="panel result-panel">
