@@ -77,16 +77,27 @@ function removeTask(tasks, id) {
   return tasks.some((task) => removeTask(task.children, id));
 }
 
+function findTaskList(tasks, id) {
+  if (tasks.some((task) => task.id === id)) return tasks;
+  for (const task of tasks) {
+    const list = findTaskList(task.children, id);
+    if (list) return list;
+  }
+  return null;
+}
+
 if (typeof document !== "undefined") {
   const elements = {
     list: document.querySelector("#list"), empty: document.querySelector("#emptyState"), template: document.querySelector("#taskTemplate"),
     dialog: document.querySelector("#importDialog"), input: document.querySelector("#taskInput"), inputLabel: document.querySelector("#inputLabel"), hint: document.querySelector("#inputHint"),
     plainTab: document.querySelector("#plainTab"), markdownTab: document.querySelector("#markdownTab"), status: document.querySelector("#status"),
-    progressText: document.querySelector("#progressText"), progressPercent: document.querySelector("#progressPercent"), progressBar: document.querySelector("#progressBar"), track: document.querySelector(".progress-track")
+    progressText: document.querySelector("#progressText"), progressPercent: document.querySelector("#progressPercent"), progressBar: document.querySelector("#progressBar"), track: document.querySelector(".progress-track"),
+    addTaskDialog: document.querySelector("#addTaskDialog"), addSiblingChoice: document.querySelector("#addSiblingChoice"), addChildChoice: document.querySelector("#addChildChoice")
   };
   let tasks = loadTasks();
   let inputMode = "plain";
   let statusTimer;
+  let choiceTask = null;
 
   function loadTasks() {
     try {
@@ -97,6 +108,22 @@ if (typeof document !== "undefined") {
 
   function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks)); }
   function announce(message) { clearTimeout(statusTimer); elements.status.textContent = message; statusTimer = setTimeout(() => { elements.status.textContent = ""; }, 2200); }
+
+  function addChild(task) {
+    const child = makeTask("新しいタスク"); task.children.push(child); task.checked = false; commit();
+    requestAnimationFrame(() => startEditing(document.querySelector(`[data-id="${child.id}"]`)));
+  }
+
+  function addSibling(task) {
+    const siblings = findTaskList(tasks, task.id);
+    if (!siblings) return;
+    const sibling = makeTask("新しいタスク");
+    siblings.splice(siblings.indexOf(task) + 1, 0, sibling); commit();
+    requestAnimationFrame(() => startEditing(document.querySelector(`[data-id="${sibling.id}"]`)));
+  }
+
+  function openAddTaskDialog(task) { choiceTask = task; elements.addTaskDialog.showModal(); elements.addSiblingChoice.focus(); }
+  function closeAddTaskDialog() { elements.addTaskDialog.close(); choiceTask = null; }
 
   function renderTask(task, depth) {
     const node = document.createElement("div");
@@ -110,9 +137,12 @@ if (typeof document !== "undefined") {
     node.querySelector(".task-name").textContent = task.name;
     const edit = node.querySelector(".task-edit"); edit.value = task.name;
     checkbox.addEventListener("change", () => { setTaskChecked(task, checkbox.checked); synchronizeTree(tasks); commit(); });
-    node.querySelector(".add-child").addEventListener("click", () => {
-      const child = makeTask("新しいタスク"); task.children.push(child); task.checked = false; commit();
-      requestAnimationFrame(() => startEditing(document.querySelector(`[data-id="${child.id}"]`)));
+    const addButton = node.querySelector(".add-child");
+    if (depth === 2) { addButton.setAttribute("aria-label", "同じ階層に小タスクを追加"); addButton.title = "小タスクを追加"; }
+    addButton.addEventListener("click", (event) => {
+      if (depth === 2 || event.shiftKey) { addSibling(task); return; }
+      if (depth === 1 && matchMedia("(pointer: coarse)").matches) { openAddTaskDialog(task); return; }
+      addChild(task);
     });
     node.querySelector(".edit-task").addEventListener("click", () => startEditing(node));
     node.querySelector(".delete-task").addEventListener("click", () => {
@@ -158,6 +188,9 @@ if (typeof document !== "undefined") {
     tasks.push(...created); synchronizeTree(tasks); elements.input.value = ""; elements.dialog.close(); commit(); announce(`${created.length}件の大タスクを追加しました`);
   });
   document.querySelector("#addRootButton").addEventListener("click", () => { const task = makeTask("新しい大タスク"); tasks.push(task); commit(); requestAnimationFrame(() => startEditing(document.querySelector(`[data-id="${task.id}"]`))); });
+  document.querySelector("#closeAddTaskDialog").addEventListener("click", closeAddTaskDialog);
+  elements.addSiblingChoice.addEventListener("click", () => { const task = choiceTask; closeAddTaskDialog(); if (task) addSibling(task); });
+  elements.addChildChoice.addEventListener("click", () => { const task = choiceTask; closeAddTaskDialog(); if (task) addChild(task); });
   document.querySelector("#resetButton").addEventListener("click", () => { if (!tasks.length || !confirm("チェックリストをすべて削除しますか？")) return; tasks = []; commit(); announce("すべて削除しました"); });
   document.querySelector("#copyButton").addEventListener("click", async () => {
     const markdown = toMarkdown(tasks).trimEnd(); if (!markdown) { announce("コピーするタスクがありません"); return; }
@@ -167,4 +200,4 @@ if (typeof document !== "undefined") {
   render();
 }
 
-if (typeof module !== "undefined") module.exports = { makeTask, parsePlainText, parseMarkdown, synchronizeTree, setTaskChecked, taskState, toMarkdown, countTasks, findTask, removeTask };
+if (typeof module !== "undefined") module.exports = { makeTask, parsePlainText, parseMarkdown, synchronizeTree, setTaskChecked, taskState, toMarkdown, countTasks, findTask, removeTask, findTaskList };
