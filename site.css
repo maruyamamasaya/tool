@@ -26,10 +26,11 @@ section { padding: 32px; border: 1px solid #e2e7f0; border-radius: 20px; backgro
 h2 { margin: 0; font-size: 1.8rem; }
 .window-note { margin: 0; padding: 8px 12px; border-radius: 999px; color: #3151cf; background: #edf2ff; font-size: .85rem; font-weight: 700; }
 .tool-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.tool-card { position: relative; min-height: 116px; padding: 20px 42px 20px 20px; border: 1px solid #e4e8f1; border-radius: 12px; color: inherit; text-decoration: none; transition: border-color .15s, box-shadow .15s, transform .15s; }
+.tool-card { position: relative; display: flex; align-items: flex-start; gap: 14px; min-height: 116px; padding: 20px 42px 20px 20px; border: 1px solid #e4e8f1; border-radius: 12px; color: inherit; text-decoration: none; transition: border-color .15s, box-shadow .15s, transform .15s; }
 .tool-card::after { content: "↗"; position: absolute; top: 18px; right: 18px; color: #748ffc; font-weight: 800; }
 .tool-card:hover { border-color: #91a7ff; box-shadow: 0 8px 24px rgb(49 81 207 / 10%); transform: translateY(-2px); }
 .tool-card:focus-visible { outline: 3px solid #91a7ff; outline-offset: 3px; }
+.tool-icon { display: grid; flex: 0 0 42px; width: 42px; height: 42px; place-items: center; border-radius: 11px; color: #3151cf; background: #edf2ff; font-size: 1.05rem; font-weight: 800; line-height: 1; }
 .tool-card h3 { margin: 0 0 9px; font-size: 1rem; line-height: 1.3; }
 .tool-card p { margin: 0; color: #697386; font-size: .87rem; line-height: 1.55; }
 footer { padding: 0 24px 40px; color: #7a8497; font-size: .84rem; text-align: center; }
