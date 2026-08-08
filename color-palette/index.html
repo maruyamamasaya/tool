@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="約120色からHEX・RGBカラーコードを選択、プレビュー、コピーできるカラーツール">
+  <meta name="description" content="約120色のカラーとトレンドのグラデーションを選び、カラーコードを保存・コピーできるカラーツール">
   <title>Color Palette</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
@@ -30,6 +30,33 @@
           <div class="code-row"><div><small>RGB</small><strong id="rgbValue">rgb(76, 175, 80)</strong></div><button class="copy-button" data-copy="rgb" type="button">コピー</button></div>
         </div>
       </div>
+    </section>
+
+    <section class="gradient-section" aria-labelledby="gradient-title">
+      <div class="section-heading"><div><p class="eyebrow">GRADIENT STUDIO</p><h2 id="gradient-title">グラデーションをつくる</h2></div><p>2色と角度を選んで調整</p></div>
+      <div class="gradient-card">
+        <div id="gradientPreview" class="gradient-preview" aria-label="グラデーションのプレビュー"></div>
+        <div class="gradient-controls">
+          <div class="gradient-inputs">
+            <label>カラー 1<span class="color-field"><input id="gradientColor1" type="color" value="#833AB4"><input id="gradientHex1" type="text" value="#833AB4" maxlength="7" aria-label="グラデーションのカラー1 HEX"></span></label>
+            <label>カラー 2<span class="color-field"><input id="gradientColor2" type="color" value="#FD1D1D"><input id="gradientHex2" type="text" value="#FD1D1D" maxlength="7" aria-label="グラデーションのカラー2 HEX"></span></label>
+          </div>
+          <label class="direction-label" for="gradientDirection">方向
+            <select id="gradientDirection">
+              <option value="135deg">斜め ↘</option><option value="90deg">下から上 ↑</option><option value="180deg">右から左 ←</option><option value="45deg">斜め ↗</option>
+            </select>
+          </label>
+          <div class="css-output"><code id="gradientCss">linear-gradient(135deg, #833AB4, #FD1D1D)</code><button id="copyGradient" class="copy-button" type="button">CSSをコピー</button></div>
+        </div>
+      </div>
+
+      <div class="recommend-heading"><div><h3>おすすめグラデーション</h3><p>Instagramライクな鮮やかさと、今っぽい柔らかな配色</p></div></div>
+      <div id="gradientRecommendations" class="gradient-recommendations"></div>
+    </section>
+
+    <section class="code-notes" aria-labelledby="notes-title">
+      <div class="notes-copy"><p class="eyebrow">COLOR NOTES</p><h2 id="notes-title">カラーコードをストック</h2><p>気になるカラーやグラデーションを自由にメモ。入力内容はこのブラウザに自動保存されます。</p></div>
+      <div class="notes-field"><textarea id="colorNotes" rows="6" placeholder="#833AB4&#10;#FD1D1D&#10;linear-gradient(135deg, #833AB4, #FD1D1D)" aria-label="カラーコードのメモ"></textarea><span id="saveStatus" role="status">自動保存</span></div>
     </section>
 
     <section class="palette-section" aria-labelledby="palette-title">
