@@ -83,12 +83,14 @@
     });
   }
 
-  function formatScheduleText(dates, startHour, endHour, multiple) {
+  function formatScheduleText(dates, times, multiple) {
     return [...dates].sort().map(value => {
       const date = parseDate(value);
-      const line = `${date.getUTCMonth() + 1}月${date.getUTCDate()}日　${String(startHour).padStart(2, "0")}：00　〜　${String(endHour).padStart(2, "0")}：00`;
+      const time = times.get(value);
+      if (!time || time.end <= time.start) return "";
+      const line = `${date.getUTCMonth() + 1}月${date.getUTCDate()}日　${String(time.start).padStart(2, "0")}：00　〜　${String(time.end).padStart(2, "0")}：00`;
       return multiple ? `・${line}` : line;
-    }).join("\n");
+    }).filter(Boolean).join("\n");
   }
 
   if (typeof module !== "undefined" && module.exports) {
@@ -101,6 +103,7 @@
   let displayDate = new Date(today.getFullYear(), today.getMonth(), 1);
   let selectionMode = "single";
   let selectedDates = new Set();
+  const dateTimes = new Map();
   const customHolidays = new Map();
 
   const holidayCache = new Map();
@@ -124,12 +127,24 @@
   }
 
   function renderOutput() {
-    const start = Number($("#startTime").value); const end = Number($("#endTime").value);
-    const invalidTime = end <= start;
-    $("#timeError").textContent = invalidTime ? "終了時間は開始時間より後にしてください。" : "";
-    const text = invalidTime ? "" : formatScheduleText(selectedDates, start, end, selectionMode === "multiple");
+    const invalidDates = [...selectedDates].filter(date => dateTimes.get(date).end <= dateTimes.get(date).start);
+    $("#timeError").textContent = invalidDates.length ? "終了時間は開始時間より後にしてください。" : "";
+    const text = invalidDates.length ? "" : formatScheduleText(selectedDates, dateTimes, selectionMode === "multiple");
     $("#outputText").value = text; $("#selectedCount").textContent = `${selectedDates.size}件`;
     $("#copyButton").disabled = !text;
+  }
+
+  function timeOptions(selected) {
+    return Array.from({ length: 24 }, (_, hour) => `<option value="${hour}"${hour === selected ? " selected" : ""}>${String(hour).padStart(2, "0")}：00</option>`).join("");
+  }
+
+  function renderDateTimes() {
+    $("#dateTimeList").innerHTML = [...selectedDates].sort().map(date => {
+      const time = dateTimes.get(date);
+      const parsed = parseDate(date);
+      const label = `${parsed.getUTCMonth() + 1}月${parsed.getUTCDate()}日`;
+      return `<div class="date-time-row${time.end <= time.start ? " invalid" : ""}" data-time-date="${date}"><strong>${label}</strong><select data-time-field="start" aria-label="${label}の開始時間">${timeOptions(time.start)}</select><span aria-hidden="true">〜</span><select data-time-field="end" aria-label="${label}の終了時間">${timeOptions(time.end)}</select></div>`;
+    }).join("");
   }
 
   function renderHolidayList() {
@@ -139,19 +154,30 @@
   $("#calendarGrid").addEventListener("click", event => {
     const button = event.target.closest("[data-date]"); if (!button) return;
     const value = button.dataset.date;
-    if (selectionMode === "single") selectedDates = new Set([value]);
-    else if (selectedDates.has(value)) selectedDates.delete(value); else selectedDates.add(value);
+    if (selectionMode === "single") {
+      selectedDates = new Set([value]);
+    } else if (selectedDates.has(value)) {
+      selectedDates.delete(value);
+    } else {
+      selectedDates.add(value);
+    }
+    if (selectedDates.has(value) && !dateTimes.has(value)) dateTimes.set(value, { start: Number($("#startTime").value), end: Number($("#endTime").value) });
     const picked = parseDate(value); displayDate = new Date(picked.getUTCFullYear(), picked.getUTCMonth(), 1);
-    renderCalendar(); renderOutput();
+    renderCalendar(); renderDateTimes(); renderOutput();
   });
 
   document.querySelectorAll("[name=selectionMode]").forEach(input => input.addEventListener("change", event => {
     selectionMode = event.target.value;
     if (selectionMode === "single" && selectedDates.size > 1) selectedDates = new Set([[...selectedDates].sort()[0]]);
     $("#selectionHelp").textContent = selectionMode === "multiple" ? "候補日をクリックして追加・解除できます。" : "カレンダーから日付を1つ選んでください。";
-    renderCalendar(); renderOutput();
+    renderCalendar(); renderDateTimes(); renderOutput();
   }));
-  ["#startTime", "#endTime"].forEach(id => $(id).addEventListener("change", renderOutput));
+  $("#dateTimeList").addEventListener("change", event => {
+    const field = event.target.dataset.timeField; if (!field) return;
+    const date = event.target.closest("[data-time-date]").dataset.timeDate;
+    dateTimes.get(date)[field] = Number(event.target.value);
+    renderDateTimes(); renderOutput();
+  });
   $("#previousMonth").addEventListener("click", () => { displayDate.setMonth(displayDate.getMonth() - 1); renderCalendar(); });
   $("#nextMonth").addEventListener("click", () => { displayDate.setMonth(displayDate.getMonth() + 1); renderCalendar(); });
   $("#todayButton").addEventListener("click", () => { displayDate = new Date(today.getFullYear(), today.getMonth(), 1); renderCalendar(); });
@@ -171,7 +197,7 @@
     customHolidays.delete(button.dataset.removeHoliday); renderHolidayList(); renderCalendar();
   });
 
-  const options = Array.from({ length: 24 }, (_, hour) => `<option value="${hour}">${String(hour).padStart(2, "0")}：00</option>`).join("");
+  const options = timeOptions(-1);
   $("#startTime").innerHTML = options; $("#endTime").innerHTML = options;
   $("#startTime").value = "12"; $("#endTime").value = "13";
   renderCalendar(); renderOutput();
