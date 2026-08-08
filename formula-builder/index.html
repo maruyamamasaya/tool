@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="日本語からExcel・Googleスプレッドシートの関数を探して数式を作成できるブラウザツール">
+  <title>Formula Builder — 関数を、ことばから。</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../" aria-label="Browser Toolsへ戻る"><span class="brand-mark">ƒx</span><span>Formula<br>Builder</span></a>
+    <div class="service-switch" role="group" aria-label="表計算サービス">
+      <button class="service active" data-service="excel" type="button"><span class="excel-dot"></span>Excel</button>
+      <button class="service" data-service="sheets" type="button"><span class="sheets-dot"></span>Google Sheets</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p class="eyebrow">FORMULA FINDER &amp; BUILDER</p>
+      <h1>関数を、<br><em>ことば</em>から。</h1>
+      <p>やりたいことを日本語で検索。入力欄を埋めるだけで、そのまま使える数式をつくれます。</p>
+    </section>
+
+    <div class="workspace">
+      <aside class="sidebar">
+        <label class="searchbox" for="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="例：合計、重複を消す、別表から…" autocomplete="off"><kbd>⌘ K</kbd></label>
+        <div class="filter-head"><span>カテゴリ</span><button id="clearFilter" type="button">すべて表示</button></div>
+        <div id="categories" class="categories"></div>
+        <div class="list-head"><strong id="listTitle">すべての関数</strong><span id="resultCount"></span></div>
+        <div id="functionList" class="function-list" role="listbox" aria-label="関数一覧"></div>
+        <div class="saved-section"><h2><span>★</span> お気に入り</h2><div id="favorites" class="chips"><p class="empty-mini">☆から登録できます</p></div></div>
+        <div class="saved-section"><h2><span>↺</span> 最近使った関数</h2><div id="recents" class="chips"><p class="empty-mini">まだありません</p></div></div>
+      </aside>
+
+      <section id="detail" class="detail" aria-live="polite">
+        <div class="detail-head">
+          <div><p id="detailCategory" class="category-label"></p><div class="title-row"><h2 id="functionName"></h2><button id="favoriteButton" class="star" type="button" aria-label="お気に入りに追加">☆</button></div></div>
+          <span id="compatibility" class="compatibility"></span>
+        </div>
+        <p id="description" class="description"></p>
+        <div class="syntax-card"><span>SYNTAX</span><code id="syntax"></code></div>
+        <div id="serviceNote" class="note"></div>
+
+        <section class="builder" aria-labelledby="builderTitle">
+          <div class="section-title"><div><span>FORMULA BUILDER</span><h3 id="builderTitle">数式をつくる</h3></div><span class="step">入力すると自動で反映</span></div>
+          <form id="formulaForm" class="fields"></form>
+          <div class="result-block">
+            <div class="result-label"><span>生成された数式</span><span id="inputStatus">入力してください</span></div>
+            <div class="formula-output"><code id="formulaResult">=</code><button id="copyButton" type="button"><span>▢</span> コピー</button></div>
+            <p id="copyStatus" role="status" aria-live="polite"></p>
+          </div>
+        </section>
+
+        <section class="example"><div><span>EXAMPLE</span><h3>使用例</h3></div><div class="example-code"><code id="exampleFormula"></code><button id="copyExample" type="button" aria-label="使用例をコピー">▢</button></div><p id="exampleText"></p></section>
+      </section>
+    </div>
+  </main>
+  <footer><span><b>ƒx</b> Formula Builder</span><p>入力内容は外部へ送信されません。すべてブラウザ内で処理されます。</p></footer>
+</body>
+</html>
