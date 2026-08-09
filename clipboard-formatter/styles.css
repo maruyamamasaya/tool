@@ -1,0 +1,47 @@
+:root { font-family: Inter, "Noto Sans JP", system-ui, sans-serif; color: #18201c; background: #f4f7f5; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { min-width: 320px; margin: 0; }
+button, textarea, select { font: inherit; }
+.app { width: min(1040px, calc(100% - 32px)); margin: auto; padding: clamp(32px, 7vw, 72px) 0 40px; }
+header { margin-bottom: 32px; }
+.back { display: inline-block; margin-bottom: 34px; color: #547063; font-size: 13px; font-weight: 700; text-decoration: none; }
+.eyebrow { margin: 0 0 10px; color: #40745d; font-size: 11px; font-weight: 800; letter-spacing: .18em; }
+h1 { margin: 0; font-size: clamp(34px, 7vw, 58px); line-height: 1.16; letter-spacing: -.045em; }
+.lead { max-width: 650px; margin: 16px 0 0; color: #617067; line-height: 1.8; }
+.step { padding: clamp(18px, 3vw, 28px); border: 1px solid #dce4df; border-radius: 16px; background: #fff; box-shadow: 0 8px 28px rgb(25 57 42 / 5%); }
+.workspace { display: grid; gap: 18px; margin-top: 18px; }
+.step-title { display: flex; align-items: flex-start; gap: 13px; margin-bottom: 18px; }
+.step-title > span { display: grid; flex: 0 0 28px; width: 28px; height: 28px; place-items: center; border-radius: 50%; color: #fff; background: #327254; font-size: 13px; font-weight: 800; }
+.step-title h2 { margin: 1px 0 0; font-size: 18px; }
+.step-title p { margin: 5px 0 0; color: #718078; font-size: 13px; line-height: 1.5; }
+.step-title.compact { align-items: center; }
+textarea { width: 100%; padding: 15px; resize: vertical; border: 1px solid #cbd6d0; border-radius: 9px; outline: 0; color: inherit; background: #fcfdfc; line-height: 1.55; tab-size: 4; }
+#source { min-height: 190px; }
+textarea:focus, select:focus { border-color: #327254; box-shadow: 0 0 0 3px rgb(50 114 84 / 13%); }
+.input-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+.input-footer p, .note { margin: 0; color: #77837d; font-size: 12px; }
+button { border-radius: 9px; font-weight: 750; cursor: pointer; }
+button:focus-visible { outline: 3px solid rgb(50 114 84 / 22%); outline-offset: 2px; }
+button:disabled { cursor: default; opacity: .4; }
+.ghost { min-height: 36px; padding: 6px 14px; border: 1px solid #d4ddd8; color: #526159; background: #fff; }
+.column-choices { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.column-choices label { padding: 7px 11px; border: 1px solid #d9e3dd; border-radius: 7px; background: #f8faf9; font-size: 13px; font-weight: 700; }
+input { accent-color: #327254; }
+.table-wrap { overflow: auto; max-height: 310px; border: 1px solid #dfe6e2; border-radius: 9px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+th, td { max-width: 300px; padding: 10px 13px; overflow: hidden; border-right: 1px solid #e5ebe7; border-bottom: 1px solid #e5ebe7; text-align: left; text-overflow: ellipsis; }
+th { position: sticky; top: 0; color: #536159; background: #f1f5f3; font-size: 12px; }
+.note { margin-top: 10px; }
+.settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.checks { display: grid; gap: 12px; }
+.checks label { font-size: 14px; }
+.field { display: grid; grid-template-columns: 90px 1fr; align-items: center; gap: 10px; margin-top: 12px; color: #536159; font-size: 13px; font-weight: 700; }
+select { width: 100%; min-height: 42px; padding: 8px 34px 8px 11px; border: 1px solid #cbd6d0; border-radius: 8px; color: inherit; background: #fff; }
+.result-step textarea { min-height: 200px; background: #f7faf8; }
+.copy { width: 100%; min-height: 54px; margin-top: 14px; border: 1px solid #286246; color: #fff; background: #327254; font-size: 16px; }
+.copy:not(:disabled):hover { background: #286246; }
+.status { min-height: 20px; margin: 9px 0 -9px; color: #28704e; font-size: 13px; font-weight: 700; text-align: center; }
+.privacy { margin: 20px 0 0; color: #758179; font-size: 12px; text-align: center; }
+.privacy::first-letter { color: #4b8c6d; }
+[hidden] { display: none !important; }
+@media (max-width: 700px) { .settings-grid { grid-template-columns: 1fr; } .app { width: min(100% - 20px, 1040px); } .step { border-radius: 12px; } .field { grid-template-columns: 1fr; gap: 5px; } }
