@@ -65,6 +65,13 @@ function formatRows(rows, options) {
   return quoted.map((row) => row.join(separators[options.format])).join("\n");
 }
 
+function setCellValue(rows, rowIndex, columnIndex, value) {
+  if (!Array.isArray(rows[rowIndex]) || rowIndex < 0 || columnIndex < 0) return false;
+  while (rows[rowIndex].length <= columnIndex) rows[rowIndex].push("");
+  rows[rowIndex][columnIndex] = String(value);
+  return true;
+}
+
 if (typeof document !== "undefined") {
   const $ = (selector) => document.querySelector(selector);
   const source = $("#source"); const workspace = $("#workspace"); const result = $("#result");
@@ -76,12 +83,12 @@ if (typeof document !== "undefined") {
     if (selected.length !== columnCount) selected = Array.from({ length: columnCount }, () => true);
     $("#columnChoices").innerHTML = Array.from({ length: columnCount }, (_, index) => `<label><input type="checkbox" data-column="${index}" ${selected[index] ? "checked" : ""}> 列${index + 1}</label>`).join("");
     $("#previewHead").innerHTML = `<tr>${Array.from({ length: columnCount }, (_, i) => `<th>列${i + 1}</th>`).join("")}</tr>`;
-    $("#previewBody").innerHTML = parsed.slice(0, 6).map((row) => `<tr>${Array.from({ length: columnCount }, (_, i) => `<td>${escapeHtml(row[i] || "")}</td>`).join("")}</tr>`).join("");
-    $("#previewNote").textContent = parsed.length > 6 ? `先頭6行を表示しています（全${parsed.length.toLocaleString("ja-JP")}行）` : "";
+    $("#previewBody").innerHTML = parsed.map((row, rowIndex) => `<tr>${Array.from({ length: columnCount }, (_, columnIndex) => `<td><input class="cell-input" type="text" value="${escapeHtml(row[columnIndex] ?? "").replaceAll('"', "&quot;")}" data-row="${rowIndex}" data-column="${columnIndex}" aria-label="${rowIndex + 1}行目、列${columnIndex + 1}"></td>`).join("")}</tr>`).join("");
+    $("#previewNote").textContent = `${parsed.length.toLocaleString("ja-JP")}行すべてを表示しています。編集内容は変換結果へすぐに反映されます。`;
   }
   function escapeHtml(value) { const el = document.createElement("span"); el.textContent = value; return el.innerHTML; }
   function updateResult() {
-    const chosen = parsed.map((row) => row.filter((_, index) => selected[index]));
+    const chosen = parsed.map((row) => selected.flatMap((isSelected, index) => isSelected ? [row[index] ?? ""] : []));
     result.value = formatRows(chosen, { trim: $("#trim").checked, empty: $("#empty").checked, duplicate: $("#duplicate").checked, spaces: $("#spaces").checked, format: $("#format").value, quote: $("#quote").value });
     $("#resultCount").textContent = `${result.value ? result.value.split("\n").length.toLocaleString("ja-JP") : 0} 行・${[...result.value].length.toLocaleString("ja-JP")} 文字`;
     $("#copyButton").disabled = !result.value;
@@ -97,6 +104,11 @@ if (typeof document !== "undefined") {
   }
   source.addEventListener("input", update);
   $("#columnChoices").addEventListener("change", (event) => { if (!event.target.matches("[data-column]")) return; selected[Number(event.target.dataset.column)] = event.target.checked; updateResult(); });
+  $("#previewBody").addEventListener("input", (event) => {
+    if (!event.target.matches(".cell-input")) return;
+    setCellValue(parsed, Number(event.target.dataset.row), Number(event.target.dataset.column), event.target.value);
+    updateResult();
+  });
   document.querySelectorAll("#trim, #empty, #duplicate, #spaces, #format, #quote").forEach((control) => control.addEventListener("change", updateResult));
   $("#clearButton").addEventListener("click", () => { source.value = ""; update(); source.focus(); });
   $("#copyButton").addEventListener("click", async () => {
@@ -106,4 +118,4 @@ if (typeof document !== "undefined") {
   update();
 }
 
-if (typeof module !== "undefined") module.exports = { parseDelimited, detectAndParse, formatRows };
+if (typeof module !== "undefined") module.exports = { parseDelimited, detectAndParse, formatRows, setCellValue };
