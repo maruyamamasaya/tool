@@ -84,7 +84,19 @@
     return new Intl.NumberFormat('ja-JP', { maximumFractionDigits: 15 }).format(rounded);
   }
 
-  if (typeof module !== 'undefined') module.exports = { calculate, formatNumber, tokenize };
+  function evaluate(expression) {
+    if (typeof expression !== 'string' || !expression.trim()) {
+      return { value: null, formatted: '—', error: '' };
+    }
+    try {
+      const value = calculate(expression);
+      return { value, formatted: formatNumber(value), error: '' };
+    } catch (calculationError) {
+      return { value: null, formatted: '—', error: calculationError.message || ERROR_MESSAGE };
+    }
+  }
+
+  if (typeof module !== 'undefined') module.exports = { calculate, evaluate, formatNumber, tokenize };
   if (typeof document === 'undefined') return;
 
   const form = document.getElementById('calculatorForm');
@@ -131,20 +143,23 @@
     updateHistoryState();
   }
 
+  function updateResult() {
+    const evaluation = evaluate(input.value);
+    result.textContent = evaluation.formatted;
+    error.textContent = evaluation.error;
+    error.hidden = !evaluation.error;
+    if (evaluation.error) input.setAttribute('aria-invalid', 'true');
+    else input.removeAttribute('aria-invalid');
+    return evaluation;
+  }
+
+  input.addEventListener('input', updateResult);
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    error.hidden = true;
-    input.removeAttribute('aria-invalid');
-    try {
-      const value = calculate(input.value);
-      const formatted = formatNumber(value);
-      result.textContent = formatted;
-      addHistory(input.value.trim(), formatted);
-    } catch (calculationError) {
-      result.textContent = '—';
-      error.textContent = calculationError.message || ERROR_MESSAGE;
-      error.hidden = false;
-      input.setAttribute('aria-invalid', 'true');
+    const evaluation = updateResult();
+    if (!evaluation.error && evaluation.value !== null) {
+      addHistory(input.value.trim(), evaluation.formatted);
     }
   });
 
@@ -154,4 +169,5 @@
   });
 
   updateHistoryState();
+  updateResult();
 }());
