@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="2つのリストを比較し、共通・Aのみ・Bのみの項目を表示するブラウザツール">
+  <title>List Compare - リスト比較</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div><p class="eyebrow">LIST COMPARE</p><h1>リストの違いを、<br>ひと目で。</h1><p class="lead">AとBの一覧を、1行に1項目ずつ貼り付けてください。</p></div>
+      <p class="privacy"><span aria-hidden="true">●</span> ブラウザ内で処理</p>
+    </header>
+
+    <section class="input-card" aria-labelledby="input-title">
+      <div class="section-heading"><div><p class="eyebrow">INPUT</p><h2 id="input-title">比較するリスト</h2></div><button id="clearButton" class="quiet" type="button">すべてクリア</button></div>
+      <div class="editors">
+        <label><span><b>LIST A</b><small id="aCount">0 件</small></span><textarea id="aInput" autofocus spellcheck="false" placeholder="apple&#10;banana&#10;orange"></textarea></label>
+        <label><span><b>LIST B</b><small id="bCount">0 件</small></span><textarea id="bInput" spellcheck="false" placeholder="banana&#10;orange&#10;grape"></textarea></label>
+      </div>
+      <div class="options" aria-label="比較オプション">
+        <label><input id="trimItems" type="checkbox" checked> 前後の空白を無視</label>
+        <label><input id="ignoreCase" type="checkbox"> 大文字・小文字を無視</label>
+        <label><input id="ignoreEmpty" type="checkbox" checked> 空行を除外</label>
+      </div>
+    </section>
+
+    <section class="results" aria-labelledby="result-title">
+      <div class="section-heading result-heading"><div><p class="eyebrow">RESULT</p><h2 id="result-title">比較結果</h2></div><p id="summary" class="summary" aria-live="polite">リストを入力するとここに結果が表示されます</p></div>
+      <div class="result-grid">
+        <article class="result-card common"><div class="result-card-heading"><h3><i aria-hidden="true"></i>共通 <span id="commonCount">0</span></h3><button class="copy" data-target="commonOutput" type="button" disabled>コピー</button></div><textarea id="commonOutput" readonly aria-label="共通する項目" placeholder="共通する項目"></textarea></article>
+        <article class="result-card only-a"><div class="result-card-heading"><h3><i aria-hidden="true"></i>A のみ <span id="onlyACount">0</span></h3><button class="copy" data-target="onlyAOutput" type="button" disabled>コピー</button></div><textarea id="onlyAOutput" readonly aria-label="Aにのみある項目" placeholder="A にのみある項目"></textarea></article>
+        <article class="result-card only-b"><div class="result-card-heading"><h3><i aria-hidden="true"></i>B のみ <span id="onlyBCount">0</span></h3><button class="copy" data-target="onlyBOutput" type="button" disabled>コピー</button></div><textarea id="onlyBOutput" readonly aria-label="Bにのみある項目" placeholder="B にのみある項目"></textarea></article>
+      </div>
+    </section>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
