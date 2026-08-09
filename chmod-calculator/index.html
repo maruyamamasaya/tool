@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="chmodの数値と権限表記を確認・生成できるブラウザツール">
+    <title>chmod Calculator</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="page-header">
+        <div class="terminal-mark" aria-hidden="true"><span>$</span><i>_</i></div>
+        <div>
+          <p class="eyebrow">LINUX PERMISSION TOOL</p>
+          <h1>chmod Calculator</h1>
+          <p class="lead">ファイル権限を、数字とことばで分かりやすく。</p>
+        </div>
+      </header>
+
+      <nav class="tabs" aria-label="機能の切り替え" role="tablist">
+        <button class="tab is-active" id="tab-checker" type="button" role="tab" aria-selected="true" aria-controls="checker" data-tab="checker">⌕ 権限チェッカー</button>
+        <button class="tab" id="tab-generator" type="button" role="tab" aria-selected="false" aria-controls="generator" data-tab="generator" tabindex="-1">⊞ 権限ジェネレーター</button>
+      </nav>
+
+      <section class="card panel" id="checker" role="tabpanel" aria-labelledby="tab-checker">
+        <div class="section-heading">
+          <div><span class="step">01</span><h2>現在の権限を調べる</h2></div>
+          <p>数値・記号のどちらでも入力できます</p>
+        </div>
+        <label class="input-label" for="permission-input">パーミッション</label>
+        <div class="permission-input-wrap">
+          <span aria-hidden="true">chmod</span>
+          <input id="permission-input" type="text" inputmode="text" autocomplete="off" value="755" placeholder="例：755 / 0755 / rwxr-xr-x" aria-describedby="input-hint checker-error">
+          <button id="clear-checker" type="button" aria-label="入力を消去">×</button>
+        </div>
+        <p class="hint" id="input-hint">3〜4桁の8進数、または9文字の記号表記に対応</p>
+        <p class="error" id="checker-error" role="alert" hidden></p>
+
+        <div class="result" id="checker-result" aria-live="polite">
+          <div class="result-top">
+            <div><span class="result-label">数値表記</span><strong id="checker-octal">755</strong></div>
+            <span class="equals">＝</span>
+            <div><span class="result-label">記号表記</span><code id="checker-symbolic">rwxr-xr-x</code></div>
+          </div>
+          <div class="permission-grid" id="checker-grid"></div>
+          <div class="summary"><span aria-hidden="true">●</span><p id="checker-summary"></p></div>
+          <button class="copy-button" id="copy-checker" type="button">chmod コマンドをコピー</button>
+        </div>
+      </section>
+
+      <section class="card panel" id="generator" role="tabpanel" aria-labelledby="tab-generator" hidden>
+        <div class="section-heading">
+          <div><span class="step">02</span><h2>権限を組み立てる</h2></div>
+          <p>必要な操作をチェックしてください</p>
+        </div>
+        <div class="generator-grid" id="generator-grid"></div>
+        <div class="special-box">
+          <h3>特殊権限 <span>必要な場合のみ</span></h3>
+          <div class="special-options">
+            <label><input type="checkbox" data-special="4"><span>setuid</span><small>所有者の権限で実行</small></label>
+            <label><input type="checkbox" data-special="2"><span>setgid</span><small>グループの権限で実行</small></label>
+            <label><input type="checkbox" data-special="1"><span>sticky</span><small>所有者だけが削除可能</small></label>
+          </div>
+        </div>
+        <div class="generated-result" aria-live="polite">
+          <div><span>生成された権限</span><strong id="generator-octal">644</strong><code id="generator-symbolic">rw-r--r--</code></div>
+          <p id="generator-summary"></p>
+          <div class="command-line"><code id="generator-command">chmod 644 filename</code><button id="copy-generator" type="button">コピー</button></div>
+        </div>
+      </section>
+
+      <aside class="legend" aria-label="権限記号の説明">
+        <div><b>r</b><span>read</span><strong>読み取り</strong><em>4</em></div>
+        <div><b>w</b><span>write</span><strong>書き込み</strong><em>2</em></div>
+        <div><b>x</b><span>execute</span><strong>実行</strong><em>1</em></div>
+      </aside>
+      <footer>入力内容はブラウザ内だけで処理されます</footer>
+    </main>
+  </body>
+</html>
