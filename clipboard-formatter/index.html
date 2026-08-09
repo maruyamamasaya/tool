@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Excelやスプレッドシートからコピーした表を、必要な列だけ好きな形式へ変換します">
+  <title>Clipboard Formatter</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header>
+      <a class="back" href="../">← ツール一覧</a>
+      <p class="eyebrow">CLIPBOARD FORMATTER</p>
+      <h1>貼り付けた表を、<br>すぐ使える形に。</h1>
+      <p class="lead">Excel・スプレッドシートのデータから必要な列を選び、好きな形式でコピーできます。</p>
+    </header>
+
+    <section class="step input-step" aria-labelledby="input-title">
+      <div class="step-title"><span>1</span><div><h2 id="input-title">データを貼り付け</h2><p>タブ・カンマ・改行・スペースを自動で判定します。</p></div></div>
+      <textarea id="source" rows="8" autofocus placeholder="Excelやスプレッドシートから、そのまま貼り付けてください"></textarea>
+      <div class="input-footer"><p id="inputCount">0 行</p><button id="clearButton" class="ghost" type="button" disabled>クリア</button></div>
+    </section>
+
+    <section id="workspace" class="workspace" hidden>
+      <section class="step" aria-labelledby="preview-title">
+        <div class="step-title"><span>2</span><div><h2 id="preview-title">認識結果・列を選択</h2><p id="detected">判定中</p></div></div>
+        <div id="columnChoices" class="column-choices" aria-label="出力する列"></div>
+        <div class="table-wrap"><table><thead id="previewHead"></thead><tbody id="previewBody"></tbody></table></div>
+        <p id="previewNote" class="note"></p>
+      </section>
+
+      <div class="settings-grid">
+        <section class="step" aria-labelledby="clean-title">
+          <div class="step-title compact"><span>3</span><h2 id="clean-title">整形オプション</h2></div>
+          <div class="checks">
+            <label><input id="trim" type="checkbox" checked> 前後の空白を削除</label>
+            <label><input id="empty" type="checkbox"> 空行を削除</label>
+            <label><input id="duplicate" type="checkbox"> 重複行を削除</label>
+            <label><input id="spaces" type="checkbox"> 連続したスペースを1つにする</label>
+          </div>
+        </section>
+        <section class="step" aria-labelledby="format-title">
+          <div class="step-title compact"><span>4</span><h2 id="format-title">出力形式</h2></div>
+          <label class="field">形式<select id="format"><option value="comma">カンマ区切り</option><option value="tab">タブ区切り</option><option value="space">スペース区切り</option><option value="newline">改行</option><option value="markdown">Markdown Table</option><option value="sql-values">SQL IN（値のみ）</option><option value="sql-in">SQL IN（IN付き）</option></select></label>
+          <label class="field">囲み文字<select id="quote"><option value="">なし</option><option value="double">&quot;ダブルクォート&quot;</option><option value="single">'シングルクォート'</option></select></label>
+        </section>
+      </div>
+
+      <section class="step result-step" aria-labelledby="result-title">
+        <div class="step-title compact"><span>5</span><div><h2 id="result-title">変換結果</h2><p id="resultCount"></p></div></div>
+        <textarea id="result" rows="9" readonly aria-label="変換結果"></textarea>
+        <button id="copyButton" class="copy" type="button">結果をコピー</button>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </section>
+    </section>
+    <p class="privacy">● 入力データは外部に送信されません。すべてブラウザ内で処理します。</p>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
