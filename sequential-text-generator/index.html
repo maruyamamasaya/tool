@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="複数行のテキストに、書式を選んで連番を追加できるブラウザツール">
+  <title>連番テキスト生成</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <p class="eyebrow">SEQUENTIAL TEXT GENERATOR</p>
+      <h1>連番テキスト生成</h1>
+      <p class="lead">複数行のテキストに、好きな書式の連番をまとめて追加します。</p>
+    </header>
+
+    <div class="layout">
+      <section class="panel input-panel" aria-labelledby="input-title">
+        <div class="panel-heading">
+          <label id="input-title" for="inputText">入力テキスト</label>
+          <span id="inputCount" class="count">0 行</span>
+        </div>
+        <textarea id="inputText" rows="16" autofocus spellcheck="false" placeholder="apple&#10;banana&#10;orange&#10;grape"></textarea>
+      </section>
+
+      <section class="settings" aria-labelledby="settings-title">
+        <div class="settings-heading">
+          <p class="eyebrow">SETTINGS</p>
+          <h2 id="settings-title">設定</h2>
+        </div>
+        <div class="settings-grid">
+          <div class="field"><label for="startNumber">開始番号</label><input id="startNumber" type="number" value="1" step="1"></div>
+          <div class="field"><label for="increment">増加数</label><input id="increment" type="number" value="1" step="1"></div>
+          <div class="field"><label for="digits">桁数</label><select id="digits"><option value="1">1</option><option value="2">01</option><option value="3">001</option><option value="4">0001</option></select></div>
+          <div class="field"><label for="position">連番の位置</label><select id="position"><option value="start">行の先頭</option><option value="end">行の末尾</option></select></div>
+          <div class="field separator-field">
+            <label for="separator">区切り文字</label>
+            <select id="separator"><option value=". ">.（ドット）</option><option value="_">_（アンダーバー）</option><option value="-">-（ハイフン）</option><option value=":">:（コロン）</option><option value=" ">半角スペース</option><option value="">なし</option><option value="custom">任意入力</option></select>
+            <input id="customSeparator" type="text" aria-label="任意の区切り文字" maxlength="20" placeholder="区切り文字を入力" hidden>
+          </div>
+          <div class="field"><label for="prefix">Prefix</label><input id="prefix" type="text" placeholder="例：item-"></div>
+          <div class="field"><label for="suffix">Suffix</label><input id="suffix" type="text" placeholder="任意の文字列"></div>
+          <fieldset class="empty-lines"><legend>空行の扱い</legend><label><input type="radio" name="emptyLines" value="ignore" checked> 無視する</label><label><input type="radio" name="emptyLines" value="number"> 空行も連番対象にする</label></fieldset>
+        </div>
+      </section>
+
+      <section class="panel output-panel" aria-labelledby="output-title">
+        <div class="panel-heading">
+          <label id="output-title" for="outputText">変換後テキスト</label>
+          <span id="outputCount" class="count" aria-live="polite">0 件</span>
+        </div>
+        <textarea id="outputText" rows="16" readonly spellcheck="false" placeholder="変換結果がここに表示されます"></textarea>
+      </section>
+    </div>
+
+    <div class="action-bar">
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+      <div class="actions"><button id="clearButton" class="secondary" type="button">クリア</button><button id="convertButton" class="primary" type="button">変換</button><button id="copyButton" class="dark" type="button" disabled>結果をコピー</button></div>
+    </div>
+    <p class="privacy"><span aria-hidden="true">●</span> 入力内容は外部へ送信されず、すべてブラウザ内で処理されます。</p>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
