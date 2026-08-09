@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HTTPステータスコードの意味と用途をすばやく確認できる一覧ツール">
+  <title>HTTP Status Viewer - HTTPステータスコード早見表</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <div class="hero-code" aria-hidden="true">200</div>
+      <div>
+        <p class="eyebrow">HTTP QUICK REFERENCE</p>
+        <h1>HTTP Status Viewer</h1>
+        <p>ステータスコードの意味を、すばやく確認。</p>
+      </div>
+    </header>
+
+    <section class="search-card" aria-labelledby="search-title">
+      <h2 id="search-title" class="sr-only">ステータスコードを検索</h2>
+      <label for="query">コード・名前・説明で検索</label>
+      <div class="search-box">
+        <span aria-hidden="true">⌕</span>
+        <input id="query" type="search" placeholder="例: 404、Not Found、認証" autocomplete="off" autofocus>
+        <button id="clear" type="button" aria-label="検索をクリア" hidden>×</button>
+      </div>
+      <div id="filters" class="filters" aria-label="分類で絞り込み">
+        <button class="filter active" type="button" data-category="all" aria-pressed="true">すべて</button>
+        <button class="filter info" type="button" data-category="1" aria-pressed="false">1xx</button>
+        <button class="filter success" type="button" data-category="2" aria-pressed="false">2xx</button>
+        <button class="filter redirect" type="button" data-category="3" aria-pressed="false">3xx</button>
+        <button class="filter client" type="button" data-category="4" aria-pressed="false">4xx</button>
+        <button class="filter server" type="button" data-category="5" aria-pressed="false">5xx</button>
+      </div>
+    </section>
+
+    <section class="results" aria-labelledby="results-title">
+      <div class="section-title"><h2 id="results-title">ステータス一覧</h2><output id="count"></output></div>
+      <div id="resultList" class="result-list" aria-live="polite"></div>
+      <div id="empty" class="empty" hidden><strong>該当するコードが見つかりません</strong><p>コード、英語名、日本語の説明を変えて検索してください。</p></div>
+    </section>
+    <p class="note">主なHTTPステータスコードを掲載しています。仕様や実装によって扱いが異なる場合があります。</p>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
