@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="長さ・重さ・温度・通貨などをすぐに変換できる単位変換ツール">
+  <meta name="theme-color" content="#f4f7fb">
+  <title>Unit Converter</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="app-shell">
+    <header>
+      <div class="brand" aria-hidden="true">↔</div>
+      <div><p class="eyebrow">QUICK CONVERSION</p><h1>Unit Converter</h1><p class="lead">数値を入力するだけで、すぐに単位変換。</p></div>
+    </header>
+
+    <nav id="categories" class="categories" aria-label="変換カテゴリ"></nav>
+
+    <section class="converter-card" aria-labelledby="converter-title">
+      <div class="card-heading"><div><p class="step">CONVERT</p><h2 id="converter-title">長さを変換</h2></div><p id="category-note">変換する値と単位を選択してください</p></div>
+
+      <label class="value-field"><span>数値</span><input id="value" type="text" inputmode="decimal" autocomplete="off" placeholder="例：100"></label>
+
+      <div class="unit-row">
+        <label><span>変換元</span><select id="from-unit"></select></label>
+        <button id="swap" class="swap-button" type="button" aria-label="変換元と変換先を入れ替える" title="単位を入れ替える">⇄</button>
+        <label><span>変換先</span><select id="to-unit"></select></label>
+      </div>
+
+      <div id="data-options" class="option-panel" hidden>
+        <span>データ容量の換算</span>
+        <div class="segmented"><label><input type="radio" name="data-base" value="1024" checked><span>1024（2進）</span></label><label><input type="radio" name="data-base" value="1000"><span>1000（10進）</span></label></div>
+      </div>
+
+      <div id="currency-options" class="option-panel currency-panel" hidden>
+        <div><span>為替レート</span><small>レートはご自身で入力してください</small></div>
+        <div class="rate-line"><span>1</span><strong id="rate-from">USD</strong><span>=</span><input id="rate" type="text" inputmode="decimal" value="150" aria-label="為替レート"><strong id="rate-to">JPY</strong></div>
+      </div>
+
+      <div class="result-block" aria-live="polite">
+        <p>変換結果</p><output id="result">—</output><span id="result-unit"></span>
+        <p id="formula" class="formula">数値を入力すると結果が表示されます</p>
+      </div>
+
+      <div class="bottom-row">
+        <label class="digits"><span>小数点以下</span><select id="digits"><option value="0">0桁</option><option value="2" selected>2桁</option><option value="4">4桁</option><option value="6">6桁</option><option value="10">10桁</option></select></label>
+        <div class="actions"><button id="clear" class="secondary" type="button">クリア</button><button id="copy" class="primary" type="button" disabled>▣ 結果をコピー</button></div>
+      </div>
+    </section>
+    <footer>入力内容はブラウザ内だけで処理されます</footer>
+  </main>
+</body>
+</html>
