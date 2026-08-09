@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="画像をブラウザ内で手軽にリサイズして保存できるツール">
+  <title>Image Resizer</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <p class="eyebrow">BROWSER IMAGE TOOL</p>
+      <h1>Image Resizer</h1>
+      <p>画像を選んで、サイズを変えて、すぐ保存。</p>
+      <span class="privacy">画像はサーバーへ送信されません</span>
+    </header>
+
+    <section class="workspace" aria-label="画像リサイズ">
+      <div class="step upload-step">
+        <div class="step-title"><span>1</span><div><h2>画像を選択</h2><p>JPG・PNG・WebP（最大 30 MB）</p></div></div>
+        <label id="dropZone" class="drop-zone" for="fileInput" tabindex="0">
+          <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp">
+          <span class="upload-icon" aria-hidden="true">＋</span>
+          <strong>ここに画像をドロップ</strong>
+          <span>または <b>ファイルを選択</b></span>
+        </label>
+        <p id="error" class="error" role="alert"></p>
+        <div id="sourceInfo" class="source-info" hidden>
+          <img id="sourceThumb" alt="選択した画像">
+          <div><strong id="sourceName"></strong><span id="sourceMeta"></span></div>
+          <button id="replaceButton" type="button">変更</button>
+        </div>
+      </div>
+
+      <div id="settingsStep" class="step disabled" aria-disabled="true">
+        <div class="step-title"><span>2</span><div><h2>サイズを指定</h2><p>ピクセルまたは倍率で調整</p></div></div>
+        <div class="presets" aria-label="倍率指定">
+          <button type="button" data-scale="0.25">25%</button><button type="button" data-scale="0.5">50%</button><button type="button" data-scale="0.75">75%</button><button class="active" type="button" data-scale="1">100%</button><button type="button" data-scale="2">200%</button>
+        </div>
+        <div class="dimensions">
+          <label>幅 <span><input id="widthInput" type="number" min="1" max="16384" inputmode="numeric"><b>px</b></span></label>
+          <i aria-hidden="true">×</i>
+          <label>高さ <span><input id="heightInput" type="number" min="1" max="16384" inputmode="numeric"><b>px</b></span></label>
+        </div>
+        <label class="ratio"><input id="keepRatio" type="checkbox" checked><span></span>縦横比を維持</label>
+        <div class="output-settings">
+          <label>出力形式<select id="formatSelect"><option value="original">元の形式</option><option value="image/jpeg">JPEG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option></select></label>
+          <label id="qualityField">品質 <output id="qualityValue">85%</output><input id="qualityInput" type="range" min="10" max="100" value="85"></label>
+        </div>
+        <button id="resizeButton" class="primary" type="button" disabled>リサイズする <span>→</span></button>
+      </div>
+
+      <div id="resultStep" class="step result-step" hidden>
+        <div class="step-title"><span class="done">✓</span><div><h2>できあがり</h2><p>プレビューを確認して保存</p></div></div>
+        <div class="preview-wrap"><img id="resultPreview" alt="リサイズ後の画像プレビュー"></div>
+        <div class="size-comparison"><div><span>変換前</span><strong id="beforeSize"></strong></div><b>→</b><div><span>変換後</span><strong id="afterSize"></strong></div></div>
+        <a id="downloadButton" class="download" download>画像をダウンロード <span>↓</span></a>
+      </div>
+    </section>
+  </main>
+  <footer>Image Resizer · すべての画像処理はブラウザ内で完結します</footer>
+</body>
+</html>
