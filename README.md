@@ -27,6 +27,7 @@
 | [JSON Formatter](https://maruyamamasaya.github.io/tool/json-formatter/) | JSON の整形・圧縮・構文チェックと、整形結果のコピーができます。 |
 | [SQL Formatter](https://maruyamamasaya.github.io/tool/sql-formatter/) | SQLを貼り付けて、キーワードや句、条件を読みやすく整形し、結果をコピーできます。 |
 | [CSV ビューアー](https://maruyamamasaya.github.io/tool/csv-viewer/) | UTF-8 / Shift_JIS の CSV を表で表示し、全列検索や列ごとの並べ替えができます。 |
+| [Table Builder](https://maruyamamasaya.github.io/tool/table-builder/) | GUIで表を編集し、Markdown・HTML・CSV形式でコピーまたは保存できます。 |
 | [CSV Statistics](https://maruyamamasaya.github.io/tool/csv-statistics/) | CSVを貼り付けて、行・列・NULL・重複・ユニーク数や数値カラムの統計を確認できます。 |
 | [Whiteboard](https://maruyamamasaya.github.io/tool/drawing/) | ペン、消しゴム、四角、矢印、テキストを使ってブラウザ上で作図できます。Undo / Redo にも対応しています。 |
 | [Timer Board](https://maruyamamasaya.github.io/tool/timer-board/) | 複数のストップウォッチとカウントダウンをまとめて管理できます。設定内容はブラウザに保存されます。 |

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="表をGUIで作成し、Markdown・HTML・CSVで出力できるツール">
+  <title>Table Builder</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div><p class="eyebrow">TABLE BUILDER</p><h1>表づくりを、<br><span>もっと軽やかに。</span></h1><p class="lead">セルを直接編集するだけ。Markdown・HTML・CSVへ、すぐに変換できます。</p></div>
+      <div class="hero-art" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </header>
+
+    <section class="workspace" aria-labelledby="editor-title">
+      <div class="section-head">
+        <div><p class="eyebrow">EDITOR</p><h2 id="editor-title">テーブルを編集</h2></div>
+        <div class="actions"><button id="sampleButton" class="button ghost" type="button">サンプル</button><button id="clearButton" class="button ghost danger" type="button">クリア</button></div>
+      </div>
+      <div class="settings">
+        <label class="toggle"><input id="headerToggle" type="checkbox" checked><span></span> 1行目を見出しにする</label>
+        <label>文字揃え <select id="alignment"><option value="left">左揃え</option><option value="center">中央揃え</option><option value="right">右揃え</option></select></label>
+      </div>
+      <p class="hint">セルをクリックして入力できます。行・列はいつでも追加、削除できます。</p>
+      <div class="table-scroll"><table id="editorTable" aria-label="編集するテーブル"></table></div>
+      <div class="add-actions"><button id="addRowButton" type="button">＋ 行を追加</button><button id="addColumnButton" type="button">＋ 列を追加</button></div>
+    </section>
+
+    <section class="output" aria-labelledby="output-title">
+      <div class="section-head"><div><p class="eyebrow">OUTPUT</p><h2 id="output-title">出力</h2></div><span id="sizeLabel" class="size-label"></span></div>
+      <div class="tabs" role="tablist" aria-label="出力形式">
+        <button class="tab active" data-format="markdown" role="tab" aria-selected="true" type="button">Markdown</button>
+        <button class="tab" data-format="html" role="tab" aria-selected="false" type="button">HTML</button>
+        <button class="tab" data-format="csv" role="tab" aria-selected="false" type="button">CSV</button>
+      </div>
+      <div class="code-wrap"><pre><code id="outputCode"></code></pre><button id="copyButton" class="copy-button" type="button">コピー</button></div>
+      <div class="output-footer"><p id="status" role="status" aria-live="polite">編集内容はブラウザに自動保存されます</p><button id="downloadButton" class="button primary" type="button">ファイルを保存</button></div>
+    </section>
+    <p class="privacy">● 入力したデータは外部に送信されません</p>
+  </main>
+</body>
+</html>
