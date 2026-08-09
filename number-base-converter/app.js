@@ -1,9 +1,9 @@
 "use strict";
 
-const DIGITS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const DIGITS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx";
 
 function parseBaseValue(rawValue, base) {
-  if (!Number.isInteger(base) || base < 2 || base > 36) throw new Error("基数は2〜36の範囲で指定してください");
+  if (!Number.isInteger(base) || base < 2 || base > 60) throw new Error("基数は2〜60の範囲で指定してください");
 
   let value = String(rawValue).trim();
   if (!value) return null;
@@ -19,7 +19,8 @@ function parseBaseValue(rawValue, base) {
   if (!value) throw new Error(`${base}進数の値を入力してください`);
 
   let result = 0n;
-  for (const character of value.toUpperCase()) {
+  const normalizedValue = base <= 36 ? value.toUpperCase() : value;
+  for (const character of normalizedValue) {
     const digit = DIGITS.indexOf(character);
     if (digit < 0 || digit >= base) throw new Error(`${base}進数では「${character}」は使用できません`);
     result = result * BigInt(base) + BigInt(digit);
@@ -29,14 +30,27 @@ function parseBaseValue(rawValue, base) {
 
 function formatBaseValue(value, base) {
   if (typeof value !== "bigint") value = BigInt(value);
-  return value.toString(base).toUpperCase();
+  if (!Number.isInteger(base) || base < 2 || base > 60) throw new Error("基数は2〜60の範囲で指定してください");
+  if (value === 0n) return "0";
+
+  const isNegative = value < 0n;
+  let remaining = isNegative ? -value : value;
+  let result = "";
+  while (remaining > 0n) {
+    result = DIGITS[Number(remaining % BigInt(base))] + result;
+    remaining /= BigInt(base);
+  }
+  return `${isNegative ? "-" : ""}${result}`;
 }
 
 if (typeof document !== "undefined") {
   const fixedFields = [
     { input: document.querySelector("#binary"), base: 2, error: document.querySelector("#binary-error") },
     { input: document.querySelector("#decimal"), base: 10, error: document.querySelector("#decimal-error") },
-    { input: document.querySelector("#hexadecimal"), base: 16, error: document.querySelector("#hexadecimal-error") }
+    { input: document.querySelector("#duodecimal"), base: 12, error: document.querySelector("#duodecimal-error") },
+    { input: document.querySelector("#hexadecimal"), base: 16, error: document.querySelector("#hexadecimal-error") },
+    { input: document.querySelector("#base24"), base: 24, error: document.querySelector("#base24-error") },
+    { input: document.querySelector("#sexagesimal"), base: 60, error: document.querySelector("#sexagesimal-error") }
   ];
   const customBase = document.querySelector("#custom-base");
   const customValue = document.querySelector("#custom-value");
@@ -94,8 +108,8 @@ if (typeof document !== "undefined") {
   customBase.addEventListener("input", () => {
     clearErrors();
     const base = Number(customBase.value);
-    if (!Number.isInteger(base) || base < 2 || base > 36) {
-      baseError.textContent = "⚠ 基数は2〜36の範囲で指定してください";
+    if (!Number.isInteger(base) || base < 2 || base > 60) {
+      baseError.textContent = "⚠ 基数は2〜60の範囲で指定してください";
       customBase.setAttribute("aria-invalid", "true");
       return;
     }
