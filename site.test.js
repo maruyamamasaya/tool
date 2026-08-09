@@ -60,7 +60,7 @@ const toolLinks = [...indexHtml.matchAll(/<a class="tool-card" href="([^"]+)"/g)
 const categoryHtml = (id) => indexHtml.match(new RegExp(`<section id="${id}"[\\s\\S]*?</section>`))[0];
 assert.strictEqual(categorySections.length, categoryNames.length);
 categoryNames.forEach((name) => assert.ok(indexHtml.includes(`>${name}</a>`), `${name} navigation link is missing`));
-assert.strictEqual(toolLinks.length, 69);
+assert.strictEqual(toolLinks.length, 70);
 assert.strictEqual(new Set(toolLinks).size, toolLinks.length);
 assert.ok(categoryHtml("linux-tools").includes("./cron-reader/"));
 assert.ok(categoryHtml("data-analysis").includes("./regex-tester/"));
@@ -70,6 +70,6 @@ assert.ok(categoryHtml("log-analysis").includes("./log-highlighter/"));
   assert.ok(categoryHtml("numeric-tools").includes(`./${tool}/`), `${tool} is not in numeric tools`);
 });
 assert.ok(indexHtml.includes('id="favorite-grid"'));
-assert.ok(indexHtml.includes('id="toggle-all-tools"'));
+assert.ok(!indexHtml.includes('id="toggle-all-tools"'));
 
 console.log("site tests passed");

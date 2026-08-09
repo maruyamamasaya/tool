@@ -49,7 +49,6 @@
     const favoritesGrid = documentObject.getElementById("favorite-grid");
     const status = documentObject.getElementById("favorites-status");
     const categories = documentObject.getElementById("all-tool-categories");
-    const toggleAll = documentObject.getElementById("toggle-all-tools");
     const links = [...categories.querySelectorAll(".tool-card")];
     let favorites = loadFavorites(browserWindow.localStorage);
 
@@ -106,17 +105,6 @@
       wrapper.append(button);
     });
 
-    toggleAll.addEventListener("click", () => {
-      const willHide = !categories.hidden;
-      categories.hidden = willHide;
-      toggleAll.setAttribute("aria-expanded", String(!willHide));
-      toggleAll.textContent = willHide ? "全ツールを表示" : "全ツールを隠す";
-    });
-    if (favorites.length) {
-      categories.hidden = true;
-      toggleAll.setAttribute("aria-expanded", "false");
-      toggleAll.textContent = "全ツールを表示";
-    }
     update();
   }
 
