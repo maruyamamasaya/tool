@@ -22,13 +22,13 @@
           placeholder="例：1000 + 250 × 2" aria-describedby="inputHint errorMessage" autofocus>
         <button type="submit">計算</button>
       </div>
-      <p id="inputHint" class="hint">+ − × ÷ と括弧が使えます。Enterでも計算できます。</p>
+      <p id="inputHint" class="hint">入力しながら自動で計算します。+ − × ÷ と括弧が使えます。</p>
       <p id="errorMessage" class="error" role="alert" hidden></p>
     </form>
 
-    <section class="result-panel" aria-labelledby="resultTitle" aria-live="polite">
+    <section class="result-panel" aria-labelledby="resultTitle">
       <h2 id="resultTitle">結果</h2>
-      <output id="result">—</output>
+      <output id="result" aria-live="polite">—</output>
     </section>
 
     <section class="history-panel" aria-labelledby="historyTitle">
