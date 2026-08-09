@@ -1,4 +1,6 @@
 const assert = require("assert");
+const fs = require("fs");
+const path = require("path");
 const { shuffle, generateCard, getWinningLines, ballLetter } = require("./app.js");
 
 const card = generateCard(() => 0.42);
@@ -21,4 +23,11 @@ const fixed = [
 assert.strictEqual(getWinningLines(fixed, new Set([1, 16, 31, 46, 61])).length, 1);
 assert.strictEqual(getWinningLines(fixed, new Set([1, 17, 49, 65])).length, 1);
 assert.strictEqual(getWinningLines(fixed, new Set([1, 17])).length, 0);
+
+const markup = fs.readFileSync(path.join(__dirname, "index.html"), "utf8");
+assert(markup.indexOf('class="players-section"') < markup.indexOf('class="numbers-panel"'));
+
+const styles = fs.readFileSync(path.join(__dirname, "styles.css"), "utf8");
+assert(styles.includes(".current-number{min-height:170px"));
+assert(styles.includes(".current-number strong{font-size:4.5rem"));
 console.log("bingo-simulator tests passed");
