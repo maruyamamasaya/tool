@@ -52,6 +52,7 @@ const categoryNames = [
   "数値計算",
   "プログラム解析",
   "索引系",
+  "イメージ加工",
   "その他・シミュレーションなど"
 ];
 const categorySections = indexHtml.match(/<section[^>]+class="tool-category"/g) || [];
