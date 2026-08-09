@@ -32,6 +32,7 @@
           <a href="#tasks">タスク管理系</a>
           <a href="#calendar-tools">カレンダー</a>
           <a href="#linux-tools">Linux操作</a>
+          <a href="#network-tools">ネットワーク関連</a>
           <a href="#diff-tools">Diff（差分チェッカー）</a>
           <a href="#text-processing">テキスト加工</a>
           <a href="#text-generation">テキスト生成</a>
@@ -60,8 +61,8 @@
         <section id="timers" class="tool-category" aria-labelledby="timers-title">
           <h3 id="timers-title">タイマー系</h3>
           <div class="tool-grid">
-            <a class="tool-card" href="./clock-viewer/"><span class="tool-icon" aria-hidden="true">◷</span><div><h3>Clock Viewer</h3><p>現在時刻と予定までの残り時間を大きく表示</p></div></a>
-            <a class="tool-card" href="./time-calculator/"><span class="tool-icon" aria-hidden="true">＋◷</span><div><h3>Time Calculator</h3><p>勤務時間や複数の時間帯を計算・テキスト化</p></div></a>
+            <a class="tool-card" href="./clock-viewer/"><span class="tool-icon" aria-hidden="true">◷</span><div><h3>時計ビューアー（Clock Viewer）</h3><p>現在時刻と予定までの残り時間を大きく表示</p></div></a>
+            <a class="tool-card" href="./time-calculator/"><span class="tool-icon" aria-hidden="true">＋◷</span><div><h3>時間計算（Time Calculator）</h3><p>勤務時間や複数の時間帯を計算・テキスト化</p></div></a>
             <a class="tool-card" href="./timer-board/"><span class="tool-icon" aria-hidden="true">⏱️</span><div><h3>タイマーボード</h3><p>複数のタイマーをまとめて管理</p></div></a>
             <a class="tool-card" href="./meeting-timer/"><span class="tool-icon" aria-hidden="true">🗣️</span><div><h3>会議タイマー</h3><p>会議の残り時間とターンを表示</p></div></a>
             <a class="tool-card" href="./pomodoro-timer/"><span class="tool-icon" aria-hidden="true">🍅</span><div><h3>ポモドーロタイマー</h3><p>作業と休憩を自動で切り替え</p></div></a>
@@ -72,8 +73,8 @@
           <h3 id="tasks-title">タスク管理系</h3>
           <div class="tool-grid">
             <a class="tool-card" href="./checklist-builder/"><span class="tool-icon" aria-hidden="true">☑️</span><div><h3>チェックリスト作成</h3><p>階層チェックリストを作成・保存</p></div></a>
-            <a class="tool-card" href="./reflection-builder/"><span class="tool-icon" aria-hidden="true">↗</span><div><h3>Reflection Builder</h3><p>進捗リストから振り返りをMarkdownで作成</p></div></a>
-            <a class="tool-card" href="./progress-tracker/"><span class="tool-icon" aria-hidden="true">◔</span><div><h3>Progress Tracker</h3><p>タスク別の進捗から全体進捗を見える化</p></div></a>
+            <a class="tool-card" href="./reflection-builder/"><span class="tool-icon" aria-hidden="true">↗</span><div><h3>振り返り作成（Reflection Builder）</h3><p>進捗リストから振り返りをMarkdownで作成</p></div></a>
+            <a class="tool-card" href="./progress-tracker/"><span class="tool-icon" aria-hidden="true">◔</span><div><h3>進捗トラッカー（Progress Tracker）</h3><p>タスク別の進捗から全体進捗を見える化</p></div></a>
           </div>
         </section>
 
@@ -82,17 +83,25 @@
           <div class="tool-grid">
             <a class="tool-card" href="./calendar/"><span class="tool-icon" aria-hidden="true">📅</span><div><h3>日程候補作成</h3><p>候補日時を選んでテキスト化</p></div></a>
             <a class="tool-card" href="./business-day-calculator/"><span class="tool-icon" aria-hidden="true">🏢</span><div><h3>営業日カウンター</h3><p>期間内の営業日数を計算</p></div></a>
-            <a class="tool-card" href="./unix-time-converter/"><span class="tool-icon" aria-hidden="true">🕐</span><div><h3>Unix時刻変換</h3><p>Unix時刻と日時を相互変換</p></div></a>
           </div>
         </section>
 
         <section id="linux-tools" class="tool-category" aria-labelledby="linux-tools-title">
           <h3 id="linux-tools-title">Linux操作</h3>
           <div class="tool-grid">
-            <a class="tool-card" href="./cron-reader/"><span class="tool-icon" aria-hidden="true">＊</span><div><h3>Cron Builder &amp; Reader</h3><p>Cron式をかんたん作成・日本語へ変換</p></div></a>
-            <a class="tool-card" href="./linux-command-explorer/"><span class="tool-icon" aria-hidden="true">&gt;_</span><div><h3>Linux Command Explorer</h3><p>162のLinuxコマンドを検索・コピー</p></div></a>
-            <a class="tool-card" href="./chmod-calculator/"><span class="tool-icon" aria-hidden="true">rwx</span><div><h3>chmod Calculator</h3><p>ファイル権限を確認・かんたん生成</p></div></a>
+            <a class="tool-card" href="./cron-reader/"><span class="tool-icon" aria-hidden="true">＊</span><div><h3>Cron作成・解説（Cron Builder &amp; Reader）</h3><p>Cron式をかんたん作成・日本語へ変換</p></div></a>
+            <a class="tool-card" href="./linux-command-explorer/"><span class="tool-icon" aria-hidden="true">&gt;_</span><div><h3>Linuxコマンド検索（Linux Command Explorer）</h3><p>162のLinuxコマンドを検索・コピー</p></div></a>
+            <a class="tool-card" href="./chmod-calculator/"><span class="tool-icon" aria-hidden="true">rwx</span><div><h3>chmod権限計算（chmod Calculator）</h3><p>ファイル権限を確認・かんたん生成</p></div></a>
             <a class="tool-card" href="./file-tree-builder/"><span class="tool-icon" aria-hidden="true">🌲</span><div><h3>ファイルツリー作成</h3><p>フォルダ・ファイル構成を作成してテキスト化</p></div></a>
+            <a class="tool-card" href="./unix-time-converter/"><span class="tool-icon" aria-hidden="true">🕐</span><div><h3>Unix時刻変換</h3><p>Unix時刻と日時を相互変換</p></div></a>
+          </div>
+        </section>
+
+        <section id="network-tools" class="tool-category" aria-labelledby="network-tools-title">
+          <h3 id="network-tools-title">ネットワーク関連</h3>
+          <div class="tool-grid">
+            <a class="tool-card" href="./cidr-analyzer/"><span class="tool-icon" aria-hidden="true">🌐</span><div><h3>CIDR解析</h3><p>IPv4/CIDRの範囲と関係を解析</p></div></a>
+            <a class="tool-card" href="./dns-record-builder/"><span class="tool-icon" aria-hidden="true">DNS</span><div><h3>DNSレコード作成（DNS Record Builder）</h3><p>A・AAAA・CNAME・MX・TXTレコードをGUIで作成</p></div></a>
           </div>
         </section>
 
@@ -108,9 +117,9 @@
           <div class="tool-grid">
             <a class="tool-card" href="./text-cleaner/"><span class="tool-icon" aria-hidden="true">🧹</span><div><h3>テキストクリーナー</h3><p>不可視文字などを取り除く</p></div></a>
             <a class="tool-card" href="./line-sorter/"><span class="tool-icon" aria-hidden="true">↕</span><div><h3>行の並べ替え</h3><p>複数行をさまざまな順序で整列</p></div></a>
-            <a class="tool-card" href="./line-filter/"><span class="tool-icon" aria-hidden="true">⌕</span><div><h3>Line Filter</h3><p>AND・OR条件で一致する行だけを抽出</p></div></a>
-            <a class="tool-card" href="./duplicate-finder/"><span class="tool-icon" aria-hidden="true">≡2</span><div><h3>Duplicate Finder</h3><p>重複行の回数と行番号をチェック</p></div></a>
-            <a class="tool-card" href="./list-converter/"><span class="tool-icon" aria-hidden="true">⇢</span><div><h3>List Converter</h3><p>行リストをSQL・JSON・区切り形式へ変換</p></div></a>
+            <a class="tool-card" href="./line-filter/"><span class="tool-icon" aria-hidden="true">⌕</span><div><h3>行フィルター（Line Filter）</h3><p>AND・OR条件で一致する行だけを抽出</p></div></a>
+            <a class="tool-card" href="./duplicate-finder/"><span class="tool-icon" aria-hidden="true">≡2</span><div><h3>重複検索（Duplicate Finder）</h3><p>重複行の回数と行番号をチェック</p></div></a>
+            <a class="tool-card" href="./list-converter/"><span class="tool-icon" aria-hidden="true">⇢</span><div><h3>リスト変換（List Converter）</h3><p>行リストをSQL・JSON・区切り形式へ変換</p></div></a>
             <a class="tool-card" href="./base64-converter/"><span class="tool-icon" aria-hidden="true">64</span><div><h3>Base64変換</h3><p>テキストとBase64を相互変換</p></div></a>
             <a class="tool-card" href="./character-encoding-checker/"><span class="tool-icon" aria-hidden="true">あ</span><div><h3>文字コード確認</h3><p>文字種や不可視文字を確認</p></div></a>
             <a class="tool-card" href="./escape-tool/"><span class="tool-icon" aria-hidden="true">\</span><div><h3>エスケープ変換</h3><p>特殊文字をエスケープ・可視化</p></div></a>
@@ -120,9 +129,11 @@
         <section id="text-generation" class="tool-category" aria-labelledby="text-generation-title">
           <h3 id="text-generation-title">テキスト生成</h3>
           <div class="tool-grid">
-            <a class="tool-card" href="./text-generator/"><span class="tool-icon" aria-hidden="true">T+</span><div><h3>Text Generator</h3><p>文字数・行数・形式を選んでテスト用テキストを生成</p></div></a>
+            <a class="tool-card" href="./text-generator/"><span class="tool-icon" aria-hidden="true">T+</span><div><h3>テキスト生成（Text Generator）</h3><p>文字数・行数・形式を選んでテスト用テキストを生成</p></div></a>
             <a class="tool-card" href="./hash-generator/"><span class="tool-icon" aria-hidden="true">#</span><div><h3>ハッシュ値生成</h3><p>テキストのハッシュ値を生成</p></div></a>
             <a class="tool-card" href="./dummy-data-generator/"><span class="tool-icon" aria-hidden="true">🎲</span><div><h3>ダミーデータ生成</h3><p>テスト用の文章やCSVを生成</p></div></a>
+            <a class="tool-card" href="./uuid-generator/"><span class="tool-icon" aria-hidden="true">#</span><div><h3>UUID生成</h3><p>UUID v4をまとめて生成</p></div></a>
+            <a class="tool-card" href="./random-number-generator/"><span class="tool-icon" aria-hidden="true">🎲</span><div><h3>乱数ジェネレーター</h3><p>範囲と個数を選んで乱数を生成</p></div></a>
           </div>
         </section>
 
@@ -132,8 +143,8 @@
             <a class="tool-card" href="./regex-tester/"><span class="tool-icon" aria-hidden="true">.*</span><div><h3>正規表現テスター</h3><p>正規表現のマッチ結果を確認</p></div></a>
             <a class="tool-card" href="./regex-builder/"><span class="tool-icon" aria-hidden="true">/[ ]</span><div><h3>正規表現ジェネレーター</h3><p>日本語の条件から正規表現を作成</p></div></a>
             <a class="tool-card" href="./data-inspector/"><span class="tool-icon" aria-hidden="true">🔍</span><div><h3>データ解析</h3><p>データ形式・サイズ・構造を解析</p></div></a>
-            <a class="tool-card" href="./yaml-viewer/"><span class="tool-icon" aria-hidden="true">YML</span><div><h3>YAML Viewer</h3><p>YAMLの階層・値・パスを確認</p></div></a>
-            <a class="tool-card" href="./data-insight-explorer/"><span class="tool-icon" aria-hidden="true">◒</span><div><h3>Data Insight Explorer</h3><p>数値データをグラフで可視化・分析</p></div></a>
+            <a class="tool-card" href="./yaml-viewer/"><span class="tool-icon" aria-hidden="true">YML</span><div><h3>YAMLビューアー（YAML Viewer）</h3><p>YAMLの階層・値・パスを確認</p></div></a>
+            <a class="tool-card" href="./data-insight-explorer/"><span class="tool-icon" aria-hidden="true">◒</span><div><h3>データ分析ビューアー（Data Insight Explorer）</h3><p>数値データをグラフで可視化・分析</p></div></a>
           </div>
         </section>
 
@@ -141,7 +152,7 @@
           <h3 id="csv-tools-title">CSV</h3>
           <div class="tool-grid">
             <a class="tool-card" href="./csv-viewer/"><span class="tool-icon" aria-hidden="true">▤</span><div><h3>CSVビューアー</h3><p>CSVを表で表示・検索・並べ替え</p></div></a>
-            <a class="tool-card" href="./table-builder/"><span class="tool-icon" aria-hidden="true">▦</span><div><h3>Table Builder</h3><p>表を作成してMarkdown・HTML・CSVへ変換</p></div></a>
+            <a class="tool-card" href="./table-builder/"><span class="tool-icon" aria-hidden="true">▦</span><div><h3>表作成（Table Builder）</h3><p>表を作成してMarkdown・HTML・CSVへ変換</p></div></a>
             <a class="tool-card" href="./csv-statistics/"><span class="tool-icon" aria-hidden="true">📊</span><div><h3>CSV統計</h3><p>CSVの件数や統計値を集計</p></div></a>
           </div>
         </section>
@@ -151,7 +162,7 @@
           <div class="tool-grid">
             <a class="tool-card" href="./json-structure-viewer/"><span class="tool-icon" aria-hidden="true">🌳</span><div><h3>JSON構造ビューアー</h3><p>JSONの階層と型を可視化</p></div></a>
             <a class="tool-card" href="./json-formatter/"><span class="tool-icon" aria-hidden="true">{ }</span><div><h3>JSON整形</h3><p>JSONの整形・圧縮・構文確認</p></div></a>
-            <a class="tool-card" href="./json-builder/"><span class="tool-icon" aria-hidden="true">{＋}</span><div><h3>JSON Builder</h3><p>キー・値・配列を選んでJSONを組み立て</p></div></a>
+            <a class="tool-card" href="./json-builder/"><span class="tool-icon" aria-hidden="true">{＋}</span><div><h3>JSON作成（JSON Builder）</h3><p>キー・値・配列を選んでJSONを組み立て</p></div></a>
           </div>
         </section>
 
@@ -159,7 +170,7 @@
           <h3 id="numeric-tools-title">数値計算</h3>
           <div class="tool-grid">
             <a class="tool-card" href="./simple-calculator/"><span class="tool-icon" aria-hidden="true">🧮</span><div><h3>かんたん電卓</h3><p>四則演算と括弧を使った計算</p></div></a>
-            <a class="tool-card" href="./number-calculator/"><span class="tool-icon" aria-hidden="true">Σ</span><div><h3>Number Calculator</h3><p>貼り付けた数値の合計・平均などを集計</p></div></a>
+            <a class="tool-card" href="./number-calculator/"><span class="tool-icon" aria-hidden="true">Σ</span><div><h3>数値計算（Number Calculator）</h3><p>貼り付けた数値の合計・平均などを集計</p></div></a>
             <a class="tool-card" href="./percentage-calculator/"><span class="tool-icon" aria-hidden="true">％</span><div><h3>割合計算</h3><p>割合や増減率をすばやく計算</p></div></a>
             <a class="tool-card" href="./byte-converter/"><span class="tool-icon" aria-hidden="true">💾</span><div><h3>バイト単位変換</h3><p>バイト単位を相互変換</p></div></a>
             <a class="tool-card" href="./number-base-converter/"><span class="tool-icon" aria-hidden="true">₂₁₆</span><div><h3>進数変換</h3><p>2〜36進数を相互変換</p></div></a>
@@ -175,17 +186,15 @@
             <a class="tool-card" href="./sql-formatter/"><span class="tool-icon" aria-hidden="true">SQL</span><div><h3>SQL整形</h3><p>SQLを読みやすく整形</p></div></a>
             <a class="tool-card" href="./sql-explainer/"><span class="tool-icon" aria-hidden="true">💡</span><div><h3>SQL解説</h3><p>SELECT文の処理内容を日本語化</p></div></a>
             <a class="tool-card" href="./infrastructure-diagram/"><span class="tool-icon" aria-hidden="true">⬡</span><div><h3>構成図ビルダー</h3><p>文章やパーツからサーバー構成図を作成</p></div></a>
-            <a class="tool-card" href="./cidr-analyzer/"><span class="tool-icon" aria-hidden="true">🌐</span><div><h3>CIDR解析</h3><p>IPv4/CIDRの範囲と関係を解析</p></div></a>
-            <a class="tool-card" href="./dns-record-builder/"><span class="tool-icon" aria-hidden="true">DNS</span><div><h3>DNS Record Builder</h3><p>A・AAAA・CNAME・MX・TXTレコードをGUIで作成</p></div></a>
           </div>
         </section>
 
         <section id="references" class="tool-category" aria-labelledby="references-title">
           <h3 id="references-title">索引系</h3>
           <div class="tool-grid">
-            <a class="tool-card" href="./formula-builder/"><span class="tool-icon" aria-hidden="true">ƒx</span><div><h3>Formula Builder</h3><p>日本語で関数を探してExcel・Sheetsの数式を作成</p></div></a>
-            <a class="tool-card" href="./port-number-finder/"><span class="tool-icon" aria-hidden="true">:80</span><div><h3>Port Number Finder</h3><p>ポート番号とサービス名を検索・逆検索</p></div></a>
-            <a class="tool-card" href="./http-status-viewer/"><span class="tool-icon" aria-hidden="true">200</span><div><h3>HTTP Status Viewer</h3><p>HTTPステータスコードの意味を検索・確認</p></div></a>
+            <a class="tool-card" href="./formula-builder/"><span class="tool-icon" aria-hidden="true">ƒx</span><div><h3>数式作成（Formula Builder）</h3><p>日本語で関数を探してExcel・Sheetsの数式を作成</p></div></a>
+            <a class="tool-card" href="./port-number-finder/"><span class="tool-icon" aria-hidden="true">:80</span><div><h3>ポート番号検索（Port Number Finder）</h3><p>ポート番号とサービス名を検索・逆検索</p></div></a>
+            <a class="tool-card" href="./http-status-viewer/"><span class="tool-icon" aria-hidden="true">200</span><div><h3>HTTPステータス検索（HTTP Status Viewer）</h3><p>HTTPステータスコードの意味を検索・確認</p></div></a>
             <a class="tool-card" href="./color-palette/"><span class="tool-icon" aria-hidden="true">🎨</span><div><h3>カラーパレット</h3><p>色を選んでカラーコードを取得</p></div></a>
           </div>
         </section>
@@ -193,15 +202,13 @@
         <section id="others" class="tool-category" aria-labelledby="others-title">
           <h3 id="others-title">その他・シミュレーションなど</h3>
           <div class="tool-grid">
-            <a class="tool-card" href="./flash-card/"><span class="tool-icon" aria-hidden="true">Q/A</span><div><h3>Flash Card</h3><p>Q/Aを貼り付けて暗記カードで学習</p></div></a>
+            <a class="tool-card" href="./flash-card/"><span class="tool-icon" aria-hidden="true">Q/A</span><div><h3>暗記カード（Flash Card）</h3><p>Q/Aを貼り付けて暗記カードで学習</p></div></a>
             <a class="tool-card" href="./bingo-simulator/"><span class="tool-icon" aria-hidden="true">❺</span><div><h3>ビンゴシミュレーター</h3><p>最大16人の75球ビンゴを抽選・進行</p></div></a>
             <a class="tool-card" href="./lottery-simulator/"><span class="tool-icon" aria-hidden="true">🎟️</span><div><h3>くじ・抽選シミュレーター</h3><p>均等なくじ・確率付きガチャを抽選して集計</p></div></a>
-            <a class="tool-card" href="./random-picker/"><span class="tool-icon" aria-hidden="true">✦</span><div><h3>Random Picker</h3><p>CSVや箇条書きなどのリストから1つを抽選</p></div></a>
-            <a class="tool-card" href="./quiz-maker/"><span class="tool-icon" aria-hidden="true">Q?</span><div><h3>Quiz Maker</h3><p>テキストからクイズを作成してランダム出題</p></div></a>
+            <a class="tool-card" href="./random-picker/"><span class="tool-icon" aria-hidden="true">✦</span><div><h3>ランダム抽選（Random Picker）</h3><p>CSVや箇条書きなどのリストから1つを抽選</p></div></a>
+            <a class="tool-card" href="./quiz-maker/"><span class="tool-icon" aria-hidden="true">Q?</span><div><h3>クイズ作成（Quiz Maker）</h3><p>テキストからクイズを作成してランダム出題</p></div></a>
             <a class="tool-card" href="./drawing/"><span class="tool-icon" aria-hidden="true">✏️</span><div><h3>ホワイトボード</h3><p>ブラウザ上で自由に作図</p></div></a>
             <a class="tool-card" href="./qr-code-generator/"><span class="tool-icon" aria-hidden="true">▦</span><div><h3>QRコード生成</h3><p>URLからQRコードを生成・保存</p></div></a>
-            <a class="tool-card" href="./uuid-generator/"><span class="tool-icon" aria-hidden="true">#</span><div><h3>UUID生成</h3><p>UUID v4をまとめて生成</p></div></a>
-            <a class="tool-card" href="./random-number-generator/"><span class="tool-icon" aria-hidden="true">🎲</span><div><h3>乱数ジェネレーター</h3><p>範囲と個数を選んで乱数を生成</p></div></a>
             <a class="tool-card" href="./user-agent-viewer/"><span class="tool-icon" aria-hidden="true">🖥️</span><div><h3>端末・ブラウザ情報</h3><p>ブラウザや端末の情報を確認</p></div></a>
           </div>
         </section>
