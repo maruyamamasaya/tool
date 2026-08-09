@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ポート番号からサービス名を、サービス名からポート番号をすばやく検索できるツール">
+  <title>Port Number Finder - ポート番号検索・逆検索</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <div class="hero-mark" aria-hidden="true">:80</div>
+      <div><p class="eyebrow">NETWORK REFERENCE</p><h1>Port Number Finder</h1><p>ポート番号 ↔ サービス名を、どちらからでもすばやく検索。</p></div>
+    </header>
+
+    <section class="search-card" aria-labelledby="search-title">
+      <h2 id="search-title" class="sr-only">ポートを検索</h2>
+      <label for="query">ポート番号・サービス名</label>
+      <div class="search-box"><span aria-hidden="true">⌕</span><input id="query" type="search" placeholder="例: 443、HTTPS、database" autocomplete="off" autofocus><button id="clear" type="button" aria-label="検索をクリア" hidden>×</button></div>
+      <div class="filters" aria-label="プロトコルで絞り込み">
+        <button class="filter active" type="button" data-protocol="all" aria-pressed="true">すべて</button>
+        <button class="filter" type="button" data-protocol="TCP" aria-pressed="false">TCP</button>
+        <button class="filter" type="button" data-protocol="UDP" aria-pressed="false">UDP</button>
+      </div>
+    </section>
+
+    <section class="popular" aria-labelledby="popular-title">
+      <div class="section-title"><div><p class="eyebrow">QUICK HINTS</p><h2 id="popular-title">よく使うポート</h2></div><p>クリックして検索</p></div>
+      <div id="hints" class="hints"></div>
+    </section>
+
+    <section class="results" aria-labelledby="results-title">
+      <div class="section-title"><h2 id="results-title">検索結果</h2><output id="count">すべてのポート</output></div>
+      <div id="resultList" class="result-list" aria-live="polite"></div>
+      <div id="empty" class="empty" hidden><strong>該当するポートが見つかりません</strong><p>番号、英語名、用途を変えて検索してください。</p></div>
+    </section>
+    <p class="note">ポートの用途は一般的な既定値です。実際の設定や組織のポリシーを確認してください。</p>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
