@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { openTool, popupFeatures, usesMiniWindow } = require("./site.js");
+const { loadFavorites, openTool, popupFeatures, toolId, usesMiniWindow } = require("./site.js");
 
 const centeredWindow = {
   innerWidth: 1200,
@@ -29,6 +29,11 @@ desktopWindow.location = { assign: (url) => { fallbackUrl = url; } };
 openTool(event, { href: "https://example.com/tool/calendar/" }, desktopWindow);
 assert.strictEqual(fallbackUrl, "https://example.com/tool/calendar/");
 
+assert.deepStrictEqual(loadFavorites({ getItem: () => '["/tool/a","/tool/b"]' }), ["/tool/a", "/tool/b"]);
+assert.deepStrictEqual(loadFavorites({ getItem: () => "invalid" }), []);
+assert.strictEqual(loadFavorites({ getItem: () => JSON.stringify(Array.from({ length: 12 }, (_, index) => String(index))) }).length, 12);
+assert.strictEqual(toolId({ href: "https://example.com/tool/calendar/" }), "/tool/calendar");
+
 const fs = require("fs");
 const indexHtml = fs.readFileSync(require.resolve("./index.html"), "utf8");
 const categoryNames = [
@@ -41,11 +46,13 @@ const categoryNames = [
   "索引系",
   "その他・シミュレーションなど"
 ];
-const categorySections = indexHtml.match(/<section class="tool-category"/g) || [];
+const categorySections = indexHtml.match(/<section[^>]+class="tool-category"/g) || [];
 const toolLinks = [...indexHtml.matchAll(/<a class="tool-card" href="([^"]+)"/g)].map((match) => match[1]);
 assert.strictEqual(categorySections.length, categoryNames.length);
 categoryNames.forEach((name) => assert.ok(indexHtml.includes(`>${name}</a>`), `${name} navigation link is missing`));
 assert.strictEqual(toolLinks.length, 64);
 assert.strictEqual(new Set(toolLinks).size, toolLinks.length);
+assert.ok(indexHtml.includes('id="favorite-grid"'));
+assert.ok(indexHtml.includes('id="toggle-all-tools"'));
 
 console.log("site tests passed");
