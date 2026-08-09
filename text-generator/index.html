@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="文字数・行数・形式を選んで、テスト用テキストをブラウザ内で生成します。">
+  <title>Text Generator</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <a class="back" href="../" aria-label="ツール一覧へ戻る">← ツール一覧</a>
+      <div class="title-row"><span class="logo" aria-hidden="true">T<span>+</span></span><div><p class="eyebrow">TEST DATA UTILITY</p><h1>Text Generator</h1></div></div>
+      <p class="lead">必要な形式と長さを選んで、テスト用テキストをすばやく作成。</p>
+    </header>
+
+    <section class="workspace" aria-labelledby="settings-title">
+      <div class="section-heading"><div><p class="step">01 / SETTINGS</p><h2 id="settings-title">生成条件</h2></div><span class="local-badge">● ブラウザ内で処理</span></div>
+      <div class="settings-grid">
+        <label class="field wide"><span>生成タイプ</span><select id="type">
+          <option value="ja">日本語のダミー文章</option><option value="en">英語のダミー文章</option>
+          <option value="alphanumeric">ランダム英数字</option><option value="number">数字のみ</option><option value="alpha">英字のみ</option>
+          <option value="symbols">記号を含むランダム文字列</option><option value="uuid">UUID風文字列</option>
+          <option value="email">メールアドレス風</option><option value="url">URL風</option><option value="ip">IPアドレス風</option><option value="filename">ファイル名風</option>
+        </select></label>
+        <label class="field"><span>文字数 <small>（1行あたり）</small></span><select id="length"><option>10</option><option selected>20</option><option>50</option><option>100</option><option>500</option><option>1000</option><option value="custom">任意指定</option></select></label>
+        <label id="customLengthField" class="field custom" hidden><span>任意の文字数</span><input id="customLength" type="number" min="1" max="10000" value="200" inputmode="numeric"></label>
+        <label class="field"><span>行数</span><select id="lines"><option selected>1</option><option>5</option><option>10</option><option>20</option><option>50</option><option>100</option><option value="custom">任意指定</option></select></label>
+        <label id="customLinesField" class="field custom" hidden><span>任意の行数</span><input id="customLines" type="number" min="1" max="1000" value="30" inputmode="numeric"></label>
+        <label class="field"><span>区切り</span><select id="separator"><option value="newline">改行</option><option value="comma">カンマ</option><option value="space">スペース</option><option value="tab">タブ</option></select></label>
+      </div>
+      <button id="generate" class="generate" type="button"><span aria-hidden="true">✦</span> 生成する</button>
+    </section>
+
+    <section class="result" aria-labelledby="result-title">
+      <div class="section-heading result-head"><div><p class="step">02 / OUTPUT</p><h2 id="result-title">生成結果</h2></div><span id="meta" aria-live="polite">未生成</span></div>
+      <textarea id="output" readonly spellcheck="false" placeholder="生成したテキストがここに表示されます" aria-label="生成結果"></textarea>
+      <div class="actions"><button id="regenerate" type="button">↻ 再生成</button><button id="copy" class="copy" type="button">▣ 全文コピー</button><button id="clear" class="clear" type="button">クリア</button></div>
+    </section>
+    <p class="privacy">外部APIは使用しません。入力・生成したデータが外部サーバーへ送信されることはありません。</p>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden>コピーしました</div>
+</body>
+</html>
