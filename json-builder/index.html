@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="キー・値・配列をGUIで追加してJSONを生成できるブラウザツール">
+  <title>JSON Builder</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <a class="back-link" href="../">← Browser Tools</a>
+        <p class="eyebrow">JSON BUILDER</p>
+        <h1>組み立てるだけ。<br><span>JSONのできあがり。</span></h1>
+        <p class="lead">キーと値をフォームで追加。オブジェクトも配列も、コードを書かずに作れます。</p>
+      </div>
+      <div class="hero-art" aria-hidden="true"><i>{</i><div><b>"key"</b><em>:</em> "value"<br><b>"list"</b><em>:</em> [•••]</div><i>}</i></div>
+    </header>
+
+    <section class="template-section" aria-labelledby="template-title">
+      <div class="section-heading"><div><p class="eyebrow">QUICK START</p><h2 id="template-title">何から作りますか？</h2></div><p>サンプルを選ぶか、空のJSONから始められます。</p></div>
+      <div id="templates" class="template-grid"></div>
+    </section>
+
+    <section class="workspace" aria-label="JSON編集エリア">
+      <div class="panel builder-panel">
+        <div class="panel-head">
+          <div><p class="eyebrow">BUILDER</p><h2>データを組み立てる</h2></div>
+          <button id="clearButton" class="text-button danger" type="button">すべてクリア</button>
+        </div>
+        <div class="root-type"><span>ルートの種類</span><div class="segment"><button data-root-type="object" class="active" type="button">{ } オブジェクト</button><button data-root-type="array" type="button">[ ] 配列</button></div></div>
+        <div id="builder" class="builder-tree"></div>
+      </div>
+
+      <aside class="panel preview-panel">
+        <div class="panel-head">
+          <div><p class="eyebrow">PREVIEW</p><h2>生成されたJSON</h2></div>
+          <button id="copyButton" class="copy-button" type="button"><span>▣</span> コピー</button>
+        </div>
+        <div class="valid-state"><span class="valid-dot"></span><span id="validText">有効なJSON</span><span id="sizeText"></span></div>
+        <pre id="preview" tabindex="0" aria-label="生成されたJSON"></pre>
+        <p class="privacy">● 入力内容はブラウザの中だけで処理されます。</p>
+      </aside>
+    </section>
+    <p id="status" class="toast" role="status" aria-live="polite"></p>
+  </main>
+
+  <template id="rowTemplate">
+    <div class="node-row">
+      <button class="drag" type="button" aria-label="並べ替え" tabindex="-1">⠿</button>
+      <input class="key-input" type="text" placeholder="キー" aria-label="キー">
+      <select class="type-select" aria-label="値の種類"><option value="string">文字列</option><option value="number">数値</option><option value="boolean">真偽値</option><option value="null">null</option><option value="object">オブジェクト</option><option value="array">配列</option></select>
+      <div class="value-slot"></div>
+      <button class="delete-button" type="button" aria-label="項目を削除">×</button>
+    </div>
+  </template>
+</body>
+</html>
