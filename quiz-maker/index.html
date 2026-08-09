@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="テキストで問題と選択肢を登録し、ランダムに出題できるクイズメーカー">
+  <title>Quiz Maker — テキストからクイズ作成</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div><p class="eyebrow">QUIZ MAKER</p><h1>貼り付けて、<br><span>すぐにクイズ。</span></h1><p class="lead">問題と選択肢をテキストで登録。データは保存せず、このブラウザの中だけで出題します。</p></div>
+      <div class="hero-mark" aria-hidden="true">Q<span>?</span></div>
+    </header>
+
+    <section id="editor" class="card">
+      <div class="section-head"><div><p class="step">STEP 01</p><h2>問題を入力</h2></div><span class="privacy">● ブラウザ内だけで処理</span></div>
+      <p class="format"><code>Q:</code> で問題、<code>-</code> で選択肢、正解だけ <code>*</code> で始めます。空行で次の問題に移ります。</p>
+      <textarea id="source" rows="15" spellcheck="false">Q: 日本の首都はどこですか？
+- 大阪
+* 東京
+- 京都
+- 福岡
+
+Q: 1年は何か月ですか？
+- 10か月
+- 11か月
+* 12か月
+- 13か月
+
+Q: 水の化学式はどれですか？
+* H2O
+- CO2
+- O2
+- NaCl</textarea>
+      <div class="editor-foot"><span id="parseStatus" aria-live="polite"></span><button id="start" class="primary" type="button">ランダムに出題する <b>→</b></button></div>
+      <p id="inputError" class="error" role="alert" hidden></p>
+    </section>
+
+    <section id="quiz" class="card quiz" hidden>
+      <div class="quiz-top"><span id="progressText">1 / 3</span><button id="stop" class="text-button" type="button">途中でやめる</button></div>
+      <div class="progress"><i id="progressBar"></i></div>
+      <p class="step">QUESTION</p><h2 id="question"></h2>
+      <div id="choices" class="choices"></div>
+      <div id="feedback" class="feedback" aria-live="polite" hidden></div>
+      <button id="next" class="primary next" type="button" hidden>次の問題へ <b>→</b></button>
+    </section>
+
+    <section id="result" class="card result" hidden>
+      <p class="step">RESULT</p><h2>おつかれさまでした</h2>
+      <div class="score"><strong id="scoreValue">0%</strong><div><b id="scoreDetail"></b><span id="finishReason"></span></div></div>
+      <div id="wrongPanel" class="wrong-panel"><div class="section-head"><div><p class="step">RETRY TEXT</p><h3>間違った問題</h3></div><button id="copy" class="copy" type="button">コピー</button></div><p>このまま入力欄に貼り付けて、もう一度使えます。</p><textarea id="wrongText" rows="10" readonly></textarea></div>
+      <div id="perfect" class="perfect" hidden>すべて正解です！ 間違った問題はありません。</div>
+      <div class="result-actions"><button id="retryWrong" class="primary" type="button">間違った問題に挑戦</button><button id="back" class="secondary" type="button">入力に戻る</button></div>
+    </section>
+  </main>
+  <footer>QUIZ MAKER <span>•</span> PRIVATE &amp; TEMPORARY</footer>
+</body>
+</html>
