@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="2進数・10進数・16進数と任意の進数をリアルタイムで相互変換します。">
+  <meta name="description" content="2進数・10進数・12進数・16進数・24進数・60進数と任意の進数をリアルタイムで相互変換します。">
   <meta name="theme-color" content="#f5f6f8">
   <title>Number Base Converter</title>
   <link rel="stylesheet" href="./styles.css">
@@ -37,6 +37,15 @@
         <p class="error" id="decimal-error" role="alert"></p>
       </div>
 
+      <div class="field" data-base="12">
+        <label for="duodecimal"><span>12進数</span><small>DUODECIMAL</small></label>
+        <div class="input-row">
+          <input id="duodecimal" type="text" value="193" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="duodecimal-error">
+          <button class="copy-button" type="button" data-copy="duodecimal" aria-label="12進数をコピー"><span aria-hidden="true">▣</span> コピー</button>
+        </div>
+        <p class="error" id="duodecimal-error" role="alert"></p>
+      </div>
+
       <div class="field" data-base="16">
         <label for="hexadecimal"><span>16進数</span><small>HEXADECIMAL</small></label>
         <div class="input-row">
@@ -45,20 +54,38 @@
         </div>
         <p class="error" id="hexadecimal-error" role="alert"></p>
       </div>
+
+      <div class="field" data-base="24">
+        <label for="base24"><span>24進数</span><small>BASE 24</small></label>
+        <div class="input-row">
+          <input id="base24" type="text" value="AF" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="base24-error">
+          <button class="copy-button" type="button" data-copy="base24" aria-label="24進数をコピー"><span aria-hidden="true">▣</span> コピー</button>
+        </div>
+        <p class="error" id="base24-error" role="alert"></p>
+      </div>
+
+      <div class="field" data-base="60">
+        <label for="sexagesimal"><span>60進数</span><small>SEXAGESIMAL</small></label>
+        <div class="input-row">
+          <input id="sexagesimal" type="text" value="4F" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="sexagesimal-error">
+          <button class="copy-button" type="button" data-copy="sexagesimal" aria-label="60進数をコピー"><span aria-hidden="true">▣</span> コピー</button>
+        </div>
+        <p class="error" id="sexagesimal-error" role="alert"></p>
+      </div>
     </section>
 
     <section class="custom-section" aria-labelledby="custom-title">
       <div class="section-heading">
         <div>
           <h2 id="custom-title">任意の進数</h2>
-          <p>2〜36進数に対応</p>
+          <p>2〜60進数に対応</p>
         </div>
-        <span class="alphabet">0–9 &nbsp; A–Z</span>
+        <span class="alphabet">0–9 &nbsp; A–Z &nbsp; a–x</span>
       </div>
       <div class="custom-grid">
         <div class="base-field">
           <label for="custom-base">基数</label>
-          <div><input id="custom-base" type="number" value="8" min="2" max="36" inputmode="numeric"><span>進数</span></div>
+          <div><input id="custom-base" type="number" value="8" min="2" max="60" inputmode="numeric"><span>進数</span></div>
         </div>
         <div class="value-field">
           <label for="custom-value">値</label>
