@@ -37,6 +37,7 @@
 | [Text Diff Viewer](https://maruyamamasaya.github.io/tool/diff-viewer/) | 2 つのテキストを行単位で比較し、変更行は文字単位の差分まで確認できます。 |
 | [Text Cleaner](https://maruyamamasaya.github.io/tool/text-cleaner/) | リッチテキストをプレーンテキストとして貼り付け、不可視文字などを取り除いてコピーできます。 |
 | [Line Sorter](https://maruyamamasaya.github.io/tool/line-sorter/) | 複数行のテキストを、ABC順・数値順・数字を考慮した自然順で並べ替えられます。 |
+| [Line Filter](https://maruyamamasaya.github.io/tool/line-filter/) | 指定文字列を含む・含まないなどの条件をAND / ORで組み合わせ、一致する行だけを抽出できます。 |
 | [Duplicate Finder](https://maruyamamasaya.github.io/tool/duplicate-finder/) | テキストを貼り付けて、重複行の回数と行番号をまとめて確認できます。 |
 | [CIDR Analyzer](https://maruyamamasaya.github.io/tool/cidr-analyzer/) | 複数の IPv4/CIDR を整形し、ネットワーク・範囲・アドレス数と包含関係を一括で確認できます。 |
 | [Calendar](https://maruyamamasaya.github.io/tool/calendar/) | 日本の祝日が分かるカレンダーから候補日時を選び、日程調整用テキストをまとめてコピーできます。 |
