@@ -29,4 +29,23 @@ desktopWindow.location = { assign: (url) => { fallbackUrl = url; } };
 openTool(event, { href: "https://example.com/tool/calendar/" }, desktopWindow);
 assert.strictEqual(fallbackUrl, "https://example.com/tool/calendar/");
 
+const fs = require("fs");
+const indexHtml = fs.readFileSync(require.resolve("./index.html"), "utf8");
+const categoryNames = [
+  "タイマー系",
+  "タスク管理系",
+  "カレンダー",
+  "テキスト加工・テキスト生成",
+  "データ分析",
+  "プログラム（SQL）",
+  "索引系",
+  "その他・シミュレーションなど"
+];
+const categorySections = indexHtml.match(/<section class="tool-category"/g) || [];
+const toolLinks = [...indexHtml.matchAll(/<a class="tool-card" href="([^"]+)"/g)].map((match) => match[1]);
+assert.strictEqual(categorySections.length, categoryNames.length);
+categoryNames.forEach((name) => assert.ok(indexHtml.includes(`>${name}</a>`), `${name} navigation link is missing`));
+assert.strictEqual(toolLinks.length, 64);
+assert.strictEqual(new Set(toolLinks).size, toolLinks.length);
+
 console.log("site tests passed");
