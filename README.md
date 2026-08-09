@@ -31,6 +31,7 @@
 | [Timer Board](https://maruyamamasaya.github.io/tool/timer-board/) | 複数のストップウォッチとカウントダウンをまとめて管理できます。設定内容はブラウザに保存されます。 |
 | [Meeting Timer](https://maruyamamasaya.github.io/tool/meeting-timer/) | 会議の開始・終了時刻とターン数から、残り時間と現在のターンを1画面で確認できます。 |
 | [Bandwidth Calculator](https://maruyamamasaya.github.io/tool/bandwidth-calculator/) | データ容量と転送時間から必要な帯域幅を、データ容量と帯域幅から転送時間を計算できます。 |
+| [HTTP Status Viewer](https://maruyamamasaya.github.io/tool/http-status-viewer/) | HTTPステータスコードを番号・名前・説明から検索し、分類ごとに絞り込めます。 |
 | [RAID Calculator](https://maruyamamasaya.github.io/tool/raid-calculator/) | RAID 0 / 1 / 5 / 6 / 10 の使用可能容量、容量効率、耐障害性を計算できます。 |
 | [Text Diff Viewer](https://maruyamamasaya.github.io/tool/diff-viewer/) | 2 つのテキストを行単位で比較し、変更行は文字単位の差分まで確認できます。 |
 | [Text Cleaner](https://maruyamamasaya.github.io/tool/text-cleaner/) | リッチテキストをプレーンテキストとして貼り付け、不可視文字などを取り除いてコピーできます。 |
