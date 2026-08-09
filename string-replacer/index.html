@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="文字列を検索し、まとめて置換・削除できるブラウザツール">
+  <title>文字列検索・一括置換</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div><p class="eyebrow">STRING FIND &amp; REPLACE</p><h1>文字列検索・一括置換</h1><p class="lead">貼り付けたテキストから、目的の文字列をすばやく検索・置換・削除します。</p></div>
+      <div class="privacy-badge"><span aria-hidden="true">●</span> ブラウザ内で処理</div>
+    </header>
+
+    <nav class="tabs" aria-label="処理モード">
+      <button type="button" class="tab active" data-mode="search" aria-selected="true">検索</button>
+      <button type="button" class="tab" data-mode="replace" aria-selected="false">置換</button>
+      <button type="button" class="tab" data-mode="delete" aria-selected="false">削除</button>
+      <button type="button" class="tab" data-mode="multiple" aria-selected="false">複数置換</button>
+    </nav>
+
+    <section class="card" aria-labelledby="input-title">
+      <div class="card-heading"><div><p class="section-label">INPUT</p><h2 id="input-title"><label for="inputText">入力テキスト</label></h2></div><span id="inputStats" class="meta">0文字・0行</span></div>
+      <textarea id="inputText" rows="9" spellcheck="false" autofocus placeholder="ここに加工するテキストを貼り付けます"></textarea>
+    </section>
+
+    <section class="card settings" aria-labelledby="settings-title">
+      <div><p class="section-label">SETTINGS</p><h2 id="settings-title">検索と処理の設定</h2></div>
+      <div id="singleFields" class="field-grid">
+        <label>検索する文字列<textarea id="searchText" rows="2" placeholder="例：apple"></textarea></label>
+        <label id="replacementField">置換後の文字列<textarea id="replacementText" rows="2" placeholder="例：orange（空欄にもできます）"></textarea></label>
+      </div>
+      <div id="multipleFields" class="multiple-fields" hidden>
+        <label>置換ルール（1行に1件）<textarea id="rulesText" rows="5" placeholder="apple => orange&#10;banana => grape&#10;test => sample"></textarea></label>
+        <p>「検索文字列 =&gt; 置換文字列」の形式で、上から順番に適用します。</p>
+      </div>
+      <div id="deleteListField" class="multiple-fields" hidden>
+        <label>削除する文字列（1行に1件）<textarea id="deleteListText" rows="5" placeholder="aaa&#10;bbb&#10;ccc"></textarea></label>
+      </div>
+      <div class="options">
+        <label><input id="caseSensitive" type="checkbox"> 大文字・小文字を区別する</label>
+        <label><input id="exactMatch" type="checkbox"> 完全一致のみ（行単位）</label>
+        <label><input id="useRegex" type="checkbox"> 正規表現を使用する</label>
+        <label><input id="dotAll" type="checkbox"> 改行を含む文字列に対応（. が改行にも一致）</label>
+      </div>
+      <div class="actions">
+        <button id="runButton" class="primary-button" type="button">検索</button>
+        <button id="deleteListToggle" class="secondary-button" type="button" hidden>複数削除に切り替え</button>
+      </div>
+      <p id="message" class="message" role="alert" aria-live="assertive"></p>
+    </section>
+
+    <section class="card result-card" aria-labelledby="result-title">
+      <div class="card-heading"><div><p class="section-label">RESULT</p><h2 id="result-title">処理結果</h2></div><strong id="matchCount" class="match-count">該当：0件</strong></div>
+      <div id="highlightPanel" class="highlight-panel" aria-label="一致箇所のプレビュー"><span class="empty-preview">検索すると一致箇所をハイライト表示します</span></div>
+      <textarea id="outputText" rows="9" readonly spellcheck="false" placeholder="置換・削除した結果がここに表示されます"></textarea>
+      <div class="result-actions">
+        <button id="copyButton" class="primary-button" type="button" disabled>結果をコピー</button>
+        <button id="swapButton" class="secondary-button" type="button" disabled>入力と結果を入れ替え</button>
+        <button id="clearButton" class="text-button" type="button">クリア</button>
+      </div>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
