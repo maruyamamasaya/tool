@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Q/Aテキストを貼り付けて、その場で暗記学習できるフラッシュカード">
+  <title>Flash Card</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <a class="back-link" href="../">← ツール一覧</a>
+      <div class="hero-copy">
+        <p class="eyebrow">FLASH CARD</p>
+        <h1>貼り付けて、<br><span>すぐ覚える。</span></h1>
+        <p class="lead">Q/Aテキストを暗記カードに変換。入力内容や学習結果は保存されません。</p>
+      </div>
+      <div class="deck-mark" aria-hidden="true"><span>Q</span><span>A</span></div>
+    </header>
+
+    <section id="setupView" class="panel setup-panel" aria-labelledby="setupTitle">
+      <div class="panel-heading">
+        <div><p class="section-label">NEW DECK</p><h2 id="setupTitle">問題を貼り付け</h2></div>
+        <span class="local-badge">● ブラウザ内だけで処理</span>
+      </div>
+      <label for="qaInput">Q: と A: を使ったテキスト</label>
+      <textarea id="qaInput" rows="13" spellcheck="false" placeholder="Q: 日本の首都は？&#10;A: 東京&#10;&#10;Q: 水の化学式は？&#10;A: H2O"></textarea>
+      <div class="input-footer">
+        <p><strong>対応形式</strong> Q: / A:（複数行可）、タブ区切り、<code>問題 :: 答え</code></p>
+        <button id="sampleButton" class="text-button" type="button">サンプルを入力</button>
+      </div>
+      <p id="inputError" class="error" role="alert"></p>
+      <div class="setup-actions">
+        <label class="shuffle-option"><input id="shuffleInput" type="checkbox"><span>順番をシャッフル</span></label>
+        <button id="startButton" class="button primary" type="button">学習をはじめる <span>→</span></button>
+      </div>
+    </section>
+
+    <section id="studyView" class="study-view" aria-labelledby="studyTitle" hidden>
+      <div class="study-toolbar">
+        <button id="stopButton" class="button ghost" type="button">途中でやめる</button>
+        <div class="progress-copy"><span id="progressText">1 / 1</span><strong id="scoreText">正解 0</strong></div>
+      </div>
+      <div class="progress-track" role="progressbar" aria-label="学習の進捗" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressBar"></span></div>
+      <article id="flashCard" class="flash-card">
+        <p id="cardLabel" class="card-label">QUESTION</p>
+        <h2 id="studyTitle" tabindex="-1"></h2>
+        <div id="answerArea" class="answer-area" hidden><div class="divider"></div><p class="card-label">ANSWER</p><p id="answerText"></p></div>
+      </article>
+      <div class="study-actions">
+        <button id="revealButton" class="button primary wide" type="button">答えを見る <kbd>Space</kbd></button>
+        <div id="judgeActions" class="judge-actions" hidden>
+          <button id="wrongButton" class="button wrong" type="button"><span>×</span> 間違えた <kbd>1</kbd></button>
+          <button id="correctButton" class="button correct" type="button"><span>✓</span> 正解した <kbd>2</kbd></button>
+        </div>
+      </div>
+      <p class="keyboard-hint">キーボードでも操作できます</p>
+    </section>
+
+    <section id="resultView" class="panel result-panel" aria-labelledby="resultTitle" hidden>
+      <div class="result-heading"><div><p class="section-label">RESULT</p><h2 id="resultTitle" tabindex="-1">学習結果</h2></div><span id="resultState" class="result-state">完了</span></div>
+      <div class="score-grid">
+        <div class="rate-card"><span>正答率</span><strong id="accuracyText">0%</strong><div class="rate-track"><span id="rateBar"></span></div></div>
+        <dl class="count-list"><div><dt>回答</dt><dd id="answeredText">0問</dd></div><div><dt>正解</dt><dd id="correctText">0問</dd></div><div><dt>間違い</dt><dd id="wrongText">0問</dd></div></dl>
+      </div>
+      <div id="wrongSection" class="wrong-section">
+        <div class="wrong-heading"><div><p class="section-label">REVIEW</p><h3>間違えた問題</h3></div><button id="copyButton" class="button secondary" type="button">Q/Aをコピー</button></div>
+        <textarea id="wrongOutput" rows="9" readonly aria-label="間違えた問題のQ/Aテキスト"></textarea>
+        <p id="copyStatus" class="copy-status" role="status" aria-live="polite"></p>
+      </div>
+      <div id="perfectMessage" class="perfect-message" hidden><span aria-hidden="true">✓</span><div><strong>全問正解です！</strong><p>間違えた問題はありません。</p></div></div>
+      <div class="result-actions"><button id="newDeckButton" class="button ghost" type="button">入力画面に戻る</button><button id="retryButton" class="button primary" type="button">間違えた問題をもう一度</button></div>
+    </section>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
