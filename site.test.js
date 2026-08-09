@@ -40,18 +40,31 @@ const categoryNames = [
   "タイマー系",
   "タスク管理系",
   "カレンダー",
-  "テキスト加工・テキスト生成",
+  "Linux操作",
+  "Diff（差分チェッカー）",
+  "テキスト加工",
+  "テキスト生成",
   "データ分析",
-  "プログラム（SQL）",
+  "CSV",
+  "JSON",
+  "数値計算",
+  "プログラム解析",
   "索引系",
   "その他・シミュレーションなど"
 ];
 const categorySections = indexHtml.match(/<section[^>]+class="tool-category"/g) || [];
 const toolLinks = [...indexHtml.matchAll(/<a class="tool-card" href="([^"]+)"/g)].map((match) => match[1]);
+const categoryHtml = (id) => indexHtml.match(new RegExp(`<section id="${id}"[\\s\\S]*?</section>`))[0];
 assert.strictEqual(categorySections.length, categoryNames.length);
 categoryNames.forEach((name) => assert.ok(indexHtml.includes(`>${name}</a>`), `${name} navigation link is missing`));
 assert.strictEqual(toolLinks.length, 64);
 assert.strictEqual(new Set(toolLinks).size, toolLinks.length);
+assert.ok(categoryHtml("linux-tools").includes("./cron-reader/"));
+assert.ok(categoryHtml("data-analysis").includes("./regex-tester/"));
+assert.ok(categoryHtml("data-analysis").includes("./regex-builder/"));
+["raid-calculator", "sla-calculator", "bandwidth-calculator", "percentage-calculator"].forEach((tool) => {
+  assert.ok(categoryHtml("numeric-tools").includes(`./${tool}/`), `${tool} is not in numeric tools`);
+});
 assert.ok(indexHtml.includes('id="favorite-grid"'));
 assert.ok(indexHtml.includes('id="toggle-all-tools"'));
 
