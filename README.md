@@ -9,6 +9,7 @@
 
 | ツール | できること |
 | --- | --- |
+| [Image Resizer](https://maruyamamasaya.github.io/tool/image-resizer/) | JPG・PNG・WebP画像をブラウザ内でリサイズし、形式と品質を選んで保存できます。 |
 | [Text Generator](https://maruyamamasaya.github.io/tool/text-generator/) | 11種類の形式と文字数・行数・区切りを選び、テスト用テキストをブラウザ内で生成できます。 |
 | [Flash Card](https://maruyamamasaya.github.io/tool/flash-card/) | Q/Aテキストを貼り付けて暗記カードで学習し、正答率と間違えた問題を出力できます。 |
 | [ビンゴシミュレーター](https://maruyamamasaya.github.io/tool/bingo-simulator/) | 最大16人のランダムなカードで、75球ビンゴの抽選と進行をシミュレーションできます。 |
