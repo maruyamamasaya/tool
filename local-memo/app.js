@@ -99,5 +99,5 @@
     document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden")persist(); });
     if(!notes.length)addNote(); else render();
   }
-  return { normalizeNote, validateBackup, sortNotes, snapshotHistory, MAX_HISTORY };
+  return { start, normalizeNote, validateBackup, sortNotes, snapshotHistory, MAX_HISTORY };
 });
