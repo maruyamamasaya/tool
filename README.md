@@ -50,6 +50,7 @@
 | [Local Memo](https://maruyamamasaya.github.io/tool/local-memo/) | 複数のメモをブラウザ内へ自動保存し、JSONと5世代の履歴でバックアップできます。 |
 | [Reflection Builder](https://maruyamamasaya.github.io/tool/reflection-builder/) | 進捗付きチェックリストを読み取り、タスクごとの振り返りをMarkdownで作成できます。 |
 | [Progress Tracker](https://maruyamamasaya.github.io/tool/progress-tracker/) | タスクごとの進捗率から全体進捗と評価を表示し、進捗付きMarkdownを入出力できます。 |
+| [Schedule Plotter](https://maruyamamasaya.github.io/tool/schedule-plotter/) | Markdownタスクを読み込み、1日の時間軸へ30分単位で配置して保存・コピーできます。 |
 | [Pomodoro Timer](https://maruyamamasaya.github.io/tool/pomodoro-timer/) | 作業と休憩を自動で切り替え、今日の完了回数を記録できるポモドーロタイマーです。 |
 | [Color Palette](https://maruyamamasaya.github.io/tool/color-palette/) | 約120色のパレットから色を選び、HEX・RGBカラーコードをプレビューしてコピーできます。 |
 | [Unix Time Converter](https://maruyamamasaya.github.io/tool/unix-time-converter/) | Unix timestamp（秒・ミリ秒）と日時をテキスト入力で相互変換できます。 |
