@@ -1,6 +1,6 @@
 "use strict";
 
-const PROGRESS_PATTERN = /\s*(?:【\s*進捗\s*[:：]\s*(\d{1,3})\s*%\s*】|\{\s*progress\s*[:=]\s*(\d{1,3})\s*%\s*\}|<!--\s*進捗\s*[:：]\s*(\d{1,3})\s*%\s*-->)\s*$/i;
+const PROGRESS_PATTERN = /【\s*進捗\s*[:：]\s*(\d{1,3})\s*%\s*】|\{\s*progress\s*[:=]\s*(\d{1,3})\s*%\s*\}|<!--\s*進捗\s*[:：]\s*(\d{1,3})\s*%\s*-->/gi;
 
 function clampProgress(value) { return Math.max(0, Math.min(100, Number(value) || 0)); }
 
@@ -17,10 +17,10 @@ function parseTasks(text) {
     } else if (bullet) {
       depth = Math.floor(bullet[1].replace(/\t/g, "  ").length / 2); name = bullet[2];
     } else { name = raw.trim(); }
-    const progressMatch = name.match(PROGRESS_PATTERN);
-    const progress = progressMatch ? clampProgress(progressMatch.slice(1).find(Boolean)) : checked ? 100 : 0;
-    if (progressMatch) name = name.slice(0, progressMatch.index).trim();
-    if (name) tasks.push({ id: `task-${index}-${tasks.length}`, name, depth: Math.min(depth, 8), progress });
+    const progressMatch = Array.from(name.matchAll(PROGRESS_PATTERN))[0];
+    const progress = progressMatch ? clampProgress(progressMatch.slice(1).find((value) => value !== undefined)) : checked ? 100 : 0;
+    if (progressMatch) name = name.replace(PROGRESS_PATTERN, "").trim();
+    if (name) tasks.push({ id: `task-${index}-${tasks.length}`, name, depth: Math.min(depth, 8), progress, raw });
   });
   return tasks;
 }
@@ -39,7 +39,18 @@ function evaluation(percent) {
 }
 
 function toMarkdown(tasks) {
-  return tasks.map((task) => `${"  ".repeat(task.depth)}- [${clampProgress(task.progress) === 100 ? "x" : " "}] ${task.name} 【進捗: ${clampProgress(task.progress)}%】`).join("\n");
+  return tasks.map((task) => {
+    const marker = `【進捗: ${clampProgress(task.progress)}%】`;
+    if (typeof task.raw !== "string") return `${"  ".repeat(task.depth)}- [${clampProgress(task.progress) === 100 ? "x" : " "}] ${task.name} ${marker}`;
+
+    let found = false;
+    const line = task.raw.replace(PROGRESS_PATTERN, () => {
+      if (found) return "";
+      found = true;
+      return marker;
+    });
+    return found ? line : `${line} ${marker}`;
+  }).join("\n");
 }
 
 if (typeof document !== "undefined") {
