@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="会議の残り時間とターン進行を1画面で確認できるミーティングタイマー">
+  <meta name="description" content="会議の残り時間と終了予定をシンプルに確認できるミーティングタイマー">
   <meta name="theme-color" content="#0c1324">
   <title>Meeting Timer</title>
   <link rel="stylesheet" href="./styles.css">
@@ -19,8 +19,17 @@
     </header>
 
     <section class="workspace">
+      <section class="timer-panel" aria-live="polite">
+        <div class="remaining-block">
+          <p>会議終了まで</p>
+          <strong id="remainingMinutes">--</strong>
+          <span>分</span>
+        </div>
+        <div class="end-schedule"><span>終了予定</span><strong id="scheduledEnd">--:--</strong></div>
+      </section>
+
       <form id="settings" class="settings" autocomplete="off">
-        <div class="section-heading"><span>01</span><div><h2>会議時間</h2><p>今日の開始・終了時刻を設定</p></div></div>
+        <div class="section-heading"><span>01</span><div><h2>会議時間</h2><p>開始と終了を設定</p></div></div>
         <label class="field"><span>開始時刻</span><span class="time-selects"><select id="startHour" aria-label="開始時刻（時）" required></select><b>時</b><select id="startMinute" aria-label="開始時刻（分）" required></select><b>分</b></span></label>
         <div class="end-mode" role="group" aria-label="終了の指定方法">
           <button class="active" data-end-mode="datetime" type="button">終了時刻</button>
@@ -28,35 +37,9 @@
         </div>
         <label id="endAtField" class="field"><span>終了時刻</span><span class="time-selects"><select id="endHour" aria-label="終了時刻（時）" required></select><b>時</b><select id="endMinute" aria-label="終了時刻（分）" required></select><b>分</b></span></label>
         <label id="durationField" class="field" hidden><span>会議時間</span><span class="input-suffix"><input id="durationHours" type="number" min="0.1" max="168" step="0.1" value="1"><b>時間</b></span></label>
-
-        <div class="divider"></div>
-        <div class="section-heading"><span>02</span><div><h2>ターン分割</h2><p>交代の開始と回数を設定</p></div></div>
-        <label class="field"><span>分割開始</span><span class="input-suffix"><select id="splitDelay"><option value="0">今すぐ開始</option><option value="5">5分後に開始</option><option value="10">10分後に開始</option><option value="15">15分後に開始</option><option value="30">30分後に開始</option><option value="45">45分後に開始</option><option value="60">60分後に開始</option></select><b>自動設定</b></span></label>
-        <div class="field-row">
-          <label class="field"><span>分割数</span><span class="input-suffix"><input id="splitCount" type="number" min="1" max="99" value="4"><b>分割</b></span></label>
-          <label class="field"><span>開始ターン</span><span class="input-suffix"><input id="startTurn" type="number" min="1" max="99" value="1"><b>ターン</b></span></label>
-        </div>
         <p id="formError" class="error" role="alert"></p>
-        <button class="apply" type="submit"><span>▶</span> タイマーを反映</button>
+        <button class="apply" type="submit">タイマーを設定</button>
       </form>
-
-      <section class="timer-panel" aria-live="polite">
-        <div class="state-row"><span id="stateBadge" class="badge">開始前</span><span id="meetingRange">--:-- → --:--</span></div>
-        <div class="remaining-block">
-          <p>会議終了まで</p>
-          <strong id="remainingMinutes">--</strong>
-          <span>分</span>
-          <small id="remainingDetail">設定を入力してください</small>
-        </div>
-        <div class="progress" aria-label="会議の進捗"><span id="meetingProgress"></span></div>
-
-        <div class="turn-card">
-          <div class="turn-copy"><p>CURRENT TURN</p><strong id="turnNumber">--</strong><span id="turnTotal">/ --</span></div>
-          <div class="turn-time"><span>このターンの残り</span><strong id="turnRemaining">--:--</strong></div>
-        </div>
-        <div id="turnDots" class="turn-dots" aria-label="ターン進行"></div>
-        <div class="next-row"><span>次の交代</span><strong id="nextChange">--:--</strong><span id="turnLength">1ターン --分</span></div>
-      </section>
     </section>
     <footer><span><i></i> 入力内容はこのブラウザ内だけに保存されます</span><span>自動更新</span></footer>
   </main>
