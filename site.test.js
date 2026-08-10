@@ -11,6 +11,7 @@ const centeredWindow = {
   matchMedia: () => ({ matches: false })
 };
 assert.strictEqual(popupFeatures(centeredWindow), "width=600,height=750,left=500,top=125,resizable=yes,scrollbars=yes");
+assert.strictEqual(popupFeatures(centeredWindow, 900), "width=900,height=750,left=350,top=125,resizable=yes,scrollbars=yes");
 assert.strictEqual(usesMiniWindow({ innerWidth: 767, matchMedia: () => ({ matches: false }) }), false);
 assert.strictEqual(usesMiniWindow({ innerWidth: 1024, matchMedia: () => ({ matches: true }) }), false);
 
@@ -22,6 +23,11 @@ const event = { button: 0, preventDefault: () => { prevented = true; } };
 assert.strictEqual(openTool(event, { href: "https://example.com/tool/qr-code-generator/" }, desktopWindow), popup);
 assert.strictEqual(prevented, true);
 assert.strictEqual(focused, true);
+
+let localMemoFeatures;
+desktopWindow.open = (_url, _name, features) => { localMemoFeatures = features; return popup; };
+openTool(event, { href: "https://example.com/tool/local-memo/" }, desktopWindow);
+assert.strictEqual(localMemoFeatures, "width=900,height=750,left=350,top=125,resizable=yes,scrollbars=yes");
 
 let fallbackUrl;
 desktopWindow.open = () => null;
