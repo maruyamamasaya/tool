@@ -68,7 +68,17 @@
       if(note){ elements.title.value=note.title; elements.content.value=note.content; }
     }
     function addNote() { const now=new Date().toISOString(); const id=window.crypto?.randomUUID?.() || `note-${Date.now()}-${Math.random().toString(16).slice(2)}`; notes.push({id,title:"",content:"",createdAt:now,updatedAt:now}); selectedId=id; persist({forceSnapshot:true}); render(); elements.title.focus(); closeSidebar(); }
-    function updateCurrent() { const note=current(); if(!note)return; note.title=elements.title.value; note.content=elements.content.value; note.updatedAt=new Date().toISOString(); elements.status.textContent="保存中…"; window.clearTimeout(saveTimer); saveTimer=window.setTimeout(()=>{ persist(); renderList(); },500); }
+    function updateCurrent() {
+      const note=current();
+      if(!note)return;
+      note.title=elements.title.value;
+      note.content=elements.content.value;
+      note.updatedAt=new Date().toISOString();
+      // Save the edited value before yielding back to the browser. Relying only on
+      // lifecycle events can lose the last input when a popup is closed abruptly.
+      persist();
+      saveTimer=window.setTimeout(renderList,500);
+    }
     function replaceNotes(next) { notes=sortNotes(next); selectedId=notes[0]?.id||null; if(persist({forceSnapshot:true})){ render(); notify("メモを復元しました。"); } }
     function closeSidebar(){ document.body.classList.remove("sidebar-open"); $("menu-button").setAttribute("aria-expanded","false"); }
     function showHistory(){ elements.historyList.textContent=""; if(!history.length){ const p=document.createElement("p"); p.className="history-empty"; p.textContent="バックアップ履歴はまだありません。"; elements.historyList.append(p); } history.forEach((item)=>{ const row=document.createElement("div"); row.className="history-item"; const info=document.createElement("div"); const strong=document.createElement("strong"); strong.textContent=new Date(item.createdAt).toLocaleString("ja-JP"); const p=document.createElement("p"); p.textContent=`${item.notes.length}件のメモ`; info.append(strong,p); const button=document.createElement("button"); button.type="button"; button.textContent="復元"; button.addEventListener("click",()=>{ if(window.confirm("現在のメモをこのバックアップで上書きしますか？")){ replaceNotes(validateBackup(item.notes)); $("history-dialog").close(); } }); row.append(info,button); elements.historyList.append(row); }); $("history-dialog").showModal(); }
@@ -85,6 +95,7 @@
     $("import-file").addEventListener("change",async(event)=>{ const file=event.target.files[0]; event.target.value=""; if(!file)return; try { const restored=validateBackup(JSON.parse(await file.text())); if(window.confirm("現在のメモを選択したバックアップで上書きしますか？")){ replaceNotes(restored); $("backup-dialog").close(); } } catch(error){ notify(`復元できません: ${error.message}`,true); } });
     // pagehide also fires when a mobile browser backgrounds or freezes the page.
     window.addEventListener("pagehide",()=>persist());
+    window.addEventListener("beforeunload",()=>persist());
     document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden")persist(); });
     if(!notes.length)addNote(); else render();
   }

@@ -2,6 +2,7 @@
   "use strict";
 
   const POPUP_WIDTH = 600;
+  const WIDE_POPUP_WIDTH = 900;
   const POPUP_HEIGHT = 750;
   const DESKTOP_MIN_WIDTH = 768;
   const FAVORITES_KEY = "browserToolsFavorites";
@@ -13,8 +14,8 @@
     return browserWindow.innerWidth >= DESKTOP_MIN_WIDTH && !coarsePointer;
   }
 
-  function popupFeatures(browserWindow) {
-    const width = Math.min(POPUP_WIDTH, browserWindow.screen.availWidth);
+  function popupFeatures(browserWindow, requestedWidth = POPUP_WIDTH) {
+    const width = Math.min(requestedWidth, browserWindow.screen.availWidth);
     const height = Math.min(POPUP_HEIGHT, browserWindow.screen.availHeight);
     const left = Math.max(0, Math.round(browserWindow.screenX + (browserWindow.outerWidth - width) / 2));
     const top = Math.max(0, Math.round(browserWindow.screenY + (browserWindow.outerHeight - height) / 2));
@@ -26,7 +27,8 @@
 
     event.preventDefault();
     const slug = new URL(link.href).pathname.split("/").filter(Boolean).pop();
-    const popup = browserWindow.open(link.href, `browserTool_${slug.replaceAll("-", "_")}`, popupFeatures(browserWindow));
+    const popupWidth = slug === "local-memo" ? WIDE_POPUP_WIDTH : POPUP_WIDTH;
+    const popup = browserWindow.open(link.href, `browserTool_${slug.replaceAll("-", "_")}`, popupFeatures(browserWindow, popupWidth));
     if (popup) popup.focus();
     else browserWindow.location.assign(link.href);
     return popup;
