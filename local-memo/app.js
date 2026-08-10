@@ -29,8 +29,10 @@
   function start(document, window) {
     const $ = (id) => document.getElementById(id);
     const elements = { list:$("note-list"), count:$("note-count"), title:$("note-title"), content:$("note-content"), fields:$("editor-fields"), empty:$("empty-state"), status:$("save-status"), message:$("message"), historyList:$("history-list") };
-    let notes = load(NOTES_KEY, []).map(normalizeNote).filter(Boolean);
-    let history = load(HISTORY_KEY, []);
+    const storedNotes = load(NOTES_KEY, []);
+    const storedHistory = load(HISTORY_KEY, []);
+    let notes = (Array.isArray(storedNotes) ? storedNotes : []).map(normalizeNote).filter(Boolean);
+    let history = Array.isArray(storedHistory) ? storedHistory : [];
     let selectedId = notes[0]?.id || null;
     let saveTimer = null;
     let lastSnapshotAt = history[0] ? Date.parse(history[0].createdAt) : 0;
@@ -54,16 +56,19 @@
     function formatTime(date) { return new Intl.DateTimeFormat("ja-JP",{hour:"2-digit",minute:"2-digit"}).format(date); }
     function formatDate(value) { return new Intl.DateTimeFormat("ja-JP",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(value)); }
     function current() { return notes.find((note)=>note.id===selectedId); }
-    function render() {
+    function renderList() {
       notes=sortNotes(notes);
       elements.list.textContent="";
       notes.forEach((note)=>{ const li=document.createElement("li"); li.className=`note-item${note.id===selectedId?" active":""}`; const button=document.createElement("button"); button.type="button"; const name=document.createElement("span"); name.className="note-name"; name.textContent=note.title.trim()||"無題のメモ"; const date=document.createElement("span"); date.className="note-date"; date.textContent=formatDate(note.updatedAt); button.append(name,date); button.addEventListener("click",()=>{ selectedId=note.id; render(); closeSidebar(); }); li.append(button); elements.list.append(li); });
       elements.count.textContent=`${notes.length}件`;
+    }
+    function render() {
+      renderList();
       const note=current(); elements.fields.hidden=!note; elements.empty.hidden=Boolean(note);
       if(note){ elements.title.value=note.title; elements.content.value=note.content; }
     }
     function addNote() { const now=new Date().toISOString(); const id=window.crypto?.randomUUID?.() || `note-${Date.now()}-${Math.random().toString(16).slice(2)}`; notes.push({id,title:"",content:"",createdAt:now,updatedAt:now}); selectedId=id; persist({forceSnapshot:true}); render(); elements.title.focus(); closeSidebar(); }
-    function updateCurrent() { const note=current(); if(!note)return; note.title=elements.title.value; note.content=elements.content.value; note.updatedAt=new Date().toISOString(); elements.status.textContent="保存中…"; window.clearTimeout(saveTimer); saveTimer=window.setTimeout(()=>{ persist(); render(); },500); }
+    function updateCurrent() { const note=current(); if(!note)return; note.title=elements.title.value; note.content=elements.content.value; note.updatedAt=new Date().toISOString(); elements.status.textContent="保存中…"; window.clearTimeout(saveTimer); saveTimer=window.setTimeout(()=>{ persist(); renderList(); },500); }
     function replaceNotes(next) { notes=sortNotes(next); selectedId=notes[0]?.id||null; if(persist({forceSnapshot:true})){ render(); notify("メモを復元しました。"); } }
     function closeSidebar(){ document.body.classList.remove("sidebar-open"); $("menu-button").setAttribute("aria-expanded","false"); }
     function showHistory(){ elements.historyList.textContent=""; if(!history.length){ const p=document.createElement("p"); p.className="history-empty"; p.textContent="バックアップ履歴はまだありません。"; elements.historyList.append(p); } history.forEach((item)=>{ const row=document.createElement("div"); row.className="history-item"; const info=document.createElement("div"); const strong=document.createElement("strong"); strong.textContent=new Date(item.createdAt).toLocaleString("ja-JP"); const p=document.createElement("p"); p.textContent=`${item.notes.length}件のメモ`; info.append(strong,p); const button=document.createElement("button"); button.type="button"; button.textContent="復元"; button.addEventListener("click",()=>{ if(window.confirm("現在のメモをこのバックアップで上書きしますか？")){ replaceNotes(validateBackup(item.notes)); $("history-dialog").close(); } }); row.append(info,button); elements.historyList.append(row); }); $("history-dialog").showModal(); }
@@ -78,7 +83,9 @@
     $("export-button").addEventListener("click",()=>{ persist(); const data={version:1,exportedAt:new Date().toISOString(),notes:sortNotes(notes)}; const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}); const link=document.createElement("a"); link.href=URL.createObjectURL(blob); link.download=`notes-backup-${new Date().toISOString().slice(0,10)}.json`; link.click(); window.setTimeout(()=>URL.revokeObjectURL(link.href),0); notify("JSONバックアップを書き出しました。"); });
     $("import-button").addEventListener("click",()=>$("import-file").click());
     $("import-file").addEventListener("change",async(event)=>{ const file=event.target.files[0]; event.target.value=""; if(!file)return; try { const restored=validateBackup(JSON.parse(await file.text())); if(window.confirm("現在のメモを選択したバックアップで上書きしますか？")){ replaceNotes(restored); $("backup-dialog").close(); } } catch(error){ notify(`復元できません: ${error.message}`,true); } });
-    window.addEventListener("beforeunload",()=>persist());
+    // pagehide also fires when a mobile browser backgrounds or freezes the page.
+    window.addEventListener("pagehide",()=>persist());
+    document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden")persist(); });
     if(!notes.length)addNote(); else render();
   }
   return { normalizeNote, validateBackup, sortNotes, snapshotHistory, MAX_HISTORY };

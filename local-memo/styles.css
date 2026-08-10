@@ -22,7 +22,7 @@ button.secondary { border:1px solid var(--line); background:#fff; color:var(--in
 .note-item button:hover { background:#e7eceb; } .note-item.active button { background:#dceae7; color:#164f46; }
 .note-name { display:block; overflow:hidden; font-weight:650; text-overflow:ellipsis; white-space:nowrap; }
 .note-date { display:block; margin-top:4px; color:var(--muted); font-size:.72rem; font-weight:400; }
-.editor { min-width:0; min-height:0; }
+.editor { min-width:0; min-height:460px; }
 .editor-fields { display:grid; grid-template-rows:auto minmax(0,1fr); height:100%; }
 .title-row { padding:22px 26px 12px; border-bottom:1px solid var(--line); }
 .title-input { flex:1; min-width:0; padding:3px 0; border:0; color:var(--ink); font-size:1.45rem; font-weight:700; }
@@ -46,6 +46,7 @@ dialog::backdrop { background:#17231f80; }
   .app-shell { height:100dvh; }
   .topbar { min-height:60px; padding:10px 12px; } .menu-button { display:block; } .header-actions { gap:6px; } .header-actions button { padding:8px 10px; font-size:.82rem; }
   .workspace { grid-template-columns:1fr; }
+  .editor { min-height:0; }
   .sidebar { position:absolute; z-index:3; inset:0 auto 0 0; width:min(84vw,310px); transform:translateX(-105%); transition:transform .2s ease; box-shadow:10px 0 35px #10201b35; }
   body.sidebar-open .sidebar { transform:translateX(0); }
   body.sidebar-open .sidebar-overlay { display:block; position:absolute; z-index:2; inset:0; border-radius:0; background:#17231f70; }
