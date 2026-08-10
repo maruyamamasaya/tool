@@ -1,6 +1,7 @@
 const assert = require("assert");
-const { normalizeNote, validateBackup, sortNotes, snapshotHistory, MAX_HISTORY } = require("./app.js");
+const { start, normalizeNote, validateBackup, sortNotes, snapshotHistory, MAX_HISTORY } = require("./app.js");
 
+assert.strictEqual(typeof start,"function");
 const old = { id:"old", title:"Old", content:"a", createdAt:"2026-01-01T00:00:00.000Z", updatedAt:"2026-01-01T00:00:00.000Z" };
 const recent = { ...old, id:"recent", title:"Recent", updatedAt:"2026-08-10T09:18:00.000Z" };
 assert.deepStrictEqual(sortNotes([old,recent]).map((note)=>note.id),["recent","old"]);
