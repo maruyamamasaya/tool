@@ -23,7 +23,7 @@
   }
   function toMinutes(value) { const [h, m] = value.split(":").map(Number); return h * 60 + m; }
   function toTime(minutes) { const value = Math.max(0, Math.min(1440, minutes)); return `${String(Math.floor(value / 60)).padStart(2, "0")}:${String(value % 60).padStart(2, "0")}`; }
-  function snap(minutes) { return Math.round(minutes / 30) * 30; }
+  function snap(minutes) { return Math.round(minutes / 5) * 5; }
   function getOverlaps(blocks) {
     const overlaps = [];
     for (let i = 0; i < blocks.length; i++) for (let j = i + 1; j < blocks.length; j++) {
@@ -54,7 +54,7 @@
   function uid() { return crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`; }
   function formatDate(dateString) { return new Date(`${dateString}T00:00:00`).toLocaleDateString("ja-JP", { year: "numeric", month: "2-digit", day: "2-digit", weekday: "short" }); }
 
-  function render() { $("#dateLabel").textContent = formatDate(selectedDate); renderTasks(); renderTimeline(); }
+  function render() { selectedDate = localDate(new Date()); $("#dateLabel").textContent = formatDate(selectedDate); renderTasks(); renderTimeline(); }
   function renderTasks() {
     const list = $("#taskList"), query = $("#taskSearch").value.toLowerCase(), showDone = $("#showCompleted").checked;
     list.replaceChildren();
@@ -90,7 +90,7 @@
     blocks().forEach(block => {
       const task = state.tasks.find(item => item.id === block.taskId); if (!task) return;
       const el = document.createElement("article"); el.className = `schedule-block${overlapIds.has(block.id) ? " overlap" : ""}`;
-      el.style.top = `${(block.start - start) / 30 * SLOT_HEIGHT + 1}px`; el.style.height = `${Math.max(24, (block.end - block.start) / 30 * SLOT_HEIGHT - 2)}px`;
+      el.style.top = `${(block.start - start) / 30 * SLOT_HEIGHT + 1}px`; el.style.height = `${Math.max(8, (block.end - block.start) / 30 * SLOT_HEIGHT - 2)}px`;
       el.innerHTML = `<span class="resize-handle top"></span><div class="block-time">${toTime(block.start)}–${toTime(block.end)}</div><div class="block-name">${escapeHtml(task.name)}</div><button class="block-delete" aria-label="削除">×</button><span class="resize-handle bottom"></span>`;
       el.addEventListener("click", event => { if (!event.target.closest("button") && !event.target.classList.contains("resize-handle")) openEditor(block.id); });
       el.querySelector(".block-delete").addEventListener("click", () => removeBlock(block.id));
@@ -104,16 +104,16 @@
       if (event.target.closest("button")) return;
       const mode = event.target.classList.contains("top") ? "top" : event.target.classList.contains("bottom") ? "bottom" : "move";
       const originY = event.clientY, original = { start: block.start, end: block.end }; el.setPointerCapture(event.pointerId);
-      el.onpointermove = move => { const delta = snap((move.clientY - originY) / SLOT_HEIGHT * 30); if (mode === "move") { const duration = original.end - original.start; block.start = Math.max(state.settings.start, Math.min(state.settings.end - duration, original.start + delta)); block.end = block.start + duration; } else if (mode === "top") block.start = Math.min(original.end - 30, Math.max(state.settings.start, original.start + delta)); else block.end = Math.max(original.start + 30, Math.min(state.settings.end, original.end + delta)); el.style.top = `${(block.start - state.settings.start) / 30 * SLOT_HEIGHT + 1}px`; el.style.height = `${Math.max(24, (block.end - block.start) / 30 * SLOT_HEIGHT - 2)}px`; el.querySelector(".block-time").textContent = `${toTime(block.start)}–${toTime(block.end)}`; };
+      el.onpointermove = move => { const delta = snap((move.clientY - originY) / SLOT_HEIGHT * 30); if (mode === "move") { const duration = original.end - original.start; block.start = Math.max(state.settings.start, Math.min(state.settings.end - duration, original.start + delta)); block.end = block.start + duration; } else if (mode === "top") block.start = Math.min(original.end - 5, Math.max(state.settings.start, original.start + delta)); else block.end = Math.max(original.start + 5, Math.min(state.settings.end, original.end + delta)); el.style.top = `${(block.start - state.settings.start) / 30 * SLOT_HEIGHT + 1}px`; el.style.height = `${Math.max(8, (block.end - block.start) / 30 * SLOT_HEIGHT - 2)}px`; el.querySelector(".block-time").textContent = `${toTime(block.start)}–${toTime(block.end)}`; };
       el.onpointerup = () => { el.onpointermove = null; save(); render(); };
     });
   }
   function renderWarnings() { const overlaps = getOverlaps(blocks()); $("#overlapWarnings").innerHTML = overlaps.map(item => `⚠ ${toTime(item.start)}〜${toTime(item.end)}で予定が重複しています`).join("<br>"); }
   function renderNow() { timeline.querySelector(".now-line")?.remove(); const today = localDate(new Date()), now = new Date(), minute = now.getHours() * 60 + now.getMinutes(); if (selectedDate !== today || minute < state.settings.start || minute > state.settings.end) return; const line = document.createElement("div"); line.className = "now-line"; line.style.top = `${(minute - state.settings.start) / 30 * SLOT_HEIGHT}px`; line.title = `現在 ${toTime(minute)}`; timeline.append(line); }
-  function addBlock(taskId, start) { const task = state.tasks.find(item => item.id === taskId); if (!task) return; const clampedStart = Math.max(state.settings.start, Math.min(state.settings.end - 30, snap(start))); blocks().push({ id: uid(), taskId, start: clampedStart, end: Math.min(state.settings.end, clampedStart + Math.max(30, snap(task.estimate))) }); save(); render(); }
+  function addBlock(taskId, start) { const task = state.tasks.find(item => item.id === taskId); if (!task) return; const clampedStart = Math.max(state.settings.start, Math.min(state.settings.end - 5, snap(start))); blocks().push({ id: uid(), taskId, start: clampedStart, end: Math.min(state.settings.end, clampedStart + Math.max(5, snap(task.estimate))) }); save(); render(); }
   function removeBlock(id) { state.schedules[selectedDate] = blocks().filter(block => block.id !== id); save(); render(); toast("配置を削除しました"); }
   function openEditor(id) { editingId = id; const block = blocks().find(item => item.id === id), task = state.tasks.find(item => item.id === block.taskId); $("#editTask").value = task.name; $("#editStart").value = toTime(block.start); $("#editEnd").value = toTime(block.end); $("#editEstimate").textContent = `${task.estimate}分（配置 ${block.end - block.start}分）`; $("#blockDialog").showModal(); }
-  function changeDate(days) { const date = new Date(`${selectedDate}T00:00:00`); date.setDate(date.getDate() + days); selectedDate = localDate(date); render(); }
+
   function copy(compact) { const text = scheduleText(selectedDate, blocks(), state.tasks, compact); navigator.clipboard.writeText(text).then(() => toast(compact ? "簡易形式をコピーしました" : "Markdownをコピーしました")).catch(() => toast("コピーできませんでした")); }
   function toast(message) { const el = $("#toast"); el.textContent = message; el.classList.add("show"); clearTimeout(toast.timer); toast.timer = setTimeout(() => el.classList.remove("show"), 1800); }
   function escapeHtml(value) { const div = document.createElement("div"); div.textContent = value; return div.innerHTML; }
@@ -122,12 +122,14 @@
   timeline.addEventListener("drop", event => { event.preventDefault(); const taskId = event.dataTransfer.getData("text/task-id"); const rect = timeline.getBoundingClientRect(); addBlock(taskId, state.settings.start + (event.clientY - rect.top) / SLOT_HEIGHT * 30); });
   $("#openImport").onclick = () => { $("#markdownInput").value = state.markdown || SAMPLE; $("#importDialog").showModal(); };
   $("#importButton").onclick = () => { state.markdown = $("#markdownInput").value; state.tasks = parseTasks(state.markdown); save(); $("#importDialog").close(); render(); toast(`${state.tasks.length}件のタスクを読み込みました`); };
+  function setTaskView(markdownMode) { $("#markdownEditor").hidden = !markdownMode; $("#taskListView").hidden = markdownMode; $("#showTaskList").classList.toggle("active", !markdownMode); $("#showMarkdownEditor").classList.toggle("active", markdownMode); $("#showTaskList").setAttribute("aria-selected", String(!markdownMode)); $("#showMarkdownEditor").setAttribute("aria-selected", String(markdownMode)); if (markdownMode) $("#taskMarkdown").value = state.markdown || ""; }
+  $("#showTaskList").onclick = () => setTaskView(false);
+  $("#showMarkdownEditor").onclick = () => setTaskView(true);
+  $("#saveMarkdown").onclick = () => { state.markdown = $("#taskMarkdown").value; state.tasks = parseTasks(state.markdown); save(); setTaskView(false); render(); toast(`${state.tasks.length}件のタスクを反映しました`); };
   $("#openSettings").onclick = () => { $("#startHour").value = toTime(state.settings.start); $("#endHour").value = toTime(state.settings.end); $("#settingsDialog").showModal(); };
   $("#saveSettings").onclick = () => { const start = toMinutes($("#startHour").value), end = toMinutes($("#endHour").value); if (end - start < 60) return toast("終了は開始より1時間以上後にしてください"); state.settings = { start: snap(start), end: snap(end) }; save(); $("#settingsDialog").close(); render(); };
   $("#saveBlock").onclick = () => { const block = blocks().find(item => item.id === editingId), start = snap(toMinutes($("#editStart").value)), end = snap(toMinutes($("#editEnd").value)); if (end <= start) return toast("終了は開始より後にしてください"); block.start = start; block.end = end; save(); $("#blockDialog").close(); render(); };
   $("#deleteBlock").onclick = () => { $("#blockDialog").close(); removeBlock(editingId); };
-  $("#prevDate").onclick = () => changeDate(-1); $("#nextDate").onclick = () => changeDate(1); $("#todayButton").onclick = () => { selectedDate = localDate(new Date()); render(); };
-  $("#dateLabel").onclick = () => { selectedDate = localDate(new Date()); render(); };
   $("#taskSearch").oninput = renderTasks; $("#showCompleted").onchange = renderTasks;
   $("#copyMarkdown").onclick = () => copy(false); $("#copyCompact").onclick = () => copy(true);
   $("#clearSchedule").onclick = () => { if (blocks().length && confirm("この日のスケジュール配置をすべて削除しますか？")) { state.schedules[selectedDate] = []; save(); render(); toast("スケジュールをクリアしました"); } };
