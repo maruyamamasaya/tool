@@ -14,6 +14,7 @@ const elements = {
   filteredCount: document.querySelector("#filteredCount"),
   searchInput: document.querySelector("#searchInput"),
   autoFitButton: document.querySelector("#autoFitButton"),
+  overflowMode: document.querySelector("#overflowMode"),
   fullscreenButton: document.querySelector("#fullscreenButton"),
   fullscreenButtonLabel: document.querySelector("#fullscreenButtonLabel"),
   dataTable: document.querySelector("#dataTable"),
@@ -26,8 +27,8 @@ const elements = {
 let headers = [];
 let rows = [];
 let sortState = { column: -1, direction: "none" };
-const MIN_COLUMN_WIDTH = 90;
-const MAX_COLUMN_WIDTH = 420;
+const MIN_COLUMN_WIDTH = 48;
+const MAX_AUTO_FIT_WIDTH = 420;
 const DEFAULT_COLUMN_WIDTH = 180;
 let columnWidths = [];
 
@@ -46,6 +47,7 @@ elements.dropZone.addEventListener("keydown", (event) => {
 elements.fileInput.addEventListener("change", () => loadFile(elements.fileInput.files[0]));
 elements.searchInput.addEventListener("input", renderBody);
 elements.autoFitButton.addEventListener("click", autoFitAllColumns);
+elements.overflowMode.addEventListener("change", updateOverflowMode);
 elements.fullscreenButton.addEventListener("click", toggleFullscreen);
 document.addEventListener("fullscreenchange", updateFullscreenControl);
 const desktopMedia = window.matchMedia("(min-width: 701px)");
@@ -211,12 +213,12 @@ function renderHeader() {
   updateSortIndicators();
 }
 
-function clampColumnWidth(width) {
-  return Math.min(MAX_COLUMN_WIDTH, Math.max(MIN_COLUMN_WIDTH, Math.round(width)));
+function normalizeColumnWidth(width) {
+  return Math.max(MIN_COLUMN_WIDTH, Math.round(width));
 }
 
 function setColumnWidth(index, width) {
-  columnWidths[index] = clampColumnWidth(width);
+  columnWidths[index] = normalizeColumnWidth(width);
   const column = elements.tableColumns.children[index];
   if (column) column.style.width = `${columnWidths[index]}px`;
 }
@@ -255,7 +257,11 @@ function measureColumnWidth(index) {
   rows.forEach((row) => {
     widest = Math.max(widest, context.measureText(row.cells[index]).width + 28);
   });
-  return clampColumnWidth(widest);
+  return Math.min(MAX_AUTO_FIT_WIDTH, normalizeColumnWidth(widest));
+}
+
+function updateOverflowMode() {
+  elements.dataTable.dataset.overflow = elements.overflowMode.value;
 }
 
 function autoFitColumn(index) {
