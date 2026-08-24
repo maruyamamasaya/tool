@@ -138,18 +138,28 @@
     return result;
   }
 
+  function removeTable(tables, name) {
+    delete tables[name];
+    return Object.keys(tables)[0] || null;
+  }
+
   function initialize(documentObject, browserWindow) {
     const get = (id) => documentObject.getElementById(id); let tables; let active; let pendingSQL = null;
     try { tables = JSON.parse(browserWindow.localStorage.getItem(STORAGE_KEY)) || clone(DEFAULT_TABLES); } catch (_) { tables = clone(DEFAULT_TABLES); }
-    if (!tables || !Object.keys(tables).length) tables = clone(DEFAULT_TABLES); active = Object.keys(tables)[0];
+    if (!tables || Array.isArray(tables) || typeof tables !== "object") tables = clone(DEFAULT_TABLES); active = Object.keys(tables)[0] || null;
     const save = () => { try { browserWindow.localStorage.setItem(STORAGE_KEY, JSON.stringify(tables)); } catch (_) { showMessage("保存できませんでした。", true); } };
     const cellText = (value) => value === null ? "NULL" : String(value);
     function tableMarkup(columns, rows, editable) { return `<table><thead><tr>${editable ? "<th></th>" : ""}${columns.map((c) => `<th>${escapeHTML(c)}</th>`).join("")}</tr></thead><tbody>${rows.map((row, ri) => `<tr>${editable ? `<td><button class="row-delete" data-row="${ri}" aria-label="${ri + 1}行目を削除">×</button></td>` : ""}${row.map((v, ci) => `<td${editable ? ` contenteditable="true" data-row="${ri}" data-column="${ci}"` : ""}>${escapeHTML(cellText(v))}</td>`).join("")}</tr>`).join("")}</tbody></table>`; }
     function escapeHTML(value) { return String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]); }
     function showMessage(text, error) { get("message").hidden = false; get("message").className = `message${error ? " error" : ""}`; get("message").textContent = text; }
     function renderEditor() {
-      get("tabs").innerHTML = Object.keys(tables).map((name) => `<button type="button" role="tab" data-table="${escapeHTML(name)}" aria-selected="${name === active}">${escapeHTML(name)}</button>`).join("");
-      const table = tables[active]; get("tableName").textContent = active; get("tableMeta").textContent = `${table.rows.length} rows × ${table.columns.length} columns`; get("dataTable").innerHTML = tableMarkup(table.columns, table.rows, true);
+      const names = Object.keys(tables);
+      get("tabs").innerHTML = names.map((name) => `<button type="button" role="tab" data-table="${escapeHTML(name)}" aria-selected="${name === active}">${escapeHTML(name)}</button>`).join("");
+      const table = active ? tables[active] : null;
+      get("tableName").textContent = table ? active : "テーブルがありません";
+      get("tableMeta").textContent = table ? `${table.rows.length} rows × ${table.columns.length} columns` : "「テーブルを追加」または CREATE TABLE で作成できます";
+      get("dataTable").innerHTML = table ? tableMarkup(table.columns, table.rows, true) : '<div class="empty table-empty"><div>＋</div><b>テーブルを追加してください</b><p>テーブルがなくてもSQLを実行できます。</p></div>';
+      ["addColumn", "addRow", "deleteTable"].forEach((id) => { get(id).disabled = !table; });
     }
     function run(force) {
       try { const sql = get("sqlInput").value; const result = executeSQL(sql, tables); if (!force && !result.changed && result.rows.length > WARNING_LIMIT) { pendingSQL = sql; showMessage(`結果は${result.rows.length}件です。100件を超えています。もう一度「SQLを実行」を押すと表示します。`, false); return; } pendingSQL = null; if (result.changed) { save(); active = Object.keys(tables).includes(active) ? active : Object.keys(tables)[0]; renderEditor(); } get("message").hidden = !result.message; if (result.message) showMessage(result.message, false); get("resultEmpty").hidden = result.columns.length > 0; get("resultTable").hidden = result.columns.length === 0; get("resultTable").innerHTML = result.columns.length ? tableMarkup(result.columns, result.rows, false) : ""; get("resultMeta").textContent = result.columns.length ? `${result.rows.length} rows` : "実行完了"; } catch (error) { get("resultTable").hidden = true; get("resultEmpty").hidden = false; get("resultMeta").textContent = "エラー"; showMessage(`エラー: ${error.message}`, true); }
@@ -162,9 +172,9 @@
     get("addRow").addEventListener("click", () => { tables[active].rows.push(tables[active].columns.map(() => "")); save(); renderEditor(); });
     get("addColumn").addEventListener("click", () => { const name = browserWindow.prompt("追加する列名を入力してください。"); if (!name) return; if (!safeName(name) || tables[active].columns.includes(name)) return showMessage("列名は英数字とアンダースコアで、重複しない名前にしてください。", true); tables[active].columns.push(name); tables[active].rows.forEach((row) => row.push("")); save(); renderEditor(); });
     get("addTable").addEventListener("click", () => { const name = browserWindow.prompt("新しいテーブル名を入力してください。"); if (!name) return; if (!safeName(name) || tables[name]) return showMessage("テーブル名は英数字とアンダースコアで、重複しない名前にしてください。", true); tables[name] = { columns: ["id", "value"], rows: [[1, "sample"]] }; active = name; save(); renderEditor(); });
-    get("deleteTable").addEventListener("click", () => { if (Object.keys(tables).length === 1) return showMessage("最後のテーブルは削除できません。", true); if (browserWindow.confirm(`テーブル「${active}」を削除しますか？`)) { delete tables[active]; active = Object.keys(tables)[0]; save(); renderEditor(); } });
+    get("deleteTable").addEventListener("click", () => { if (active && browserWindow.confirm(`テーブル「${active}」を削除しますか？`)) { active = removeTable(tables, active); save(); renderEditor(); } });
     get("toggleData").addEventListener("click", () => { const hidden = !get("dataBody").hidden; get("dataBody").hidden = hidden; get("toggleData").setAttribute("aria-expanded", String(!hidden)); get("toggleData").textContent = hidden ? "▾ データを表示" : "▴ データを非表示"; }); renderEditor();
   }
-  if (typeof module !== "undefined") module.exports = { DEFAULT_TABLES, executeSQL, matchesWhere, parseSQL, parseValue, splitStatements };
+  if (typeof module !== "undefined") module.exports = { DEFAULT_TABLES, executeSQL, matchesWhere, parseSQL, parseValue, removeTable, splitStatements };
   if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", () => initialize(document, window));
 }());

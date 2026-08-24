@@ -1,7 +1,7 @@
 "use strict";
 const assert = require("assert");
 const fs = require("fs");
-const { DEFAULT_TABLES, executeSQL, parseSQL, parseValue } = require("./app.js");
+const { DEFAULT_TABLES, executeSQL, parseSQL, parseValue, removeTable } = require("./app.js");
 assert.strictEqual(parseValue("true"), true);
 assert.strictEqual(parseValue("12.5"), 12.5);
 assert.deepStrictEqual(parseSQL("SELECT * FROM users LIMIT 2").limit, 2);
@@ -16,5 +16,8 @@ assert.throws(() => executeSQL("INSERT INTO tasks (missing) VALUES (1)", tables)
 assert.throws(() => executeSQL("DELETE FROM tasks WHERE missing = 1", tables), /見つかり/);
 assert.strictEqual(JSON.stringify(tables), snapshot, "エラー時は途中の変更も反映しない");
 assert.throws(() => executeSQL("SELECT * FROM missing", DEFAULT_TABLES), /見つかり/);
+const lastTable = { only: { columns: ["id"], rows: [[1]] } };
+assert.strictEqual(removeTable(lastTable, "only"), null);
+assert.deepStrictEqual(lastTable, {}, "最後のテーブルも削除できる");
 assert.match(fs.readFileSync(require.resolve("./styles.css"), "utf8"), /\[hidden\]\{display:none!important\}/);
 console.log("SQL Playground tests passed");
