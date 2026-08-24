@@ -50,17 +50,37 @@
     const clean = sql.trim().replace(/;\s*$/, "");
     if (!clean) throw new Error("SQLを入力してください。");
     if (!/^select\b/i.test(clean)) throw new Error("SELECT文の形式を確認してください。");
-    const match = clean.match(/^select\s+([\s\S]+?)\s+from\s+([a-zA-Z_]\w*)(?:\s+(?:as\s+)?[a-zA-Z_]\w*)?(?:\s+where\s+([\s\S]*?))?(?:\s+order\s+by\s+([a-zA-Z_]\w*(?:\.[a-zA-Z_]\w*)?)(?:\s+(asc|desc))?)?(?:\s+limit\s+(\d+))?$/i);
+    const match = clean.match(/^select\s+([\s\S]+?)\s+from\s+([\s\S]+?)(?:\s+where\s+([\s\S]*?))?(?:\s+order\s+by\s+([a-zA-Z_]\w*(?:\.[a-zA-Z_]\w*)?)(?:\s+(asc|desc))?)?(?:\s+limit\s+(\d+))?$/i);
     if (!match) throw new Error("SQLを解析できません。SELECT / FROM / WHERE / ORDER BY / LIMIT の形式を確認してください。");
-    return { fields: splitComma(match[1]), table: match[2], where: match[3], order: match[4] && match[4].split(".").pop(), direction: (match[5] || "asc").toLowerCase(), limit: match[6] ? Number(match[6]) : null };
+    let source = match[2].trim();
+    const base = source.match(/^([a-zA-Z_]\w*)(?:\s+(?:as\s+)?(?!inner\b|join\b)([a-zA-Z_]\w*))?(?=\s+(?:inner\s+)?join\b|$)/i);
+    if (!base) throw new Error("FROM句の形式を確認してください。");
+    const query = { fields: splitComma(match[1]), table: base[1], alias: base[2] || base[1], joins: [], where: match[3], order: match[4], direction: (match[5] || "asc").toLowerCase(), limit: match[6] ? Number(match[6]) : null };
+    source = source.slice(base[0].length);
+    const joinPattern = /^\s+(?:inner\s+)?join\s+([a-zA-Z_]\w*)(?:\s+(?:as\s+)?(?!on\b)([a-zA-Z_]\w*))?\s+on\s+([a-zA-Z_]\w*(?:\.[a-zA-Z_]\w*)?)\s*=\s*([a-zA-Z_]\w*(?:\.[a-zA-Z_]\w*)?)(?=\s+(?:inner\s+)?join\b|$)/i;
+    while (source) {
+      const join = source.match(joinPattern);
+      if (!join) throw new Error("JOIN句の形式を確認してください。JOIN ... ON 列 = 列 の形式で入力してください。");
+      query.joins.push({ table: join[1], alias: join[2] || join[1], left: join[3], right: join[4] });
+      source = source.slice(join[0].length);
+    }
+    return query;
+  }
+  function resolveColumn(row, column) {
+    if (column.includes(".")) {
+      if (!Object.prototype.hasOwnProperty.call(row, column)) throw new Error(`列「${column}」が見つかりません。`);
+      return row[column];
+    }
+    if (row.__ambiguous && row.__ambiguous.has(column)) throw new Error(`列「${column}」が曖昧です。テーブル名を付けてください。`);
+    if (!Object.prototype.hasOwnProperty.call(row, column)) throw new Error(`列「${column}」が見つかりません。`);
+    return row[column];
   }
   function matchesWhere(row, expression) {
     if (!expression) return true;
     return expression.split(/\s+and\s+/i).every((condition) => {
-      const match = condition.trim().match(/^(?:\w+\.)?([a-zA-Z_]\w*)\s*(=|!=|<>|>=|<=|>|<|like)\s*([\s\S]+)$/i);
+      const match = condition.trim().match(/^([a-zA-Z_]\w*(?:\.[a-zA-Z_]\w*)?)\s*(=|!=|<>|>=|<=|>|<|like)\s*([\s\S]+)$/i);
       if (!match) throw new Error(`WHERE条件「${condition.trim()}」には対応していません。`);
-      if (!Object.prototype.hasOwnProperty.call(row, match[1])) throw new Error(`列「${match[1]}」が見つかりません。`);
-      const left = row[match[1]]; const right = parseValue(match[3]); const operator = match[2].toLowerCase();
+      const left = resolveColumn(row, match[1]); const right = parseValue(match[3]); const operator = match[2].toLowerCase();
       if (operator === "like") { const pattern = String(right).replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/%/g, ".*").replace(/_/g, "."); return new RegExp(`^${pattern}$`, "i").test(String(left)); }
       if (operator === "=") return left === right || String(left) === String(right);
       if (operator === "!=" || operator === "<>") return !(left === right || String(left) === String(right));
@@ -70,20 +90,35 @@
   function executeSelect(sql, tables) {
     const query = parseSQL(sql); const table = tables[query.table];
     if (!table) throw new Error(`テーブル「${query.table}」が見つかりません。`);
-    let rows = table.rows.map((values) => Object.fromEntries(table.columns.map((column, index) => [column, values[index]]))).filter((row) => matchesWhere(row, query.where));
+    const addTable = (row, sourceTable, tableName, alias, values) => {
+      sourceTable.columns.forEach((column, index) => {
+        const value = values[index];
+        row[`${alias}.${column}`] = value; row[`${tableName}.${column}`] = value;
+        if (Object.prototype.hasOwnProperty.call(row, column)) row.__ambiguous.add(column); else row[column] = value;
+      });
+      return row;
+    };
+    let rows = table.rows.map((values) => addTable(Object.assign(Object.create(null), { __ambiguous: new Set() }), table, query.table, query.alias, values));
+    query.joins.forEach((join) => {
+      const joinedTable = tables[join.table];
+      if (!joinedTable) throw new Error(`テーブル「${join.table}」が見つかりません。`);
+      rows = rows.flatMap((row) => joinedTable.rows.map((values) => addTable(Object.assign(Object.create(null), row, { __ambiguous: new Set(row.__ambiguous) }), joinedTable, join.table, join.alias, values)).filter((candidate) => resolveColumn(candidate, join.left) === resolveColumn(candidate, join.right)));
+    });
+    rows = rows.filter((row) => matchesWhere(row, query.where));
     if (query.order) {
-      if (!table.columns.includes(query.order)) throw new Error(`列「${query.order}」が見つかりません。`);
-      rows.sort((a, b) => (a[query.order] === b[query.order] ? 0 : a[query.order] > b[query.order] ? 1 : -1) * (query.direction === "desc" ? -1 : 1));
+      rows.sort((a, b) => (resolveColumn(a, query.order) === resolveColumn(b, query.order) ? 0 : resolveColumn(a, query.order) > resolveColumn(b, query.order) ? 1 : -1) * (query.direction === "desc" ? -1 : 1));
     }
     if (query.limit !== null) rows = rows.slice(0, query.limit);
     const count = query.fields.length === 1 && /^count\(\*\)(?:\s+(?:as\s+)?([a-zA-Z_]\w*))?$/i.test(query.fields[0]);
     if (count) { const name = query.fields[0].match(/^count\(\*\)(?:\s+(?:as\s+)?([a-zA-Z_]\w*))?$/i)[1] || "count"; return { columns: [name], rows: [[rows.length]] }; }
-    const fields = query.fields[0] === "*" ? table.columns.map((name) => ({ source: name, name })) : query.fields.map((field) => {
-      const match = field.match(/^(?:\w+\.)?([a-zA-Z_]\w*)(?:\s+(?:as\s+)?([a-zA-Z_]\w*))?$/i);
-      if (!match || !table.columns.includes(match[1])) throw new Error(`列指定「${field}」を確認してください。`);
-      return { source: match[1], name: match[2] || match[1] };
+    const sources = [{ table: query.table, alias: query.alias, data: table }].concat(query.joins.map((join) => ({ table: join.table, alias: join.alias, data: tables[join.table] })));
+    const fields = query.fields[0] === "*" ? sources.flatMap((source) => source.data.columns.map((name) => ({ source: `${source.alias}.${name}`, name }))) : query.fields.map((field) => {
+      const match = field.match(/^([a-zA-Z_]\w*(?:\.[a-zA-Z_]\w*)?)(?:\s+(?:as\s+)?([a-zA-Z_]\w*))?$/i);
+      if (!match) throw new Error(`列指定「${field}」を確認してください。`);
+      if (rows.length) resolveColumn(rows[0], match[1]);
+      return { source: match[1], name: match[2] || match[1].split(".").pop() };
     });
-    return { columns: fields.map((field) => field.name), rows: rows.map((row) => fields.map((field) => row[field.source])) };
+    return { columns: fields.map((field) => field.name), rows: rows.map((row) => fields.map((field) => resolveColumn(row, field.source))) };
   }
   function safeName(value) { return /^[a-zA-Z_]\w*$/.test(value); }
   function executeStatement(sql, tables) {
