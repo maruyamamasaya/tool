@@ -1,5 +1,6 @@
 "use strict";
 const assert = require("assert");
+const fs = require("fs");
 const { DEFAULT_TABLES, executeSQL, parseSQL, parseValue } = require("./app.js");
 assert.strictEqual(parseValue("true"), true);
 assert.strictEqual(parseValue("12.5"), 12.5);
@@ -8,4 +9,5 @@ assert.deepStrictEqual(executeSQL("SELECT id, name FROM users WHERE active = tru
 assert.deepStrictEqual(executeSQL("SELECT COUNT(*) AS total FROM orders WHERE status = 'paid'", DEFAULT_TABLES), { columns: ["total"], rows: [[2]] });
 assert.throws(() => executeSQL("DELETE FROM users", DEFAULT_TABLES), /SELECT/);
 assert.throws(() => executeSQL("SELECT * FROM missing", DEFAULT_TABLES), /見つかり/);
+assert.match(fs.readFileSync(require.resolve("./styles.css"), "utf8"), /\[hidden\]\{display:none!important\}/);
 console.log("SQL Playground tests passed");
