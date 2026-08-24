@@ -52,6 +52,13 @@
           <span id="filteredCount" class="filtered-count"></span>
         </label>
         <button id="autoFitButton" class="secondary-button auto-fit-button" type="button">列幅を自動調節</button>
+        <label class="overflow-control" for="overflowMode">
+          見切れたデータ
+          <select id="overflowMode">
+            <option value="ellipsis">…で省略</option>
+            <option value="clip">非表示</option>
+          </select>
+        </label>
       </div>
       <p class="width-help">列名の右端をドラッグして幅を調節できます。ダブルクリックすると、その列だけ自動調節します。</p>
 

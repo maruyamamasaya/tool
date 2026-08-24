@@ -1,7 +1,7 @@
 :root { font-family: Inter, "Noto Sans JP", system-ui, sans-serif; color: #182230; background: #f5f7fa; }
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 320px; }
-button, input { font: inherit; }
+button, input, select { font: inherit; }
 .app { width: min(1180px, calc(100% - 32px)); margin: auto; padding: 38px 0; }
 .page-header { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 24px; }
 .eyebrow { margin: 0 0 5px; color: #526273; font-size: 12px; font-weight: 700; letter-spacing: .14em; }
@@ -34,6 +34,9 @@ h1 { margin: 0; font-size: clamp(28px, 4vw, 42px); }
 .search-box input { width: 100%; min-height: 42px; border: 0; outline: 0; }
 .filtered-count { flex: 0 0 auto; color: #667085; font-size: 12px; }
 .auto-fit-button { flex: 0 0 auto; }
+.overflow-control { flex: 0 0 auto; display: flex; align-items: center; gap: 7px; color: #526273; font-size: 12px; white-space: nowrap; }
+.overflow-control select { min-height: 40px; padding: 7px 28px 7px 10px; border: 1px solid #cfd7e2; border-radius: 8px; background: #fff; color: #182230; }
+.overflow-control select:focus { border-color: #4169e1; outline: 3px solid #4169e122; }
 .width-help { margin: 0 14px 12px; color: #667085; font-size: 12px; }
 .table-shell { max-height: 62vh; overflow: auto; border-top: 1px solid #e2e7ee; }
 table { width: max-content; min-width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 14px; }
@@ -42,6 +45,7 @@ th button { width: 100%; min-width: 0; padding: 11px 18px 11px 13px; display: fl
 th button span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 th button:hover { background: #eaf0f7; }
 td { padding: 10px 13px; overflow: hidden; border-top: 1px solid #edf0f4; text-overflow: ellipsis; white-space: nowrap; }
+table[data-overflow="clip"] td { text-overflow: clip; }
 .column-resizer { position: absolute; z-index: 2; top: 0; right: -4px; width: 9px; height: 100%; padding: 0; border: 0; background: transparent; cursor: col-resize; touch-action: none; }
 .column-resizer::after { content: ""; position: absolute; top: 25%; bottom: 25%; left: 4px; width: 1px; background: #b8c3d1; }
 .column-resizer:hover::after, .column-resizer:focus::after, .column-resizer.is-resizing::after { width: 2px; background: #4169e1; }
@@ -54,4 +58,4 @@ tbody tr:hover { background: #fafbfc; }
   .viewer:fullscreen { width: 100vw; height: 100vh; display: flex; flex-direction: column; border: 0; border-radius: 0; background: #fff; }
   .viewer:fullscreen .table-shell { max-height: none; min-height: 0; flex: 1; }
 }
-@media (max-width: 700px) { .page-header, .toolbar { align-items: stretch; flex-direction: column; } .statistics { justify-content: space-around; } .viewer-controls { align-items: stretch; flex-direction: column; } }
+@media (max-width: 700px) { .page-header, .toolbar { align-items: stretch; flex-direction: column; } .statistics { justify-content: space-around; } .viewer-controls { align-items: stretch; flex-direction: column; } .overflow-control { justify-content: space-between; } }
