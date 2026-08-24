@@ -1,0 +1,11 @@
+"use strict";
+const assert = require("assert");
+const { DEFAULT_TABLES, executeSQL, parseSQL, parseValue } = require("./app.js");
+assert.strictEqual(parseValue("true"), true);
+assert.strictEqual(parseValue("12.5"), 12.5);
+assert.deepStrictEqual(parseSQL("SELECT * FROM users LIMIT 2").limit, 2);
+assert.deepStrictEqual(executeSQL("SELECT id, name FROM users WHERE active = true ORDER BY id DESC LIMIT 2", DEFAULT_TABLES), { columns: ["id", "name"], rows: [[4, "田中 健太"], [2, "鈴木 一郎"]] });
+assert.deepStrictEqual(executeSQL("SELECT COUNT(*) AS total FROM orders WHERE status = 'paid'", DEFAULT_TABLES), { columns: ["total"], rows: [[2]] });
+assert.throws(() => executeSQL("DELETE FROM users", DEFAULT_TABLES), /SELECT/);
+assert.throws(() => executeSQL("SELECT * FROM missing", DEFAULT_TABLES), /見つかり/);
+console.log("SQL Playground tests passed");
