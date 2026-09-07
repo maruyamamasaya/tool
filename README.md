@@ -124,3 +124,11 @@ UI を変更した場合は、対象ページをブラウザで開き、主要�
 
 GitHub Pages ではディレクトリがそのまま URL になるため、追加したツールは
 `https://maruyamamasaya.github.io/tool/<tool-name>/` で公開できます。
+
+## 開発者向けドキュメント
+
+- [AGENTS.md](AGENTS.md): AI を含む開発作業の入口と完了条件
+- [CURRENT.md](CURRENT.md): 現在の実装状態、既知の問題、直近の作業候補
+- [ARCHITECTURE.md](ARCHITECTURE.md): システム境界、構成、データフロー
+- [TESTING.md](TESTING.md): テスト範囲と検証手順
+- [SECURITY.md](SECURITY.md): データ、外部通信、保存に関する境界

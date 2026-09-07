@@ -1,12 +1,12 @@
 # AI 開発ガイド
 
-このファイルは、このリポジトリで作業する AI エージェントの入口です。人向けの利用方法とツール一覧は [README.md](README.md)、現在状態は [CURRENT.md](CURRENT.md)、構成は [ARCHITECTURE.md](ARCHITECTURE.md) を参照してください。
+このファイルは、このリポジトリで作業する AI エージェントの入口です。人向けの利用方法とツール一覧は [README.md](README.md)、現在状態は [CURRENT.md](CURRENT.md)、構成は [ARCHITECTURE.md](ARCHITECTURE.md) を参照してください。検証の詳細は [TESTING.md](TESTING.md)、セキュリティ境界は [SECURITY.md](SECURITY.md) を正本とします。
 
 ## 作業開始時
 
 1. この `AGENTS.md` を読む。
 2. `CURRENT.md` で既知の制約、未解決事項、次のアクションを確認する。
-3. `ARCHITECTURE.md` で変更対象の責務とデータフローを確認する。
+3. `ARCHITECTURE.md` で変更対象の責務とデータフローを確認し、必要に応じて `TESTING.md` / `SECURITY.md` を読む。
 4. タスクに関係する `decisions/` の ADR と、必要なら直近の `sessions/` を選んで読む。全ファイルを無条件には読まない。
 5. 対象ツールの `index.html`、JavaScript、CSS、テストと、ルート一覧への登録状況を調査する。
 
@@ -36,9 +36,11 @@
 
 ### 現在利用できる確認コマンド
 
+コマンドの適用範囲と既知の注意点は [TESTING.md](TESTING.md) を参照する。
+
 ```bash
 # ルート一覧と各ツールの Node.js テスト
-for test in site.test.js */test.js; do node "$test"; done
+for test in site.test.js */test.js; do node "$test" || exit 1; done
 
 # ローカル表示
 python3 -m http.server 8000
