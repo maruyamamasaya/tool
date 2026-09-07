@@ -1,6 +1,6 @@
 ---
 status: active
-updated: 2026-08-28
+updated: 2026-09-07
 ---
 
 # アーキテクチャ
@@ -52,10 +52,16 @@ GitHub Pages / ローカル HTTP サーバー
 
 ## テストとローカル実行
 
+詳細な検証手順とテスト範囲は [TESTING.md](TESTING.md) を正本とする。
+
 - テストランナーや package manifest はない。`test.js` は Node.js 組み込みの `assert` と、場合により `fs` を直接利用する自己完結スクリプトである。
 - ルート挙動は `site.test.js`、個別ロジックは `<tool-name>/test.js` が検証する。ブラウザ DOM、視覚表示、アクセシビリティは自動テストだけでは網羅されない。
 - ローカルではルートで `python3 -m http.server 8000` を起動する。静的 JSON の `fetch` やクリップボード制約があるため、`file://` より HTTP を優先する。
 - build / lint / typecheck / CI は現時点で存在しない。
+
+## セキュリティと運用境界
+
+入力処理、ブラウザ保存、外部依存および変更時の確認事項は [SECURITY.md](SECURITY.md) を正本とする。サーバー側の認証・認可や秘密情報の管理機構は、現在の構成には存在しない。
 
 ## 変更時に同期する場所
 
