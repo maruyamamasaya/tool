@@ -37,6 +37,7 @@
 | [Timer Board](https://maruyamamasaya.github.io/tool/timer-board/) | 複数のストップウォッチとカウントダウンをまとめて管理できます。設定内容はブラウザに保存されます。 |
 | [Meeting Timer](https://maruyamamasaya.github.io/tool/meeting-timer/) | 会議の開始・終了時刻から、残り時間と終了予定をシンプルに確認できます。 |
 | [Audio Check](https://maruyamamasaya.github.io/tool/audio-check/) | 会議前にイヤフォンやスピーカーの左・右・ステレオ再生と、ブラウザから取得できる出力先情報を確認できます。 |
+| [Microphone Check](https://maruyamamasaya.github.io/tool/microphone-check/) | マイクの入力レベルをリアルタイム表示し、10秒まで録音した声をブラウザ内で再生確認できます。 |
 | [Bandwidth Calculator](https://maruyamamasaya.github.io/tool/bandwidth-calculator/) | データ容量と転送時間から必要な帯域幅を、データ容量と帯域幅から転送時間を計算できます。 |
 | [HTTP Status Viewer](https://maruyamamasaya.github.io/tool/http-status-viewer/) | HTTPステータスコードを番号・名前・説明から検索し、分類ごとに絞り込めます。 |
 | [RAID Calculator](https://maruyamamasaya.github.io/tool/raid-calculator/) | RAID 0 / 1 / 5 / 6 / 10 の使用可能容量、容量効率、耐障害性を計算できます。 |

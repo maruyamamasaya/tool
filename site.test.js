@@ -76,7 +76,7 @@ const toolLinks = [...indexHtml.matchAll(/<a class="tool-card" href="([^"]+)"/g)
 const categoryHtml = (id) => indexHtml.match(new RegExp(`<section id="${id}"[\\s\\S]*?</section>`))[0];
 assert.strictEqual(categorySections.length, categoryNames.length);
 categoryNames.forEach((name) => assert.ok(indexHtml.includes(`>${name}</span>`), `${name} visibility control is missing`));
-assert.strictEqual(toolLinks.length, 79);
+assert.strictEqual(toolLinks.length, 80);
 assert.strictEqual(new Set(toolLinks).size, toolLinks.length);
 assert.ok(categoryHtml("linux-tools").includes("./cron-reader/"));
 assert.ok(categoryHtml("data-analysis").includes("./regex-tester/"));
@@ -86,6 +86,7 @@ assert.ok(categoryHtml("csv-tools").indexOf("./csv-viewer/") < categoryHtml("csv
 assert.ok(categoryHtml("tasks").includes("./plan-vs-actual/"));
 assert.ok(categoryHtml("kgi-kpi-tools").includes("./kgi-kpi-builder/"));
 assert.ok(categoryHtml("others").includes("./audio-check/"));
+assert.ok(categoryHtml("others").includes("./microphone-check/"));
 const taskCategory = categoryHtml("tasks");
 const taskSteps = ["01_チェックリスト作成", "02_予実管理", "03_スケジュールプロット", "04_進捗トラッカー", "05_振り返り作成"];
 taskSteps.forEach((step) => assert.ok(taskCategory.includes(step), `${step} is missing`));

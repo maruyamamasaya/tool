@@ -13,12 +13,12 @@ GitHub Pages（https://maruyamamasaya.github.io/tool/）で公開するブラウ
 
 ## Implemented
 
-- ルート `index.html` には 79 ツールが登録され、対応する 79 ディレクトリすべてに `index.html` がある。
+- ルート `index.html` には 80 ツールが登録され、対応する 80 ディレクトリすべてに `index.html` がある。
 - ルート一覧は最大幅 1600px のレスポンシブなカテゴリ別カード、カテゴリごとの表示設定とタブ切り替え、PC でのミニウィンドウ、最大 10 件のお気に入りを提供する。
 - `tool-settings/` では、ツール単位の表示／非表示、検索、よく使うツールのプリセットを設定できる。
 - 各ツールは計算、テキスト加工、データ表示、タスク管理などを主にブラウザ内で実行する。一部はファイル入出力や `localStorage` 保存を行う。
 - 実行時ビルドとパッケージ管理はなく、HTML / CSS / JavaScript を直接配信する。アプリケーションサーバー、DB、migration、認証、独自 API は存在しない。
-- 77 ディレクトリに `test.js` があり、ルートの `site.test.js` とともに Node.js 組み込み機能だけで実行できる。2026-09-10 時点で全件成功する。
+- 78 ディレクトリに `test.js` があり、ルートの `site.test.js` とともに Node.js 組み込み機能だけで実行できる。2026-09-10 時点で全件成功する。
 
 ## In Progress
 
@@ -26,7 +26,7 @@ GitHub Pages（https://maruyamamasaya.github.io/tool/）で公開するブラウ
 
 ## Known Issues
 
-- README の表は 58 ツールで、ルート一覧の 79 ツールを網羅していない。
+- README の表は 59 ツールで、ルート一覧の 80 ツールを網羅していない。
 - README は「外部ライブラリを使わない」と説明する一方、YAML Viewer は jsDelivr から `js-yaml@4.1.0` を読み込む。オフライン時には利用できない。
 
 ## Technical Debt
