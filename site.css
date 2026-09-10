@@ -24,6 +24,11 @@ main { margin-top: -54px; padding: 0 24px 72px; }
 main > section { padding: 32px; border: 1px solid #e2e7f0; border-radius: 20px; background: #fff; box-shadow: 0 20px 60px rgb(25 45 90 / 10%); }
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 28px; }
 .section-actions { display: flex; align-items: center; gap: 10px; }
+.view-switch { display: inline-flex; padding: 3px; border: 1px solid #dbe3ff; border-radius: 10px; background: #f7f9ff; }
+.view-switch button { padding: 6px 10px; border: 0; border-radius: 7px; color: #697386; background: transparent; font: inherit; font-size: .82rem; font-weight: 700; cursor: pointer; }
+.view-switch button:hover { color: #3151cf; }
+.view-switch button[aria-pressed="true"] { color: #3151cf; background: #fff; box-shadow: 0 1px 4px rgb(23 32 51 / 12%); }
+.view-switch button:focus-visible { outline: 3px solid #91a7ff; outline-offset: 2px; }
 .settings-link { padding: 8px 12px; border: 1px solid #dbe3ff; border-radius: 999px; color: #3151cf; background: #fff; font-size: .85rem; font-weight: 700; text-decoration: none; }
 .settings-link:hover { border-color: #91a7ff; background: #edf2ff; }
 .settings-link:focus-visible { outline: 3px solid #91a7ff; outline-offset: 2px; }
@@ -74,6 +79,17 @@ h2 { margin: 0; font-size: 1.8rem; }
 .tool-icon { display: grid; flex: 0 0 42px; width: 42px; height: 42px; place-items: center; border-radius: 11px; color: #3151cf; background: #edf2ff; font-size: 1.05rem; font-weight: 800; line-height: 1; }
 .tool-card h3 { margin: 0 0 9px; font-size: 1rem; line-height: 1.3; }
 .tool-card p { margin: 0; color: #697386; font-size: .87rem; line-height: 1.55; }
+body[data-view="list"] .tool-grid { display: flex; flex-direction: column; gap: 2px; }
+body[data-view="list"] .tool-card-wrap { border-bottom: 1px solid #edf0f5; }
+body[data-view="list"] .tool-card { align-items: center; min-height: 0; padding: 10px 80px 10px 12px; border-color: transparent; border-radius: 8px; }
+body[data-view="list"] .tool-card::after { top: 50%; right: 48px; transform: translateY(-50%); }
+body[data-view="list"] .tool-card:hover { border-color: #dbe3ff; background: #f7f9ff; box-shadow: none; transform: none; }
+body[data-view="list"] .tool-icon { display: none; }
+body[data-view="list"] .tool-card > div { display: grid; grid-template-columns: minmax(220px, .8fr) minmax(0, 1.2fr); align-items: baseline; width: 100%; gap: 16px; }
+body[data-view="list"] .tool-card h3 { margin: 0; }
+body[data-view="list"] .tool-card p { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+body[data-view="list"] .favorite-button { top: 50%; right: 8px; width: 30px; height: 30px; transform: translateY(-50%); box-shadow: none; }
+body[data-view="list"] .favorite-grid { margin-top: 12px; }
 footer { padding: 0 24px 40px; color: #7a8497; font-size: .84rem; text-align: center; }
 
 @media (max-width: 1200px) { .tool-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -89,4 +105,7 @@ footer { padding: 0 24px 40px; color: #7a8497; font-size: .84rem; text-align: ce
   .window-note { display: none; }
   .tool-grid { grid-template-columns: 1fr; }
   .tool-card { min-height: auto; }
+  body[data-view="list"] .tool-card > div { display: block; }
+  body[data-view="list"] .tool-card h3 { margin-right: 4px; }
+  body[data-view="list"] .tool-card p { margin-top: 3px; }
 }

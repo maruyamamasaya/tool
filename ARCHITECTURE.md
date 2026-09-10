@@ -25,9 +25,9 @@ GitHub Pages / ローカル HTTP サーバー
 ### ルート一覧
 
 - `index.html` が 80 ツールをカテゴリ別の相対リンクで列挙する。中央の登録情報や自動生成処理はなく、追加・名称変更時は手動更新する。
-- `site.js` がカテゴリの表示設定とタブ切り替え、デスクトップのミニウィンドウ起動、起動失敗時の通常遷移、お気に入りを担当する。
+- `site.js` がカード／リンク一覧の表示切り替え、カテゴリの表示設定とタブ切り替え、デスクトップのミニウィンドウ起動、起動失敗時の通常遷移、お気に入りを担当する。
 - `tool-settings/` はルート `index.html` を同一サイト内で読み、カテゴリとツールの一覧を表示する。ここでツール単位の表示設定とプリセットを管理する。
-- お気に入りはキー `browserToolsFavorites`、表示カテゴリはキー `browserToolsVisibleCategories`、表示ツールはキー `browserToolsVisibleTools` でブラウザの `localStorage` に保存される。バックエンドには同期されない。
+- お気に入りはキー `browserToolsFavorites`、表示カテゴリはキー `browserToolsVisibleCategories`、表示ツールはキー `browserToolsVisibleTools`、一覧の表示形式はキー `browserToolsViewMode` でブラウザの `localStorage` に保存される。バックエンドには同期されない。
 - `site.css` が一覧ページのレスポンシブ表示を担う。
 
 ### 個別ツール

@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { loadFavorites, loadVisibleCategories, loadVisibleTools, openTool, popupFeatures, toolId, usesMiniWindow } = require("./site.js");
+const { loadFavorites, loadViewMode, loadVisibleCategories, loadVisibleTools, openTool, popupFeatures, toolId, usesMiniWindow } = require("./site.js");
 
 const centeredWindow = {
   innerWidth: 1200,
@@ -47,6 +47,10 @@ const toolIds = ["/tool/calendar", "/tool/json-formatter"];
 assert.deepStrictEqual(loadVisibleTools({ getItem: () => null }, toolIds), toolIds);
 assert.deepStrictEqual(loadVisibleTools({ getItem: () => '["/tool/json-formatter","/tool/missing"]' }, toolIds), ["/tool/json-formatter"]);
 assert.deepStrictEqual(loadVisibleTools({ getItem: () => "invalid" }, toolIds), toolIds);
+assert.strictEqual(loadViewMode({ getItem: () => "list" }), "list");
+assert.strictEqual(loadViewMode({ getItem: () => "card" }), "card");
+assert.strictEqual(loadViewMode({ getItem: () => "unexpected" }), "card");
+assert.strictEqual(loadViewMode({ getItem: () => { throw new Error("unavailable"); } }), "card");
 
 const fs = require("fs");
 const indexHtml = fs.readFileSync(require.resolve("./index.html"), "utf8");
@@ -99,6 +103,8 @@ taskSteps.slice(1).forEach((step, index) => {
 assert.ok(indexHtml.includes('id="favorite-grid"'));
 assert.ok(indexHtml.includes('id="category-tabs"'));
 assert.ok(indexHtml.includes('href="./tool-settings/"'));
+assert.ok(indexHtml.includes('id="card-view-button"'));
+assert.ok(indexHtml.includes('id="list-view-button"'));
 assert.strictEqual((indexHtml.match(/type="checkbox" value="[^"]+" checked/g) || []).length, categoryNames.length);
 assert.ok(!indexHtml.includes('id="toggle-all-tools"'));
 

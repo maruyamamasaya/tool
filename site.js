@@ -8,6 +8,7 @@
   const FAVORITES_KEY = "browserToolsFavorites";
   const VISIBLE_CATEGORIES_KEY = "browserToolsVisibleCategories";
   const VISIBLE_TOOLS_KEY = "browserToolsVisibleTools";
+  const VIEW_MODE_KEY = "browserToolsViewMode";
   const MAX_FAVORITES = 10;
 
   function usesMiniWindow(browserWindow) {
@@ -67,6 +68,14 @@
     }
   }
 
+  function loadViewMode(storage) {
+    try {
+      return storage.getItem(VIEW_MODE_KEY) === "list" ? "list" : "card";
+    } catch (_error) {
+      return "card";
+    }
+  }
+
   function toolId(link) {
     return new URL(link.href).pathname.replace(/\/+$/, "");
   }
@@ -85,7 +94,26 @@
     let favorites = loadFavorites(browserWindow.localStorage);
     let visibleCategories = loadVisibleCategories(browserWindow.localStorage, categoryIds);
     const visibleTools = loadVisibleTools(browserWindow.localStorage, toolIds);
+    const cardViewButton = documentObject.getElementById("card-view-button");
+    const listViewButton = documentObject.getElementById("list-view-button");
+    let viewMode = loadViewMode(browserWindow.localStorage);
     let activeCategory = visibleCategories.includes(browserWindow.location.hash.slice(1)) ? browserWindow.location.hash.slice(1) : "all";
+
+    function applyViewMode(mode) {
+      viewMode = mode;
+      documentObject.body.dataset.view = mode;
+      cardViewButton.setAttribute("aria-pressed", String(mode === "card"));
+      listViewButton.setAttribute("aria-pressed", String(mode === "list"));
+      try {
+        browserWindow.localStorage.setItem(VIEW_MODE_KEY, mode);
+      } catch (_error) {
+        // The selected view still works for this page view when storage is unavailable.
+      }
+    }
+
+    cardViewButton.addEventListener("click", () => applyViewMode("card"));
+    listViewButton.addEventListener("click", () => applyViewMode("list"));
+    applyViewMode(viewMode);
 
     function saveFavorites() {
       try {
@@ -220,6 +248,6 @@
     update();
   }
 
-  if (typeof module !== "undefined") module.exports = { loadFavorites, loadVisibleCategories, loadVisibleTools, openTool, popupFeatures, toolId, usesMiniWindow };
+  if (typeof module !== "undefined") module.exports = { loadFavorites, loadViewMode, loadVisibleCategories, loadVisibleTools, openTool, popupFeatures, toolId, usesMiniWindow };
   if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", () => initialize(document, window));
 })();
