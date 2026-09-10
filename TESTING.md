@@ -9,7 +9,7 @@ updated: 2026-09-07
 
 - package manifest、テストランナー、lint、typecheck、build、CI 設定はない。
 - `site.test.js` がルート一覧と `site.js` を検証する。
-- 75 個の `<tool-name>/test.js` が Node.js 組み込みの `assert`（一部は `fs`）で個別ツールを検証する。
+- 77 個の `<directory>/test.js` が Node.js 組み込みの `assert`（一部は `fs`）で個別ツールと表示設定ページを検証する。
 - `drawing/test` と `json-formatter/test` は空であり、テストとして数えない。意図は不明である。
 
 ## 実行方法

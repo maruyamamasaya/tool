@@ -6,6 +6,8 @@
   const POPUP_HEIGHT = 750;
   const DESKTOP_MIN_WIDTH = 768;
   const FAVORITES_KEY = "browserToolsFavorites";
+  const VISIBLE_CATEGORIES_KEY = "browserToolsVisibleCategories";
+  const VISIBLE_TOOLS_KEY = "browserToolsVisibleTools";
   const MAX_FAVORITES = 10;
 
   function usesMiniWindow(browserWindow) {
@@ -43,6 +45,28 @@
     }
   }
 
+  function loadVisibleCategories(storage, categoryIds) {
+    try {
+      const stored = storage.getItem(VISIBLE_CATEGORIES_KEY);
+      if (stored === null) return [...categoryIds];
+      const value = JSON.parse(stored);
+      return Array.isArray(value) ? [...new Set(value.filter((id) => categoryIds.includes(id)))] : [...categoryIds];
+    } catch (_error) {
+      return [...categoryIds];
+    }
+  }
+
+  function loadVisibleTools(storage, toolIds) {
+    try {
+      const stored = storage.getItem(VISIBLE_TOOLS_KEY);
+      if (stored === null) return [...toolIds];
+      const value = JSON.parse(stored);
+      return Array.isArray(value) ? [...new Set(value.filter((id) => toolIds.includes(id)))] : [...toolIds];
+    } catch (_error) {
+      return [...toolIds];
+    }
+  }
+
   function toolId(link) {
     return new URL(link.href).pathname.replace(/\/+$/, "");
   }
@@ -51,8 +75,17 @@
     const favoritesGrid = documentObject.getElementById("favorite-grid");
     const status = documentObject.getElementById("favorites-status");
     const categories = documentObject.getElementById("all-tool-categories");
+    const categorySections = [...categories.querySelectorAll(".tool-category")];
+    const categoryIds = categorySections.map((section) => section.id);
+    const categoryTabs = documentObject.getElementById("category-tabs");
+    const categoryEmpty = documentObject.getElementById("category-empty");
+    const categoryCheckboxes = [...documentObject.querySelectorAll(".category-visibility input[type=checkbox]")];
     const links = [...categories.querySelectorAll(".tool-card")];
+    const toolIds = links.map(toolId);
     let favorites = loadFavorites(browserWindow.localStorage);
+    let visibleCategories = loadVisibleCategories(browserWindow.localStorage, categoryIds);
+    const visibleTools = loadVisibleTools(browserWindow.localStorage, toolIds);
+    let activeCategory = visibleCategories.includes(browserWindow.location.hash.slice(1)) ? browserWindow.location.hash.slice(1) : "all";
 
     function saveFavorites() {
       try {
@@ -62,11 +95,86 @@
       }
     }
 
+    function saveVisibleCategories() {
+      try {
+        browserWindow.localStorage.setItem(VISIBLE_CATEGORIES_KEY, JSON.stringify(visibleCategories));
+      } catch (_error) {
+        // The current selection still works for this page view when storage is unavailable.
+      }
+    }
+
+    function renderCategories() {
+      const availableCategoryIds = categorySections
+        .filter((section) => visibleCategories.includes(section.id)
+          && [...section.querySelectorAll(".tool-card")].some((link) => visibleTools.includes(toolId(link))))
+        .map((section) => section.id);
+      if (activeCategory !== "all" && !availableCategoryIds.includes(activeCategory)) activeCategory = "all";
+      categoryTabs.replaceChildren();
+      const tabs = [{ id: "all", name: "すべて" }, ...categorySections
+        .filter((section) => availableCategoryIds.includes(section.id))
+        .map((section) => ({ id: section.id, name: section.querySelector("h3").textContent }))];
+
+      tabs.forEach(({ id, name }) => {
+        const button = documentObject.createElement("button");
+        const selected = activeCategory === id;
+        button.type = "button";
+        button.className = "category-tab";
+        button.setAttribute("role", "tab");
+        button.setAttribute("aria-selected", String(selected));
+        button.tabIndex = selected ? 0 : -1;
+        button.textContent = name;
+        button.addEventListener("click", () => {
+          const selectedIndex = tabs.findIndex((tab) => tab.id === id);
+          activeCategory = id;
+          renderCategories();
+          browserWindow.requestAnimationFrame(() => categoryTabs.children[selectedIndex].focus());
+        });
+        button.addEventListener("keydown", (event) => {
+          const currentIndex = tabs.findIndex((tab) => tab.id === id);
+          const nextIndex = event.key === "Home" ? 0
+            : event.key === "End" ? tabs.length - 1
+              : event.key === "ArrowRight" ? (currentIndex + 1) % tabs.length
+                : event.key === "ArrowLeft" ? (currentIndex - 1 + tabs.length) % tabs.length
+                  : -1;
+          if (nextIndex < 0) return;
+          event.preventDefault();
+          activeCategory = tabs[nextIndex].id;
+          renderCategories();
+          categoryTabs.children[nextIndex].focus();
+        });
+        categoryTabs.append(button);
+      });
+
+      categorySections.forEach((section) => {
+        section.hidden = !availableCategoryIds.includes(section.id) || (activeCategory !== "all" && activeCategory !== section.id);
+      });
+      categoryEmpty.hidden = availableCategoryIds.length > 0;
+    }
+
+    function updateVisibleCategories() {
+      visibleCategories = categoryCheckboxes.filter((checkbox) => checkbox.checked).map((checkbox) => checkbox.value);
+      saveVisibleCategories();
+      renderCategories();
+    }
+
+    categoryCheckboxes.forEach((checkbox) => {
+      checkbox.checked = visibleCategories.includes(checkbox.value);
+      checkbox.addEventListener("change", updateVisibleCategories);
+    });
+    documentObject.getElementById("show-all-categories").addEventListener("click", () => {
+      categoryCheckboxes.forEach((checkbox) => { checkbox.checked = true; });
+      updateVisibleCategories();
+    });
+    documentObject.getElementById("hide-all-categories").addEventListener("click", () => {
+      categoryCheckboxes.forEach((checkbox) => { checkbox.checked = false; });
+      updateVisibleCategories();
+    });
+
     function update() {
       favoritesGrid.replaceChildren();
       const linkById = new Map(links.map((link) => [toolId(link), link]));
       favorites = favorites.filter((id) => linkById.has(id));
-      favorites.slice(0, MAX_FAVORITES).forEach((id) => {
+      favorites.filter((id) => visibleTools.includes(id)).slice(0, MAX_FAVORITES).forEach((id) => {
         const source = linkById.get(id);
         const copy = source.cloneNode(true);
         copy.addEventListener("click", (event) => openTool(event, copy, browserWindow));
@@ -105,11 +213,13 @@
         saveFavorites();
       });
       wrapper.append(button);
+      wrapper.hidden = !visibleTools.includes(toolId(link));
     });
 
+    renderCategories();
     update();
   }
 
-  if (typeof module !== "undefined") module.exports = { loadFavorites, openTool, popupFeatures, toolId, usesMiniWindow };
+  if (typeof module !== "undefined") module.exports = { loadFavorites, loadVisibleCategories, loadVisibleTools, openTool, popupFeatures, toolId, usesMiniWindow };
   if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", () => initialize(document, window));
 })();

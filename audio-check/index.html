@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="会議前にイヤフォンやスピーカーの左・右・ステレオ出力と接続情報を確認">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Audio Check — イヤフォン・スピーカーチェック</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a href="../" class="brand"><span class="brand-mark" aria-hidden="true">◖◗</span><span>Audio <strong>Check</strong></span></a>
+      <span class="privacy"><i></i> 端末内でのみ処理</span>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">READY FOR YOUR MEETING</p>
+      <h1 id="page-title">音の出口を、すぐ確認。</h1>
+      <p>左右から音が聞こえるか、会議前にチェックできます。</p>
+    </section>
+
+    <section class="check-card" aria-labelledby="check-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">SOUND TEST</p><h2 id="check-title">再生チェック</h2></div>
+        <label class="volume"><span>音量</span><input id="volume" type="range" min="0.05" max="0.6" step="0.05" value="0.3"><output id="volumeValue">30%</output></label>
+      </div>
+      <div class="channel-buttons">
+        <button type="button" class="channel-button left" data-test="left"><span class="channel-letter">L</span><span><strong>左</strong><small>左側だけ再生</small></span></button>
+        <button type="button" class="channel-button stereo" data-test="stereo"><span class="stereo-mark" aria-hidden="true">L&nbsp;·&nbsp;R</span><span><strong>ステレオ</strong><small>左 → 右 → 両方</small></span></button>
+        <button type="button" class="channel-button right" data-test="right"><span class="channel-letter">R</span><span><strong>右</strong><small>右側だけ再生</small></span></button>
+      </div>
+      <div class="play-status"><span id="levelLeft" class="level" aria-hidden="true"></span><p id="playStatus" role="status" aria-live="polite">ボタンを押すと短い確認音が流れます</p><span id="levelRight" class="level" aria-hidden="true"></span></div>
+      <button id="stopButton" class="stop-button" type="button" disabled>停止</button>
+      <p class="safety-note">最初は小さめの音量でお試しください。</p>
+    </section>
+
+    <section class="device-card" aria-labelledby="device-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">OUTPUT</p><h2 id="device-title">接続情報</h2></div>
+        <button id="refreshButton" class="refresh-button" type="button">↻ 更新</button>
+      </div>
+      <div class="device-summary">
+        <div class="device-icon" aria-hidden="true">♫</div>
+        <div><span id="deviceState" class="status-pill">確認中</span><h3 id="deviceName">出力先を確認しています</h3><p id="deviceDetail">—</p></div>
+      </div>
+      <label class="output-field" for="outputSelect"><span>音声の出力先</span><select id="outputSelect" disabled><option>確認中…</option></select></label>
+      <button id="chooseOutputButton" class="choose-button" type="button" hidden>出力先を選択</button>
+      <dl class="info-grid">
+        <div><dt>検出した出力</dt><dd id="outputCount">—</dd></div>
+        <div><dt>ステレオ制御</dt><dd id="stereoSupport">—</dd></div>
+        <div><dt>サンプルレート</dt><dd id="sampleRate">再生時に取得</dd></div>
+      </dl>
+      <p id="deviceNote" class="device-note">ブラウザの制限により、接続方式やデバイス名を取得できない場合があります。</p>
+    </section>
+
+    <footer><span>AUDIO CHECK</span><span>音声・端末情報は外部へ送信されません</span></footer>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>

@@ -24,30 +24,48 @@
             <p class="eyebrow">Tools</p>
             <h2 id="tools-title">ツール一覧</h2>
           </div>
-          <p class="window-note"><span aria-hidden="true">↗</span> PCではミニウィンドウで開きます</p>
+          <div class="section-actions">
+            <a class="settings-link" href="./tool-settings/">⚙ ツール表示設定</a>
+            <p class="window-note"><span aria-hidden="true">↗</span> PCではミニウィンドウで開きます</p>
+          </div>
         </div>
 
-        <nav class="category-nav" aria-label="ジャンルから探す">
-          <a href="#timers">タイマー系</a>
-          <a href="#kgi-kpi-tools">KGI／KPI</a>
-          <a href="#tasks">タスク管理系</a>
-          <a href="#memo-tools">メモ帳</a>
-          <a href="#calendar-tools">カレンダー</a>
-          <a href="#linux-tools">Linux操作</a>
-          <a href="#network-tools">ネットワーク関連</a>
-          <a href="#diff-tools">Diff（差分チェッカー）</a>
-          <a href="#text-processing">テキスト加工</a>
-          <a href="#text-generation">テキスト生成</a>
-          <a href="#data-analysis">データ分析</a>
-          <a href="#log-analysis">ログ解析</a>
-          <a href="#csv-tools">CSV</a>
-          <a href="#json-tools">JSON</a>
-          <a href="#numeric-tools">数値計算</a>
-          <a href="#programming">プログラム解析</a>
-          <a href="#references">索引系</a>
-          <a href="#image-tools">イメージ加工</a>
-          <a href="#others">その他・シミュレーションなど</a>
-        </nav>
+        <div class="category-controls">
+          <div class="category-controls-heading">
+            <div>
+              <h3>表示するカテゴリ</h3>
+              <p>チェックを外したカテゴリは、一覧とタブの両方から非表示になります。</p>
+            </div>
+            <div class="category-control-actions">
+              <button id="show-all-categories" type="button">すべて表示</button>
+              <button id="hide-all-categories" type="button">すべて非表示</button>
+            </div>
+          </div>
+          <div class="category-visibility" aria-label="表示するカテゴリ">
+            <label><input type="checkbox" value="timers" checked><span>タイマー系</span></label>
+            <label><input type="checkbox" value="kgi-kpi-tools" checked><span>KGI／KPI</span></label>
+            <label><input type="checkbox" value="tasks" checked><span>タスク管理系</span></label>
+            <label><input type="checkbox" value="memo-tools" checked><span>メモ帳</span></label>
+            <label><input type="checkbox" value="calendar-tools" checked><span>カレンダー</span></label>
+            <label><input type="checkbox" value="linux-tools" checked><span>Linux操作</span></label>
+            <label><input type="checkbox" value="network-tools" checked><span>ネットワーク関連</span></label>
+            <label><input type="checkbox" value="diff-tools" checked><span>Diff（差分チェッカー）</span></label>
+            <label><input type="checkbox" value="text-processing" checked><span>テキスト加工</span></label>
+            <label><input type="checkbox" value="text-generation" checked><span>テキスト生成</span></label>
+            <label><input type="checkbox" value="data-analysis" checked><span>データ分析</span></label>
+            <label><input type="checkbox" value="log-analysis" checked><span>ログ解析</span></label>
+            <label><input type="checkbox" value="csv-tools" checked><span>CSV</span></label>
+            <label><input type="checkbox" value="json-tools" checked><span>JSON</span></label>
+            <label><input type="checkbox" value="numeric-tools" checked><span>数値計算</span></label>
+            <label><input type="checkbox" value="programming" checked><span>プログラム解析</span></label>
+            <label><input type="checkbox" value="references" checked><span>索引系</span></label>
+            <label><input type="checkbox" value="image-tools" checked><span>イメージ加工</span></label>
+            <label><input type="checkbox" value="others" checked><span>その他・シミュレーションなど</span></label>
+          </div>
+        </div>
+
+        <div id="category-tabs" class="category-tabs" role="tablist" aria-label="カテゴリ切り替え"></div>
+        <p id="category-empty" class="category-empty" hidden>表示するカテゴリがありません。上のチェックボックスからカテゴリを選んでください。</p>
 
         <section id="favorites" class="favorites-panel" aria-labelledby="favorites-title">
           <div class="favorites-heading">
@@ -251,6 +269,7 @@
             <a class="tool-card" href="./drawing/"><span class="tool-icon" aria-hidden="true">✏️</span><div><h3>ホワイトボード</h3><p>ブラウザ上で自由に作図</p></div></a>
             <a class="tool-card" href="./qr-code-generator/"><span class="tool-icon" aria-hidden="true">▦</span><div><h3>QRコード生成</h3><p>URLからQRコードを生成・保存</p></div></a>
             <a class="tool-card" href="./user-agent-viewer/"><span class="tool-icon" aria-hidden="true">🖥️</span><div><h3>端末・ブラウザ情報</h3><p>ブラウザや端末の情報を確認</p></div></a>
+            <a class="tool-card" href="./audio-check/"><span class="tool-icon" aria-hidden="true">L·R</span><div><h3>イヤフォン・スピーカーチェック</h3><p>左右・ステレオ音声と出力先を確認</p></div></a>
           </div>
         </section>
         </div>

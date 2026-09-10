@@ -24,9 +24,10 @@ GitHub Pages / ローカル HTTP サーバー
 
 ### ルート一覧
 
-- `index.html` が 78 ツールをカテゴリ別の相対リンクで列挙する。中央の登録情報や自動生成処理はなく、追加・名称変更時は手動更新する。
-- `site.js` がカード検索、デスクトップのミニウィンドウ起動、起動失敗時の通常遷移、お気に入りを担当する。
-- お気に入りはキー `browserToolsFavorites` でブラウザの `localStorage` に保存される。バックエンドには同期されない。
+- `index.html` が 79 ツールをカテゴリ別の相対リンクで列挙する。中央の登録情報や自動生成処理はなく、追加・名称変更時は手動更新する。
+- `site.js` がカテゴリの表示設定とタブ切り替え、デスクトップのミニウィンドウ起動、起動失敗時の通常遷移、お気に入りを担当する。
+- `tool-settings/` はルート `index.html` を同一サイト内で読み、カテゴリとツールの一覧を表示する。ここでツール単位の表示設定とプリセットを管理する。
+- お気に入りはキー `browserToolsFavorites`、表示カテゴリはキー `browserToolsVisibleCategories`、表示ツールはキー `browserToolsVisibleTools` でブラウザの `localStorage` に保存される。バックエンドには同期されない。
 - `site.css` が一覧ページのレスポンシブ表示を担う。
 
 ### 個別ツール
@@ -74,4 +75,4 @@ GitHub Pages / ローカル HTTP サーバー
 
 ## デプロイ
 
-README と URL から GitHub Pages 公開であることは確認できるが、Pages の source branch など GitHub 側設定はリポジトリ外である。`.github/workflows` やデプロイスクリプトは存在しないため、push 後の具体的な公開フローは不明である。
+公開 URL は https://maruyamamasaya.github.io/tool/ である。Pages の source branch など GitHub 側設定はリポジトリ外である。`.github/workflows` やデプロイスクリプトは存在しないため、push 後の具体的な公開フローは不明である。

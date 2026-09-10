@@ -14,7 +14,13 @@ assert.equal(result.end, Date.parse("2026-08-07T11:30:00Z"));
 assert.equal(calculateSchedule({ ...base, endAt: base.startAt }, Date.now()).valid, false);
 
 const today = todayAt("14:25", Date.parse("2026-08-08T03:00:00Z"));
-assert.equal(today, "2026-08-08T14:25:00.000Z");
-assert.equal(todayAt("14:22", Date.now()).endsWith("T14:22:00.000Z"), true);
+const referenceDate = new Date("2026-08-08T03:00:00Z");
+const todayDate = new Date(today);
+assert.deepStrictEqual(
+  [todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate(), todayDate.getHours(), todayDate.getMinutes(), todayDate.getSeconds(), todayDate.getMilliseconds()],
+  [referenceDate.getFullYear(), referenceDate.getMonth(), referenceDate.getDate(), 14, 25, 0, 0]
+);
+const currentDayAt = new Date(todayAt("14:22", Date.now()));
+assert.deepStrictEqual([currentDayAt.getHours(), currentDayAt.getMinutes(), currentDayAt.getSeconds(), currentDayAt.getMilliseconds()], [14, 22, 0, 0]);
 assert.equal(todayAt("invalid", Date.now()), "");
 console.log("Meeting Timer tests passed");

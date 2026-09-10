@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { loadFavorites, openTool, popupFeatures, toolId, usesMiniWindow } = require("./site.js");
+const { loadFavorites, loadVisibleCategories, loadVisibleTools, openTool, popupFeatures, toolId, usesMiniWindow } = require("./site.js");
 
 const centeredWindow = {
   innerWidth: 1200,
@@ -39,6 +39,14 @@ assert.deepStrictEqual(loadFavorites({ getItem: () => '["/tool/a","/tool/b"]' })
 assert.deepStrictEqual(loadFavorites({ getItem: () => "invalid" }), []);
 assert.strictEqual(loadFavorites({ getItem: () => JSON.stringify(Array.from({ length: 12 }, (_, index) => String(index))) }).length, 12);
 assert.strictEqual(toolId({ href: "https://example.com/tool/calendar/" }), "/tool/calendar");
+const categoryIds = ["timers", "tasks", "json-tools"];
+assert.deepStrictEqual(loadVisibleCategories({ getItem: () => null }, categoryIds), categoryIds);
+assert.deepStrictEqual(loadVisibleCategories({ getItem: () => '["tasks","missing","tasks"]' }, categoryIds), ["tasks"]);
+assert.deepStrictEqual(loadVisibleCategories({ getItem: () => "invalid" }, categoryIds), categoryIds);
+const toolIds = ["/tool/calendar", "/tool/json-formatter"];
+assert.deepStrictEqual(loadVisibleTools({ getItem: () => null }, toolIds), toolIds);
+assert.deepStrictEqual(loadVisibleTools({ getItem: () => '["/tool/json-formatter","/tool/missing"]' }, toolIds), ["/tool/json-formatter"]);
+assert.deepStrictEqual(loadVisibleTools({ getItem: () => "invalid" }, toolIds), toolIds);
 
 const fs = require("fs");
 const indexHtml = fs.readFileSync(require.resolve("./index.html"), "utf8");
@@ -67,8 +75,8 @@ const categorySections = indexHtml.match(/<section[^>]+class="tool-category"/g) 
 const toolLinks = [...indexHtml.matchAll(/<a class="tool-card" href="([^"]+)"/g)].map((match) => match[1]);
 const categoryHtml = (id) => indexHtml.match(new RegExp(`<section id="${id}"[\\s\\S]*?</section>`))[0];
 assert.strictEqual(categorySections.length, categoryNames.length);
-categoryNames.forEach((name) => assert.ok(indexHtml.includes(`>${name}</a>`), `${name} navigation link is missing`));
-assert.strictEqual(toolLinks.length, 77);
+categoryNames.forEach((name) => assert.ok(indexHtml.includes(`>${name}</span>`), `${name} visibility control is missing`));
+assert.strictEqual(toolLinks.length, 79);
 assert.strictEqual(new Set(toolLinks).size, toolLinks.length);
 assert.ok(categoryHtml("linux-tools").includes("./cron-reader/"));
 assert.ok(categoryHtml("data-analysis").includes("./regex-tester/"));
@@ -77,6 +85,7 @@ assert.ok(categoryHtml("log-analysis").includes("./log-highlighter/"));
 assert.ok(categoryHtml("csv-tools").indexOf("./csv-viewer/") < categoryHtml("csv-tools").indexOf("./csv-editor/"));
 assert.ok(categoryHtml("tasks").includes("./plan-vs-actual/"));
 assert.ok(categoryHtml("kgi-kpi-tools").includes("./kgi-kpi-builder/"));
+assert.ok(categoryHtml("others").includes("./audio-check/"));
 const taskCategory = categoryHtml("tasks");
 const taskSteps = ["01_チェックリスト作成", "02_予実管理", "03_スケジュールプロット", "04_進捗トラッカー", "05_振り返り作成"];
 taskSteps.forEach((step) => assert.ok(taskCategory.includes(step), `${step} is missing`));
@@ -87,6 +96,9 @@ taskSteps.slice(1).forEach((step, index) => {
   assert.ok(categoryHtml("numeric-tools").includes(`./${tool}/`), `${tool} is not in numeric tools`);
 });
 assert.ok(indexHtml.includes('id="favorite-grid"'));
+assert.ok(indexHtml.includes('id="category-tabs"'));
+assert.ok(indexHtml.includes('href="./tool-settings/"'));
+assert.strictEqual((indexHtml.match(/type="checkbox" value="[^"]+" checked/g) || []).length, categoryNames.length);
 assert.ok(!indexHtml.includes('id="toggle-all-tools"'));
 
 console.log("site tests passed");
